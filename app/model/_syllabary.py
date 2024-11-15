@@ -1,6 +1,6 @@
 
 from app import FlosettaException
-from ._quiz_metrics import QuizMetrics
+from ._quiz import QuizMetrics
 from collections import UserDict
 from typing import Optional
 from ._workbook import import_spreadsheet

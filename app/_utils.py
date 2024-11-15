@@ -103,3 +103,27 @@ def kana_reference_tables():
     }
 
     return tables
+
+
+class _PassTheBaton:
+
+    _object = None
+
+    @property
+    def object(self):
+        assert _PassTheBaton._object is not None
+        o = _PassTheBaton._object
+        _PassTheBaton._object = None
+        return o
+
+    @object.setter
+    def object(self, obj):
+        assert _PassTheBaton._object is None
+        _PassTheBaton._object = obj
+        return
+
+    def drop(self) -> None:
+        _PassTheBaton._object = None
+
+
+BATON = _PassTheBaton()
