@@ -1,5 +1,7 @@
 
 from app import FlosettaException
+from app.flogger import flogger
+from app.flogger import tracer
 from ._entries import Entry
 from ._entries import Word
 from ._entries import Character
@@ -9,6 +11,7 @@ from ._data_paths import VOCAB_FILE
 from enum import Enum
 
 
+@tracer
 def load_vocabulary() -> dict[str, Word]:
 
     workbook = import_spreadsheet(VOCAB_FILE)
@@ -21,9 +24,12 @@ def load_vocabulary() -> dict[str, Word]:
                 vocab[kana] = Word(english=row[0], romaji=row[1], kana=kana, kanji=row[3],
                                    part_of_speech=row[4], tags=row[5], note=row[6])
 
-        return vocab
+    flogger.debug('vocabulary spreadsheet loaded')
+
+    return vocab
 
 
+@tracer
 def load_syllabary() -> dict[str, Character]:
 
     workbook = import_spreadsheet(KANA_FILE)
@@ -51,6 +57,8 @@ def load_syllabary() -> dict[str, Character]:
         {k.lower(): Character(v['romaji'], v['hiragana'], v['katakana'], v['category'],
                               v['hiragana_note'], v['katakana_note']) for k, v in kana.items()}
 
+    flogger.debug('kana spreadsheet loaded')
+
     return dict_inst
 
 
@@ -66,10 +74,13 @@ LOADERS = {
 }
 
 
+@tracer
 def fetch(item: CacheItem):
 
     if item not in CACHE.keys():
         CACHE[item] = LOADERS[item]()
+    else:
+        flogger.debug('cache hit!')
 
     return CACHE[item]
 
@@ -92,8 +103,18 @@ class Vocabulary(_FrozenDict):
         vocab = fetch(CacheItem.VOCABULARY)
         super().__init__(other=vocab)
 
+    @tracer
+    def save(self) -> None:
+        pass
+
 
 class Syllabary(_FrozenDict):
+
     def __init__(self):
         kana = fetch(CacheItem.SYLLABARY)
         super().__init__(other=kana)
+
+    @tracer
+    def save(self) -> None:
+        pass
+

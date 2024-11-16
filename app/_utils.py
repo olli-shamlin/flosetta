@@ -1,5 +1,6 @@
 
 from markupsafe import Markup
+from app import app
 from app.model import Syllabary
 
 

@@ -3,6 +3,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap5
 from config import Config
 import inspect
+import logging
 
 
 class FlosettaException(Exception):
@@ -23,7 +24,15 @@ class FlosettaException(Exception):
         super().__init__(self.message)
 
 
-app = Flask(__name__)
+app = Flask('Flosetta')
+
+app.logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('[%(name)s %(levelname)s] %(message)s')
+handler.setFormatter(formatter)
+app.logger.addHandler(handler)
+
 bootstrap = Bootstrap5(app)
 app.config.from_object(Config)
 
