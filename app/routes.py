@@ -8,9 +8,11 @@ from .forms import QuizSetupForm4
 from .forms import QuizSetupForm5
 from .forms import QuizSetupForm6
 from .forms import MultipleChoiceQuizForm
-from .model import Vocabulary
+# from .model import Vocabulary
 from .model import QuizParameters
 from .model import create_quiz
+from .model import fetch_from_cache
+from .model import CacheItem
 from ._utils import resolve_icon
 from ._utils import kana_reference_tables
 from ._utils import BATON
@@ -23,8 +25,9 @@ from flask import request
 @app.route('/index')
 @app.route('/vocab')
 def index():
+    vocabulary = fetch_from_cache(CacheItem.VOCABULARY)
     return render_template('vocabulary.html',
-                           words=Vocabulary(),
+                           words=vocabulary,
                            title='Vocabulary',
                            emoji=resolve_icon('backpack'))
 

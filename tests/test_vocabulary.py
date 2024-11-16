@@ -1,12 +1,13 @@
 
 from app import FlosettaException
-from app.model import Vocabulary
+from app.model import CacheItem
+from app.model import fetch_from_cache
 import pytest
 
 
 def test_vocabulary():
 
-    vocab = Vocabulary()
+    vocab = fetch_from_cache(CacheItem.VOCABULARY)
 
     word = vocab['すこし']
     assert word.english == 'a bit'
@@ -31,12 +32,23 @@ def test_vocabulary():
 
 def test_setters():
 
-    syllabary = Vocabulary()
+    vocab = fetch_from_cache(CacheItem.VOCABULARY)
 
-    with pytest.raises(FlosettaException) as excinfo:
-        syllabary['いろいろ'] = None
-    assert str(excinfo.value) == \
-           'modifying vocabulary is not allowed (raised by app.model._vocabulary.Vocabulary.__setitem__())'
+    word = vocab['はちがつ']
+    assert word.english == 'august'
+    assert word.romaji == 'ha chi ga tsu'
+    assert word.kana == 'はちがつ'
+    assert word.kanji == '八月'
+    assert word.part_of_speech == 'adverbial noun'
+    assert word.tags is None
+    assert word.note == 'The month of August'
+
+    # with pytest.raises(FlosettaException) as excinfo:
+    #     vocab['いろいろ'] = None
+    # assert str(excinfo.value) == \
+    #        'modifying vocabulary is not allowed (raised by app.model._vocabulary.Vocabulary.__setitem__())'
+
+    assert False == 'This test is incomplete pending ability to prohibit updating syllabary entries'
 
     return
 

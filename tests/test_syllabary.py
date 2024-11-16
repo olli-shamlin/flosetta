@@ -1,12 +1,13 @@
 
 from app import FlosettaException
-from app.model import Syllabary
+from app.model import CacheItem
+from app.model import fetch_from_cache
 import pytest
 
 
 def test_syllabary():
 
-    syllabary = Syllabary()
+    syllabary = fetch_from_cache(CacheItem.SYLLABARY)
 
     kana = syllabary['a']
     assert kana.category == 'Basic'
@@ -77,11 +78,21 @@ def test_syllabary():
 
 def test_setters():
 
-    syllabary = Syllabary()
+    syllabary = fetch_from_cache(CacheItem.SYLLABARY)
 
-    with pytest.raises(FlosettaException) as excinfo:
-        syllabary['a'] = None
-    assert str(excinfo.value) == \
-           'modifying syllabary is not allowed (raised by app.model._syllabary.Syllabary.__setitem__())'
+    kana = syllabary['myo']
+    assert kana.category == 'Modified YO'
+    assert kana.romaji == 'myo'
+    assert kana.hiragana == 'みょ'
+    assert kana.katakana == 'ミョ'
+    assert kana.hiragana_note is None
+    assert kana.katakana_note is None
+
+    # with pytest.raises(FlosettaException) as excinfo:
+    #     syllabary['a'] = None
+    # assert str(excinfo.value) == \
+    #        'modifying syllabary is not allowed (raised by app.model._syllabary.Syllabary.__setitem__())'
+
+    assert False == 'This test is incomplete pending ability to prohibit updating syllabary entries'
 
     return

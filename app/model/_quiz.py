@@ -5,8 +5,10 @@ from itertools import islice
 from random import sample
 from random import shuffle
 from typing import Optional
-from ._vocabulary import Vocabulary
-from ._syllabary import Syllabary
+# from ._vocabulary import Vocabulary
+# from ._syllabary import Syllabary
+from ._cache import CacheItem
+from ._cache import fetch as fetch_from_cache
 
 
 class QuizParameters:
@@ -187,10 +189,14 @@ class MultipleChoiceQuiz(Quiz):
         self._results: Optional[list[str]] = None
 
         if params.table == 'Vocabulary':
-            vocabulary = Vocabulary()
-            prompt_words = sample(vocabulary, params.number_of_items)
-            prompt_word_ids = [w.id for w in prompt_words]
-            other_words = [w for w in vocabulary if w.id not in prompt_word_ids]
+            # TODO > The following two lines may become a common pattern in the code; and it's an awkward one.
+            # TODO > Need to keep an eye out for it recurring and possibly do a bit of refactor to reduce/eliminate
+            # TODO > this pattern
+            vocabulary = fetch_from_cache(CacheItem.VOCABULARY)
+            words = [w for w in vocabulary.values()]
+            prompt_words = sample(words, params.number_of_items)
+            prompt_word_ids = [w.key for w in prompt_words]
+            other_words = [w for w in words if w.key not in prompt_word_ids]
             alt_choice_words = sample(other_words, (params.number_of_items * 4))
             alt_choice_words = _chunk_list(alt_choice_words, 4)
         else:
@@ -198,7 +204,7 @@ class MultipleChoiceQuiz(Quiz):
             # TODO > The following two lines may become a common pattern in the code; and it's an awkward one.
             # TODO > Need to keep an eye out for it recurring and possibly do a bit of refactor to reduce/eliminate
             # TODO > this pattern
-            syllabary = Syllabary()
+            syllabary = fetch_from_cache(CacheItem.SYLLABARY)
             characters = [c for c in syllabary.values()]
             prompt_words = sample(characters, params.number_of_items)
             prompt_word_ids = [w.key for w in prompt_words]

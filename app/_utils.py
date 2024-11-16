@@ -1,6 +1,8 @@
 
 from markupsafe import Markup
-from app.model import Syllabary
+# from app.model import Syllabary
+from .model import CacheItem
+from .model import fetch_from_cache
 
 
 def resolve_icon(name: str) -> str:
@@ -63,8 +65,7 @@ def resolve_icon(name: str) -> str:
 
 def kana_reference_tables():
 
-    # m = {c.romaji: c for c in Syllabary().values()}
-    m = Syllabary()
+    m = fetch_from_cache(CacheItem.SYLLABARY)
 
     tables = {
         'Basic': {
