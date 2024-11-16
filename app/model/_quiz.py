@@ -1,50 +1,12 @@
 
+from abc import ABC
+from abc import abstractmethod
+from itertools import islice
+from random import sample
+from random import shuffle
 from typing import Optional
-
-
-class QuizMetrics:
-
-    def __init__(self, quizzed: int = 0, correct: int = 0, consecutive_correct: int = 0, consecutive_wrong: int = 0):
-        self._dirty: bool = False
-        self._quizzed: int = quizzed
-        self._correct: int = correct
-        self._consecutive_correct: int = consecutive_correct
-        self._consecutive_wrong: int = consecutive_wrong
-        return
-
-    @property
-    def quizzed(self) -> int:
-        return self._quizzed
-
-    @property
-    def correct(self) -> int:
-        return self._correct
-
-    @property
-    def consecutive_correct(self) -> int:
-        return self._consecutive_correct
-
-    @property
-    def consecutive_incorrect(self) -> int:
-        return self._consecutive_wrong
-
-    @property
-    def is_dirty(self) -> bool:
-        return self._dirty
-
-    def increment(self, correct: bool):
-        self._quizzed += 1
-        if correct:
-            self._correct += 1
-            self._consecutive_correct += 1
-            self._consecutive_wrong = 0
-        else:
-            self._consecutive_correct = 0
-            self._consecutive_wrong += 1
-        self._dirty = True
-
-    def synced(self):
-        self._dirty = False
+from ._vocabulary import Vocabulary
+from ._syllabary import Syllabary
 
 
 class QuizParameters:
@@ -153,3 +115,201 @@ class QuizParameters:
         # self._category_filter = categories
         # return
         raise NotImplementedError('quiz.py/QuizParameters.category_filter')
+
+
+class QuizItem:
+    pass
+
+
+class MultipleChoiceItem(QuizItem):
+
+    def __init__(self, prompt: str, answer: str, choices: list[str]):
+        self._prompt: str = prompt
+        self._answer: str = answer
+        self._choices: list[str] = choices
+        self._response: Optional[str] = None
+
+    @property
+    def prompt(self) -> str:
+        return self._prompt
+
+    @property
+    def answer(self) -> str:
+        return self._answer
+
+    @property
+    def choices(self) -> list[str]:
+        return self._choices
+
+    @property
+    def response(self) -> str:
+        assert self._response is not None
+        return self._response
+
+    @response.setter
+    def response(self, r: str):
+        assert self._response is None
+        self._response = r
+        return
+
+    @property
+    def answered_correct(self) -> bool:
+        assert self._response is not None
+        return self._answer == self._response
+
+
+class Quiz(ABC):
+
+    def __init__(self):
+        return
+
+    @property
+    @abstractmethod
+    def items(self) -> list[QuizItem]:
+        ...
+
+    @items.setter
+    @abstractmethod
+    def items(self, itms: list[QuizItem]):
+        ...
+
+
+def _chunk_list(arr_range, arr_size):
+    arr_range = iter(arr_range)
+    return list(iter(lambda: tuple(islice(arr_range, arr_size)), ()))
+
+
+class MultipleChoiceQuiz(Quiz):
+
+    def __init__(self, params: QuizParameters):
+
+        super().__init__()
+        self._results: Optional[list[str]] = None
+
+        if params.table == 'Vocabulary':
+            vocabulary = Vocabulary()
+            prompt_words = sample(vocabulary, params.number_of_items)
+            prompt_word_ids = [w.id for w in prompt_words]
+            other_words = [w for w in vocabulary if w.id not in prompt_word_ids]
+            alt_choice_words = sample(other_words, (params.number_of_items * 4))
+            alt_choice_words = _chunk_list(alt_choice_words, 4)
+        else:
+            assert params.table == 'Kana'
+            # TODO > The following two lines may become a common pattern in the code; and it's an awkward one.
+            # TODO > Need to keep an eye out for it recurring and possibly do a bit of refactor to reduce/eliminate
+            # TODO > this pattern
+            syllabary = Syllabary()
+            characters = [c for c in syllabary.values()]
+            prompt_words = sample(characters, params.number_of_items)
+            prompt_word_ids = [w.key for w in prompt_words]
+            other_words = [w for w in characters if w.key not in prompt_word_ids]
+            alt_choice_words = sample(other_words, (params.number_of_items * 4))
+            alt_choice_words = _chunk_list(alt_choice_words, 4)
+
+        self._items: list[MultipleChoiceItem] = []
+        for i, prompt_word in enumerate(prompt_words):
+
+            if params.prompt_type == 'English':
+                prompt = prompt_word.english
+            elif params.prompt_type == 'Kana':
+                prompt = prompt_word.kana
+            elif params.prompt_type == 'Romaji':
+                prompt = prompt_word.romaji
+            elif params.prompt_type == 'Hiragana':
+                prompt = prompt_word.hiragana
+            else:  # params.prompt_type == 'Katakana'
+                prompt = prompt_word.katakana
+
+            if params.choice_type == 'English':
+                answer = prompt_word.english
+                choices = [w.english for w in alt_choice_words[i]] + [answer]
+                shuffle(choices)
+            elif params.choice_type == 'Kana':
+                answer = prompt_word.kana
+                choices = [w.kana for w in alt_choice_words[i]] + [answer]
+                shuffle(choices)
+            elif params.choice_type == 'Romaji':
+                answer = prompt_word.romaji
+                choices = [w.romaji for w in alt_choice_words[i]] + [answer]
+                shuffle(choices)
+            elif params.choice_type == 'Hiragana':
+                answer = prompt_word.hiragana
+                choices = [w.hiragana for w in alt_choice_words[i]] + [answer]
+                shuffle(choices)
+            else:  # params.choice_type == 'Katakana'
+                answer = prompt_word.katakana
+                choices = [w.katakana for w in alt_choice_words[i]] + [answer]
+                shuffle(choices)
+
+            item = MultipleChoiceItem(prompt, answer, choices)
+            self._items.append(item)
+
+        return
+
+    @property
+    def items(self) -> list[MultipleChoiceItem]:
+        return self._items
+
+    def add_results(self, results: list[str]) -> None:
+        assert self._results is None
+        assert len(results) == len(self._items)
+        for i, item in enumerate(self._items):
+            item.response = results[i]
+        return
+
+    @property
+    def correct(self) -> int:
+        assert all([i.response is not None for i in self._items])
+        return len([i for i in self._items if i.answered_correct])
+
+    @property
+    def incorrect(self) -> int:
+        assert all([i.response is not None for i in self._items])
+        return len([i for i in self._items if not i.answered_correct])
+
+
+class MatchQuiz(Quiz):
+
+    def __init__(self, params: QuizParameters):
+        super().__init__()
+        # return
+        raise NotImplementedError('quiz.py/MatchQuiz()')
+
+
+class FillInTheBlankQuiz(Quiz):
+
+    def __init__(self, params: QuizParameters):
+        super().__init__()
+        # return
+        raise NotImplementedError('quiz.py/FillInTheQuiz()')
+
+
+class JigsawQuiz(Quiz):
+
+    def __init__(self, params: QuizParameters):
+        super().__init__()
+        # return
+        raise NotImplementedError('quiz.py/JigsawQuiz()')
+
+
+class MemoryQuiz(Quiz):
+
+    def __init__(self, params: QuizParameters):
+        super().__init__()
+        # return
+        raise NotImplementedError('quiz.py/MemoryQuiz()')
+
+
+def create_quiz(params: QuizParameters) -> Quiz:
+
+    quiz_type_map = {
+        'Multiple Choice': MultipleChoiceQuiz,
+        'Match': MatchQuiz,
+        'Fill In The Blank': FillInTheBlankQuiz,
+        'Jigsaw': JigsawQuiz,
+        'Memory': MemoryQuiz,
+    }
+
+    quiz_cls = quiz_type_map[params.type_of_quiz]
+    quiz_inst = quiz_cls(params)
+    return quiz_inst

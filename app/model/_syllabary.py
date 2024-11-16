@@ -1,10 +1,10 @@
 
 from app import FlosettaException
-from ._quiz import QuizMetrics
+from ._data_paths import KANA_FILE
+from ._quiz_metrics import QuizMetrics
+from ._workbook import import_spreadsheet
 from collections import UserDict
 from typing import Optional
-from ._workbook import import_spreadsheet
-from ._data_paths import KANA_FILE
 
 
 class Kana:
@@ -18,6 +18,13 @@ class Kana:
         self._hiragana_note: Optional[str] = hiragana_note
         self._katakana_note: Optional[str] = katakana_note
         self._quiz_metrics: Optional[QuizMetrics] = None
+
+    # TODO: I think there is motivation to create an ABC for words/characters; the "key" property is an
+    # TODO: example of a method that both Word & Kana classes need to implement; they both also need to
+    # TODO: have the same implementations of _quiz_metrics.
+    @property
+    def key(self) -> str:
+        return self._romaji
 
     @property
     def romaji(self) -> str:

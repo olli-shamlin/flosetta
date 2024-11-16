@@ -1,20 +1,22 @@
 
-from app import app
-from app.model import Vocabulary
-from app.model import QuizParameters
+from . import app
+from .forms import QuizSetupForm1
+from .forms import QuizSetupForm2a
+from .forms import QuizSetupForm2b
+from .forms import QuizSetupForm3
+from .forms import QuizSetupForm4
+from .forms import QuizSetupForm5
+from .forms import QuizSetupForm6
+from .forms import MultipleChoiceQuizForm
+from .model import Vocabulary
+from .model import QuizParameters
+from .model import create_quiz
 from ._utils import resolve_icon
 from ._utils import kana_reference_tables
 from ._utils import BATON
 from flask import redirect
 from flask import render_template
 from flask import request
-from app.forms import QuizSetupForm1
-from app.forms import QuizSetupForm2a
-from app.forms import QuizSetupForm2b
-from app.forms import QuizSetupForm3
-from app.forms import QuizSetupForm4
-from app.forms import QuizSetupForm5
-from app.forms import QuizSetupForm6
 
 
 @app.route('/')
@@ -113,3 +115,24 @@ def quiz_setup6():
     BATON.object = params
     return render_template('quiz_start.html', form=form, quiz_params=params,
                            title='Quiz Setup', emoji=resolve_icon('question'))
+
+
+@app.route('/multiple_choice_quiz', methods=['GET', 'POST'])
+def multiple_choice_quiz():
+    form = MultipleChoiceQuizForm()
+    if form.validate_on_submit():
+        quiz = BATON.object
+        quiz.add_results(str(form.responses.data).split('|'))
+        BATON.object = quiz
+        return redirect('/quiz_results')
+    params = BATON.object
+    quiz = create_quiz(params)
+    BATON.object = quiz
+    return render_template('quiz_multiple_choice.html', quiz=quiz, form=form,
+                           title='Multiple Choice Quiz', emoji=resolve_icon('question'))
+
+
+@app.route('/quiz_results')
+def quiz_results():
+    return render_template('quiz_results.html', quiz=BATON.object,
+                           title='Quiz Results', emoji=resolve_icon('question'))

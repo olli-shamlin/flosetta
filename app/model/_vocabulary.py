@@ -1,10 +1,10 @@
 
 from app import FlosettaException
-from collections import UserDict
-from typing import Optional
-from ._quiz import QuizMetrics
+from ._quiz_metrics import QuizMetrics
 from ._workbook import import_spreadsheet
 from ._data_paths import VOCAB_FILE
+from collections import UserDict
+from typing import Optional
 
 
 class Word:
