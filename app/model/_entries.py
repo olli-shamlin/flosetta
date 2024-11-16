@@ -1,9 +1,7 @@
 
-# from app import FlosettaException
 from ._quiz_metrics import QuizMetrics
 from abc import ABC
 from abc import abstractmethod
-# from collections import Mapping
 from typing import Optional
 
 
@@ -109,30 +107,3 @@ class Word(Entry):
     @property
     def note(self) -> Optional[str]:
         return self._note
-
-
-# TODO FrozenDict & Vocabulary classes in this comment block to be revisited
-# class FrozenDict(dict):
-#
-#     def __init__(self, other=None, **kwargs):
-#         super().__init__()
-#         self.update(other, **kwargs)
-#
-#     def __setitem__(self, key, value):
-#         if key in self:
-#             raise FlosettaException(f'key "{key}" already exists in FrozenDict instance')
-#         super().__setitem__(key, value)
-#
-#     def update(self, other=None, **kwargs):
-#         if other is not None:
-#             for k, v in other.items() if isinstance(other, Mapping) else other:
-#                 self[k] = v
-#         for k, v in kwargs.items():
-#             self[k] = v
-#
-#
-# class Vocabulary(FrozenDict):
-#
-#     def __init__(self):
-#         vocab = fetch_from_cache()
-#         super().__init__(other=vocab)

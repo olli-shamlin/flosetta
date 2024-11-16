@@ -1,13 +1,12 @@
 
 from app import FlosettaException
-from app.model import CacheItem
-from app.model import fetch_from_cache
+from app.model import Syllabary
 import pytest
 
 
 def test_syllabary():
 
-    syllabary = fetch_from_cache(CacheItem.SYLLABARY)
+    syllabary = Syllabary()
 
     kana = syllabary['a']
     assert kana.category == 'Basic'
@@ -78,21 +77,11 @@ def test_syllabary():
 
 def test_setters():
 
-    syllabary = fetch_from_cache(CacheItem.SYLLABARY)
+    syllabary = Syllabary()
 
-    kana = syllabary['myo']
-    assert kana.category == 'Modified YO'
-    assert kana.romaji == 'myo'
-    assert kana.hiragana == 'みょ'
-    assert kana.katakana == 'ミョ'
-    assert kana.hiragana_note is None
-    assert kana.katakana_note is None
-
-    # with pytest.raises(FlosettaException) as excinfo:
-    #     syllabary['a'] = None
-    # assert str(excinfo.value) == \
-    #        'modifying syllabary is not allowed (raised by app.model._syllabary.Syllabary.__setitem__())'
-
-    assert False == 'This test is incomplete pending ability to prohibit updating syllabary entries'
+    with pytest.raises(FlosettaException) as excinfo:
+        syllabary['a'] = None
+    assert str(excinfo.value) == 'key "a" already exists in FrozenDict instance and cannot be modified ' \
+                                 '(raised by app.model._cache.Syllabary.__setitem__())'
 
     return
