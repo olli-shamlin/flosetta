@@ -9,7 +9,8 @@ from .forms import QuizSetupForm5
 from .forms import QuizSetupForm6
 from .forms import MultipleChoiceQuizForm
 from .model import Vocabulary
-from .model import QuizParameters
+from .model import Parameters
+from .model import TableOption
 from .model import create_quiz
 from ._utils import resolve_icon
 from ._utils import kana_reference_tables
@@ -39,7 +40,8 @@ def kana():
 def quiz_setup():
     form = QuizSetupForm1()
     if form.validate_on_submit():
-        params = QuizParameters()
+        # TODO OBSOLETE params = QuizParameters()
+        params = Parameters()
         params.table = form.table.data
         BATON.object = params
         return redirect('/quiz_setup2')
@@ -49,9 +51,10 @@ def quiz_setup():
 @app.route('/quiz_setup2', methods=['GET', 'POST'])
 def quiz_setup2():
     params = BATON.object
-    form = QuizSetupForm2a() if params.table == 'Vocabulary' else QuizSetupForm2b()
+    form = QuizSetupForm2a() if params.table == TableOption.VOCABULARY else QuizSetupForm2b()
     if form.validate_on_submit():
-        params.type_of_quiz = form.quiz_type.data
+        # TODO OBSOLETE params.type_of_quiz = form.quiz_type.data
+        params.kind = form.quiz_type.data
         BATON.object = params
         return redirect('/quiz_setup3')
     BATON.object = params
@@ -63,7 +66,8 @@ def quiz_setup3():
     params = BATON.object
     form = QuizSetupForm3()
     if form.validate_on_submit():
-        params.number_of_items = int(form.number_of_items.data)
+        # TODO OBSOLETE params.number_of_items = int(form.number_of_items.data)
+        params.size = form.number_of_items.data
         BATON.object = params
         return redirect('/quiz_setup4')
     BATON.object = params
@@ -78,8 +82,8 @@ def quiz_setup4():
         params.prompt_type = form.prompt_type.data
         BATON.object = params
         return redirect('/quiz_setup5')
-    choices = ['English', 'Kana', 'Kanji'] if params.table == 'Vocabulary' else ['Romaji', 'Hiragana', 'Katakana']
-    form.prompt_type.choices = choices
+    # TODO OBSOLETE choices = ['English', 'Kana', 'Kanji'] if params.table == 'Vocabulary' else ['Romaji', 'Hiragana', 'Katakana']
+    form.prompt_type.choices = params.prompt_options
     BATON.object = params
     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
 
@@ -95,9 +99,9 @@ def quiz_setup5():
 
     # Create the list of possible choice types
     # The user should be presented with the set of "word" forms *except* the "word" form chosen for quiz item prompts
-    choices = ['English', 'Kana', 'Kanji'] if params.table == 'Vocabulary' else ['Romaji', 'Hiragana', 'Katakana']
-    form.choice_type.choices = [c for c in choices if c != params.prompt_type]
-
+    # TODO OBSOLETE choices = ['English', 'Kana', 'Kanji'] if params.table == 'Vocabulary' else ['Romaji', 'Hiragana', 'Katakana']
+    # TODO OBSOLETE form.choice_type.choices = [c for c in choices if c != params.prompt_type]
+    form.choice_type.choices = params.choice_options
     BATON.object = params
     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
 

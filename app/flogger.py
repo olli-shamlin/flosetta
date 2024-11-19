@@ -66,8 +66,7 @@ def tracer(func):
     def wrapper(*args, **kwargs):
 
         msg = ''
-        tracing_enabled = app.config['TRACE']
-        if tracing_enabled:
+        if app.config['TRACE']:
             # Get the second frame (frame_info instance actually) on the top of the stack
             stack = inspect.stack()
             frame_info = stack[1]
@@ -95,7 +94,7 @@ def tracer(func):
 
         answer = func(*args, **kwargs)
 
-        if tracing_enabled:
+        if app.config['TRACE']:
             _AppLog.trace(f'⬅️ exiting {msg}')
 
         return answer

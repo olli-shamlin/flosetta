@@ -25,10 +25,6 @@ class QuizMetrics:
     def consecutive_incorrect(self) -> int:
         return self._consecutive_wrong
 
-    @property
-    def is_dirty(self) -> bool:
-        return self._dirty
-
     def increment(self, correct: bool):
         self._quizzed += 1
         if correct:
@@ -40,5 +36,17 @@ class QuizMetrics:
             self._consecutive_wrong += 1
         self._dirty = True
 
-    def synced(self):
-        self._dirty = False
+    @property
+    def is_non_zero(self) -> bool:
+        # return True if any of the metrics are not zero (0).
+        return self._quizzed != 0 or self._correct or self._consecutive_correct or self._consecutive_wrong
+
+    @property
+    def serialized(self) -> dict[str, int]:
+        return {'quizzed': self._quizzed, 'correct': self._correct,
+                'consecutive_correct': self._consecutive_correct,
+                'consecutive_wrong': self._consecutive_wrong}
+
+
+def deserialize(d: dict[str, int]) -> QuizMetrics:
+    return QuizMetrics(d['quizzed'], d['correct'], d['consecutive_correct'], d['consecutive_wrong'])

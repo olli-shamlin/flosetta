@@ -1,15 +1,15 @@
 
 from app.model import create_quiz
-from app.model import QuizParameters
+from app.model import Parameters
 from app.model import MultipleChoiceItem
 
 
 def test_quiz_setup_vocabulary():
 
-    params = QuizParameters()
+    params = Parameters()
     params.table = 'Vocabulary'
-    params.type_of_quiz = 'Multiple Choice'
-    params.number_of_items = 5
+    params.kind = 'Multiple Choice'
+    params.size = '5'
     params.prompt_type = 'Kana'
     params.choice_type = 'English'
 
@@ -24,10 +24,10 @@ def test_quiz_setup_vocabulary():
 
 def test_quiz_setup_syllabary():
 
-    params = QuizParameters()
-    params.table = 'Kana'
-    params.type_of_quiz = 'Multiple Choice'
-    params.number_of_items = 5
+    params = Parameters()
+    params.table = 'Syllabary'
+    params.kind = 'Multiple Choice'
+    params.size = '5'
     params.prompt_type = 'Romaji'
     params.choice_type = 'Hiragana'
 

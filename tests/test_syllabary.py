@@ -81,7 +81,6 @@ def test_setters():
 
     with pytest.raises(FlosettaException) as excinfo:
         syllabary['a'] = None
-    assert str(excinfo.value) == 'key "a" already exists in FrozenDict instance and cannot be modified ' \
-                                 '(raised by app.model._cache.Syllabary.__setitem__())'
+    assert str(excinfo.value) == 'key "a" already exists in FrozenDict instance and cannot be modified'
 
     return
