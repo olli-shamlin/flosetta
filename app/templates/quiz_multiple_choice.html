@@ -136,19 +136,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         traceEnter('DOMContentLoaded');
-        items = [
-            {% for item in quiz.items %}
-                {
-                    prompt: '{{ item.prompt }}',
-                    answer: '{{ item.answer }}',
-                    choices: [
-                        {% for choice in item.choices %}
-                            '{{ choice }}',
-                        {% endfor %}
-                    ]
-                },
-            {% endfor %}
-        ];
+        items = quiz_items();
         item_count = items.length;
         current_item = 0;
         responses = [];

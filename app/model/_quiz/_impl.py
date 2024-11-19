@@ -17,6 +17,7 @@ def create_quiz(params: Parameters) -> Quiz:
     try:
         quiz_cls = quiz_type_map[params.kind]
         quiz_inst = quiz_cls(params)
+        quiz_inst.render_javascript()
     except KeyError as e:
         raise NotImplementedError(f'{params.kind} quiz')
 

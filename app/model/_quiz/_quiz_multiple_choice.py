@@ -1,4 +1,5 @@
 
+from app.data_paths import QUIZ_ITEMS_FILE
 from app.model import Syllabary
 from app.model import Vocabulary
 from ._options import TableOption
@@ -143,7 +144,37 @@ class MultipleChoiceQuiz(Quiz):
         assert all([i.response is not None for i in self._items])
         return len([i for i in self._items if not i.answered_correct])
 
-    def write_javascript(self) -> None:
+    def render_javascript(self) -> None:
+
+        def tab(n: int):
+            return '   ' * n
+
+        prelude: list[str] = [
+            'function quiz_items() {',
+            tab(1) + 'return [',
+        ]
+
+        item_lines: list[str] = []
+        quote = '"'
+        for item in self._items:
+            next_items_lines: list[str] = [
+                tab(2) + '{',
+                tab(3) + f'prompt: "{item.prompt}",',
+                tab(3) + f'answer: "{item.answer}",',
+                tab(3) + f'choices: [{", ".join([(quote + c + quote) for c in item.choices])}]',
+                tab(2) + '},'
+            ]
+            item_lines += next_items_lines
+
+        postlude: list[str] = [
+            tab(1) + '];',
+            '}'
+        ]
+
+        lines = [ln + '\n' for ln in (prelude + item_lines + postlude)]
+
+        with open(QUIZ_ITEMS_FILE, 'w') as fh:
+            fh.writelines(lines)
 
         return
 
