@@ -8,10 +8,10 @@ from ._entries import Word
 from ._entries import Character
 from ._quiz_metrics import deserialize as deserialize_metrics
 from ._workbook import import_spreadsheet
-from ._data_paths import KANA_FILE
-from ._data_paths import KANA_METRICS_FILE
-from ._data_paths import VOCAB_FILE
-from ._data_paths import VOCAB_METRICS_FILE
+from app.data_paths import SYLLABARY_FILE
+from app.data_paths import SYLLABARY_METRICS_FILE
+from app.data_paths import VOCABULARY_FILE
+from app.data_paths import VOCABULARY_METRICS_FILE
 from enum import Enum
 import json
 import os
@@ -39,9 +39,13 @@ def load_metrics_file(filename: str) -> dict[str, object]:
 @tracer
 def load_vocabulary() -> dict[str, Word]:
 
-    metrics = load_metrics_file(KANA_METRICS_FILE)
+    metrics = load_metrics_file(VOCABULARY_METRICS_FILE)
 
-    workbook = import_spreadsheet(VOCAB_FILE)
+    # Read the vocabulary file
+    if not os.path.exists(VOCABULARY_FILE):
+        raise FlosettaException(f'syllabary source file does not exist: {VOCABULARY_FILE}')
+    workbook = import_spreadsheet(VOCABULARY_FILE)
+
     vocab: dict[str, Word] = {}
 
     for sheet in workbook.sheets:
@@ -59,12 +63,12 @@ def load_vocabulary() -> dict[str, Word]:
 @tracer
 def load_syllabary() -> dict[str, Character]:
 
-    metrics = load_metrics_file(KANA_METRICS_FILE)
+    metrics = load_metrics_file(SYLLABARY_METRICS_FILE)
 
     # Read the syllabary file
-    if not os.path.exists(KANA_FILE):
-        raise FlosettaException(f'syllabary source file does not exist: {KANA_FILE}')
-    with open(KANA_FILE, 'r') as fh:
+    if not os.path.exists(SYLLABARY_FILE):
+        raise FlosettaException(f'syllabary source file does not exist: {SYLLABARY_FILE}')
+    with open(SYLLABARY_FILE, 'r') as fh:
         dict_in = json.load(fh)
 
     dict_out: dict[str, Character] = {

@@ -142,3 +142,8 @@ class MultipleChoiceQuiz(Quiz):
     def incorrect(self) -> int:
         assert all([i.response is not None for i in self._items])
         return len([i for i in self._items if not i.answered_correct])
+
+    def write_javascript(self) -> None:
+
+        return
+

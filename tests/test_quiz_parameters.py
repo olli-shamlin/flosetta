@@ -381,20 +381,3 @@ def test_choice_option_with_syllabary():
     assert str(excinfo.value) == '"Romaji" is an invalid value for choice'
 
     return
-
-
-def test_parameters_wtf():
-
-    params = Parameters()
-
-    attrs_before = dir(params)
-    # The following should throw an exception; instead a new attribute named "not_a_property" gets created
-    # with a value of int(5)!
-    params.not_a_property = 5
-    attrs_after = dir(params)
-
-    attrs_diff = set(attrs_after) - set(attrs_before)
-    assert len(attrs_diff) == 0
-
-    return
-

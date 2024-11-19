@@ -12,9 +12,9 @@ from .model import Vocabulary
 from .model import Parameters
 from .model import TableOption
 from .model import create_quiz
-from ._utils import resolve_icon
-from ._utils import kana_reference_tables
-from ._utils import BATON
+from .utils import resolve_icon
+from .utils import kana_reference_tables
+from .utils import BATON
 from flask import redirect
 from flask import render_template
 from flask import request
