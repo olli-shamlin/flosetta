@@ -3,6 +3,8 @@
 ###
 .idea/
 .DS_Store
+SCRATCH.py
+scratch.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
