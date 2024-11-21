@@ -5,6 +5,7 @@
 .DS_Store
 SCRATCH.py
 scratch.py
+quiz_items.js
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
