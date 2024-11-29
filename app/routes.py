@@ -8,7 +8,9 @@ from .forms import QuizSetupForm4
 from .forms import QuizSetupForm5
 from .forms import QuizSetupForm6
 from .forms import MultipleChoiceQuizForm
-from .model import Vocabulary
+# TODO OBSOLETE CORPORA: from .model import Vocabulary
+from app.corpora import Corpus
+from app.corpora import CorpusType
 from .model import Parameters
 from .model import TableOption
 from .model import create_quiz
@@ -24,7 +26,8 @@ from flask import request
 @app.route('/index')
 @app.route('/vocab')
 def index():
-    vocabulary = Vocabulary()
+    # TODO OBSOLETE CORPORA: vocabulary = Vocabulary()
+    vocabulary = Corpus(CorpusType.VOCABULARY)
     return render_template('vocabulary.html',
                            words=vocabulary,
                            title='Vocabulary',

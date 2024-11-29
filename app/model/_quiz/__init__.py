@@ -11,6 +11,8 @@ from ._parameters import Parameters
 from ._impl import create_quiz
 
 from ._quiz_multiple_choice import MultipleChoiceItem
+from ._quiz_abc import WordItem
+from ._quiz_abc import CharacterItem
 
 from ._exceptions import OptionValueError
 from ._exceptions import ParameterOrderError

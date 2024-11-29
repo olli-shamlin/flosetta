@@ -2,9 +2,13 @@
 from app.model import create_quiz
 from app.model import Parameters
 from app.model import MultipleChoiceItem
+from app.model import CharacterItem
+from app.model import WordItem
 
 
 def test_quiz_setup_vocabulary():
+
+    assert False == 'pending integration of corpora package'
 
     params = Parameters()
     params.table = 'Vocabulary'
@@ -17,12 +21,14 @@ def test_quiz_setup_vocabulary():
 
     assert len(quiz.items) == 5
     for item in quiz.items:
-        assert isinstance(item, MultipleChoiceItem)
+        assert isinstance(item, WordItem)
 
     return
 
 
 def test_quiz_setup_syllabary():
+
+    assert False == 'pending integration of corpora package'
 
     params = Parameters()
     params.table = 'Syllabary'
@@ -35,6 +41,6 @@ def test_quiz_setup_syllabary():
 
     assert len(quiz.items) == 5
     for item in quiz.items:
-        assert isinstance(item, MultipleChoiceItem)
+        assert isinstance(item, CharacterItem)
 
     return

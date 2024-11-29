@@ -1,858 +1,858 @@
-{
-   "nyo": {
-      "category": "Modified YO",
-      "hiragana": "\u306b\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30cb\u30e7",
-      "katakana_note": null,
-      "romaji": "nyo"
-   },
-   "cho": {
-      "category": "Modified YO",
-      "hiragana": "\u3061\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30c1\u30e7",
-      "katakana_note": null,
-      "romaji": "cho"
-   },
-   "sho": {
-      "category": "Modified YO",
-      "hiragana": "\u3057\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30b7\u30e7",
-      "katakana_note": null,
-      "romaji": "sho"
-   },
-   "kyo": {
-      "category": "Modified YO",
-      "hiragana": "\u304d\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30ad\u30e7",
-      "katakana_note": null,
-      "romaji": "kyo"
-   },
-   "gyo": {
-      "category": "Modified YO",
-      "hiragana": "\u304e\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30ae\u30e7",
-      "katakana_note": null,
-      "romaji": "gyo"
-   },
-   "ryo": {
-      "category": "Modified YO",
-      "hiragana": "\u308a\u3088",
-      "hiragana_note": null,
-      "katakana": "\u30ea\u30e7",
-      "katakana_note": null,
-      "romaji": "ryo"
-   },
-   "myo": {
-      "category": "Modified YO",
-      "hiragana": "\u307f\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30df\u30e7",
-      "katakana_note": null,
-      "romaji": "myo"
-   },
-   "hyo": {
-      "category": "Modified YO",
-      "hiragana": "\u3072\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30d2\u30e7",
-      "katakana_note": null,
-      "romaji": "hyo"
-   },
-   "pyo": {
-      "category": "Modified YO",
-      "hiragana": "\u3074\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30d4\u30e7",
-      "katakana_note": null,
-      "romaji": "pyo"
-   },
-   "byo": {
-      "category": "Modified YO",
-      "hiragana": "\u3073\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30d3\u30e7",
-      "katakana_note": null,
-      "romaji": "byo"
-   },
-   "dzyo": {
-      "category": "Modified YO",
-      "hiragana": "\u3062\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30c2\u30e7",
-      "katakana_note": null,
-      "romaji": "dzyo"
-   },
-   "jyo": {
-      "category": "Modified YO",
-      "hiragana": "\u3058\u3087",
-      "hiragana_note": null,
-      "katakana": "\u30b8\u30e7",
-      "katakana_note": null,
-      "romaji": "jyo"
-   },
-   "nyu": {
-      "category": "Modified YU",
-      "hiragana": "\u306b\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30cb\u30e5",
-      "katakana_note": null,
-      "romaji": "nyu"
-   },
-   "chu": {
-      "category": "Modified YU",
-      "hiragana": "\u3061\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30c1\u30e5",
-      "katakana_note": null,
-      "romaji": "chu"
-   },
-   "shu": {
-      "category": "Modified YU",
-      "hiragana": "\u3057\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30b7\u30e5",
-      "katakana_note": null,
-      "romaji": "shu"
-   },
-   "kyu": {
-      "category": "Modified YU",
-      "hiragana": "\u304d\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30ad\u30e5",
-      "katakana_note": null,
-      "romaji": "kyu"
-   },
-   "gyu": {
-      "category": "Modified YU",
-      "hiragana": "\u304e\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30ae\u30e5",
-      "katakana_note": null,
-      "romaji": "gyu"
-   },
-   "ryu": {
-      "category": "Modified YU",
-      "hiragana": "\u308a\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30ea\u30e5",
-      "katakana_note": null,
-      "romaji": "ryu"
-   },
-   "myu": {
-      "category": "Modified YU",
-      "hiragana": "\u307f\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30df\u30e5",
-      "katakana_note": null,
-      "romaji": "myu"
-   },
-   "hyu": {
-      "category": "Modified YU",
-      "hiragana": "\u3072\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30d2\u30e5",
-      "katakana_note": null,
-      "romaji": "hyu"
-   },
-   "pyu": {
-      "category": "Modified YU",
-      "hiragana": "\u3074\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30d4\u30e5",
-      "katakana_note": null,
-      "romaji": "pyu"
-   },
-   "byu": {
-      "category": "Modified YU",
-      "hiragana": "\u3073\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30d3\u30e5",
-      "katakana_note": null,
-      "romaji": "byu"
-   },
-   "dzyu": {
-      "category": "Modified YU",
-      "hiragana": "\u3062\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30c2\u30e5",
-      "katakana_note": null,
-      "romaji": "dzyu"
-   },
-   "jyu": {
-      "category": "Modified YU",
-      "hiragana": "\u3058\u3085",
-      "hiragana_note": null,
-      "katakana": "\u30b8\u30e5",
-      "katakana_note": null,
-      "romaji": "jyu"
-   },
-   "ga": {
-      "category": "Dakuten",
-      "hiragana": "\u304c",
-      "hiragana_note": null,
-      "katakana": "\u30ac",
-      "katakana_note": null,
-      "romaji": "ga"
-   },
-   "gi": {
-      "category": "Dakuten",
-      "hiragana": "\u304e",
-      "hiragana_note": null,
-      "katakana": "\u30ae",
-      "katakana_note": null,
-      "romaji": "gi"
-   },
-   "gu": {
-      "category": "Dakuten",
-      "hiragana": "\u3050",
-      "hiragana_note": null,
-      "katakana": "\u30b0",
-      "katakana_note": null,
-      "romaji": "gu"
-   },
-   "ge": {
-      "category": "Dakuten",
-      "hiragana": "\u3052",
-      "hiragana_note": null,
-      "katakana": "\u30b2",
-      "katakana_note": null,
-      "romaji": "ge"
-   },
-   "go": {
-      "category": "Dakuten",
-      "hiragana": "\u3054",
-      "hiragana_note": null,
-      "katakana": "\u30b4",
-      "katakana_note": null,
-      "romaji": "go"
-   },
-   "za": {
-      "category": "Dakuten",
-      "hiragana": "\u3056",
-      "hiragana_note": null,
-      "katakana": "\u30b6",
-      "katakana_note": null,
-      "romaji": "za"
-   },
-   "ji": {
-      "category": "Dakuten",
-      "hiragana": "\u3058",
-      "hiragana_note": null,
-      "katakana": "\u30b8",
-      "katakana_note": null,
-      "romaji": "ji"
-   },
-   "zu": {
-      "category": "Dakuten",
-      "hiragana": "\u305a",
-      "hiragana_note": null,
-      "katakana": "\u30ba",
-      "katakana_note": null,
-      "romaji": "zu"
-   },
-   "ze": {
-      "category": "Dakuten",
-      "hiragana": "\u305c",
-      "hiragana_note": null,
-      "katakana": "\u30bc",
-      "katakana_note": null,
-      "romaji": "ze"
-   },
-   "zo": {
-      "category": "Dakuten",
-      "hiragana": "\u305e",
-      "hiragana_note": null,
-      "katakana": "\u30be",
-      "katakana_note": null,
-      "romaji": "zo"
-   },
-   "da": {
-      "category": "Dakuten",
-      "hiragana": "\u3060",
-      "hiragana_note": null,
-      "katakana": "\u30c0",
-      "katakana_note": null,
-      "romaji": "da"
-   },
-   "dzi": {
-      "category": "Dakuten",
-      "hiragana": "\u3062",
-      "hiragana_note": null,
-      "katakana": "\u30c2",
-      "katakana_note": null,
-      "romaji": "dzi"
-   },
-   "dzu": {
-      "category": "Dakuten",
-      "hiragana": "\u3065",
-      "hiragana_note": null,
-      "katakana": "\u30c5",
-      "katakana_note": null,
-      "romaji": "dzu"
-   },
-   "de": {
-      "category": "Dakuten",
-      "hiragana": "\u3067",
-      "hiragana_note": null,
-      "katakana": "\u30c7",
-      "katakana_note": null,
-      "romaji": "de"
-   },
-   "do": {
-      "category": "Dakuten",
-      "hiragana": "\u3069",
-      "hiragana_note": null,
-      "katakana": "\u30c9",
-      "katakana_note": null,
-      "romaji": "do"
-   },
-   "ba": {
-      "category": "Dakuten",
-      "hiragana": "\u3070",
-      "hiragana_note": null,
-      "katakana": "\u30d0",
-      "katakana_note": null,
-      "romaji": "ba"
-   },
-   "bi": {
-      "category": "Dakuten",
-      "hiragana": "\u3073",
-      "hiragana_note": null,
-      "katakana": "\u30d3",
-      "katakana_note": null,
-      "romaji": "bi"
-   },
-   "bu": {
-      "category": "Dakuten",
-      "hiragana": "\u3076",
-      "hiragana_note": null,
-      "katakana": "\u30d6",
-      "katakana_note": null,
-      "romaji": "bu"
-   },
-   "be": {
-      "category": "Dakuten",
-      "hiragana": "\u3079",
-      "hiragana_note": null,
-      "katakana": "\u30d9",
-      "katakana_note": null,
-      "romaji": "be"
-   },
-   "bo": {
-      "category": "Dakuten",
-      "hiragana": "\u307c",
-      "hiragana_note": null,
-      "katakana": "\u30dc",
-      "katakana_note": null,
-      "romaji": "bo"
-   },
-   "pa": {
-      "category": "Dakuten",
-      "hiragana": "\u3071",
-      "hiragana_note": null,
-      "katakana": "\u30d1",
-      "katakana_note": null,
-      "romaji": "pa"
-   },
-   "pi": {
-      "category": "Dakuten",
-      "hiragana": "\u3074",
-      "hiragana_note": null,
-      "katakana": "\u30d4",
-      "katakana_note": null,
-      "romaji": "pi"
-   },
-   "pu": {
-      "category": "Dakuten",
-      "hiragana": "\u3077",
-      "hiragana_note": null,
-      "katakana": "\u30d7",
-      "katakana_note": null,
-      "romaji": "pu"
-   },
-   "pe": {
-      "category": "Dakuten",
-      "hiragana": "\u307a",
-      "hiragana_note": null,
-      "katakana": "\u30da",
-      "katakana_note": null,
-      "romaji": "pe"
-   },
-   "po": {
-      "category": "Dakuten",
-      "hiragana": "\u307d",
-      "hiragana_note": null,
-      "katakana": "\u30dd",
-      "katakana_note": null,
-      "romaji": "po"
-   },
-   "nya": {
-      "category": "Modified YA",
-      "hiragana": "\u306b\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30cb\u30e3",
-      "katakana_note": null,
-      "romaji": "nya"
-   },
-   "cha": {
-      "category": "Modified YA",
-      "hiragana": "\u3061\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30c1\u30e3",
-      "katakana_note": null,
-      "romaji": "cha"
-   },
-   "sha": {
-      "category": "Modified YA",
-      "hiragana": "\u3057\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30b7\u30e3",
-      "katakana_note": null,
-      "romaji": "sha"
-   },
-   "kya": {
-      "category": "Modified YA",
-      "hiragana": "\u304d\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30ad\u30e3",
-      "katakana_note": null,
-      "romaji": "kya"
-   },
-   "gya": {
-      "category": "Modified YA",
-      "hiragana": "\u304e\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30ae\u30e3",
-      "katakana_note": null,
-      "romaji": "gya"
-   },
-   "rya": {
-      "category": "Modified YA",
-      "hiragana": "\u308a\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30ea\u30e3",
-      "katakana_note": null,
-      "romaji": "rya"
-   },
-   "mya": {
-      "category": "Modified YA",
-      "hiragana": "\u307f\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30df\u30e3",
-      "katakana_note": null,
-      "romaji": "mya"
-   },
-   "hya": {
-      "category": "Modified YA",
-      "hiragana": "\u3072\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30d2\u30e3",
-      "katakana_note": null,
-      "romaji": "hya"
-   },
-   "pya": {
-      "category": "Modified YA",
-      "hiragana": "\u3074\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30d4\u30e3",
-      "katakana_note": null,
-      "romaji": "pya"
-   },
-   "bya": {
-      "category": "Modified YA",
-      "hiragana": "\u3073\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30d3\u30e3",
-      "katakana_note": null,
-      "romaji": "bya"
-   },
-   "dzya": {
-      "category": "Modified YA",
-      "hiragana": "\u3062\u3083",
-      "hiragana_note": null,
-      "katakana": "\u30c2\u30e3",
-      "katakana_note": null,
-      "romaji": "dzya"
-   },
-   "jya": {
-      "category": "Modified YA",
-      "hiragana": "\u3058",
-      "hiragana_note": null,
-      "katakana": "\u30b8\u30e3",
-      "katakana_note": null,
-      "romaji": "jya"
-   },
-   "a": {
+[
+   {
       "category": "Basic",
+      "romaji": "a",
       "hiragana": "\u3042",
-      "hiragana_note": "Ah! You found the letter A. Look for the letter A.",
       "katakana": "\u30a2",
-      "katakana_note": "Ark. Think of Noah\u2019s Ark.",
-      "romaji": "a"
+      "hiragana_note": "Ah! You found the letter A. Look for the letter A.",
+      "katakana_note": "Ark. Think of Noah\u2019s Ark."
    },
-   "i": {
+   {
       "category": "Basic",
+      "romaji": "i",
       "hiragana": "\u3044",
-      "hiragana_note": "I\u2019ve never been to Hawaii. Think of two palm trees. These are the ii\u2019s in Hawaii.",
       "katakana": "\u30a4",
-      "katakana_note": "Evil eagle. Think of an evil eagle perched on a capital \u2019T\u2019. This symbol looks like a \u2019T\u2019.",
-      "romaji": "i"
+      "hiragana_note": "I\u2019ve never been to Hawaii. Think of two palm trees. These are the ii\u2019s in Hawaii.",
+      "katakana_note": "Evil eagle. Think of an evil eagle perched on a capital \u2019T\u2019. This symbol looks like a \u2019T\u2019."
    },
-   "u": {
+   {
       "category": "Basic",
+      "romaji": "u",
       "hiragana": "\u3046",
-      "hiragana_note": "The dude with the food. He eats and makes an \u2018oo\u2019 sound.",
       "katakana": "\u30a6",
-      "katakana_note": "UFU RAWA. She is an Unlucky Unicorn. Here she has her fur and horn.",
-      "romaji": "u"
+      "hiragana_note": "The dude with the food. He eats and makes an \u2018oo\u2019 sound.",
+      "katakana_note": "UFU RAWA. She is an Unlucky Unicorn. Here she has her fur and horn."
    },
-   "e": {
+   {
       "category": "Basic",
+      "romaji": "e",
       "hiragana": "\u3048",
-      "hiragana_note": "Ed the pelican. He makes an \u2018eh\u2019 sound.",
       "katakana": "\u30a8",
-      "katakana_note": "Egg Timer. An egg timer keeps the time eggsactly.",
-      "romaji": "e"
+      "hiragana_note": "Ed the pelican. He makes an \u2018eh\u2019 sound.",
+      "katakana_note": "Egg Timer. An egg timer keeps the time eggsactly."
    },
-   "o": {
+   {
       "category": "Basic",
+      "romaji": "o",
       "hiragana": "\u304a",
-      "hiragana_note": "Oh! Throw a dog a bone. Think of all the \u2018o\u2019 sounds.",
       "katakana": "\u30aa",
-      "katakana_note": "Old Man. Think of his long beard. The vertical line is his leg but his ankle is broken. OH! It hurts.",
-      "romaji": "o"
+      "hiragana_note": "Oh! Throw a dog a bone. Think of all the \u2018o\u2019 sounds.",
+      "katakana_note": "Old Man. Think of his long beard. The vertical line is his leg but his ankle is broken. OH! It hurts."
    },
-   "ka": {
+   {
       "category": "Basic",
+      "romaji": "ka",
       "hiragana": "\u304b",
-      "hiragana_note": "Batman will never Katch the Jo-KA! Think of Batman punching the Joker\u2019s face. KA-POW!",
       "katakana": "\u30ab",
-      "katakana_note": "Batman will never Katch the Jo-KA! Think of the Joker\u2019s face.",
-      "romaji": "ka"
+      "hiragana_note": "Batman will never Katch the Jo-KA! Think of Batman punching the Joker\u2019s face. KA-POW!",
+      "katakana_note": "Batman will never Katch the Jo-KA! Think of the Joker\u2019s face."
    },
-   "ki": {
+   {
       "category": "Basic",
+      "romaji": "ki",
       "hiragana": "\u304d",
-      "hiragana_note": "The key is to keep thinking. This symbol looks like a key.",
       "katakana": "\u30ad",
-      "katakana_note": "The key is to keep thinking. This looks like a key.",
-      "romaji": "ki"
+      "hiragana_note": "The key is to keep thinking. This symbol looks like a key.",
+      "katakana_note": "The key is to keep thinking. This looks like a key."
    },
-   "ku": {
+   {
       "category": "Basic",
+      "romaji": "ku",
       "hiragana": "\u304f",
-      "hiragana_note": "Ku ku! Ku ku! Think of a cuckoo bird.",
       "katakana": "\u30af",
-      "katakana_note": "Kuketa\u2019s Kumfy Kushion. Meet Kuketa. Here he is sleeping on his kumfy kushion.",
-      "romaji": "ku"
+      "hiragana_note": "Ku ku! Ku ku! Think of a cuckoo bird.",
+      "katakana_note": "Kuketa\u2019s Kumfy Kushion. Meet Kuketa. Here he is sleeping on his kumfy kushion."
    },
-   "ke": {
+   {
       "category": "Basic",
+      "romaji": "ke",
       "hiragana": "\u3051",
-      "hiragana_note": "Kemistry set. Think of a skinny test tube and a water dropper from a chemistry set.",
       "katakana": "\u30b1",
-      "katakana_note": "Some kerfuffle is keeping hime awake. Now there is something on the cushion keeping him awake. Perhaps it\u2019s a tag\u2026",
-      "romaji": "ke"
+      "hiragana_note": "Kemistry set. Think of a skinny test tube and a water dropper from a chemistry set.",
+      "katakana_note": "Some kerfuffle is keeping hime awake. Now there is something on the cushion keeping him awake. Perhaps it\u2019s a tag\u2026"
    },
-   "ko": {
+   {
       "category": "Basic",
+      "romaji": "ko",
       "hiragana": "\u3053",
-      "hiragana_note": "It\u2019s a Ko-py. The bottom line is a copy of the top.",
       "katakana": "\u30b3",
-      "katakana_note": "A KOrner is missing. This symbol is linked to the RO which depicts a solid rock. But here it is missing a corner.",
-      "romaji": "ko"
+      "hiragana_note": "It\u2019s a Ko-py. The bottom line is a copy of the top.",
+      "katakana_note": "A KOrner is missing. This symbol is linked to the RO which depicts a solid rock. But here it is missing a corner."
    },
-   "sa": {
+   {
       "category": "Basic",
+      "romaji": "sa",
       "hiragana": "\u3055",
-      "hiragana_note": "Sam is always right. Think of a face that looks to the right.",
       "katakana": "\u30b5",
-      "katakana_note": "Saddle. Think of a huge saddle for a sad elephant who is drunk of sake.",
-      "romaji": "sa"
+      "hiragana_note": "Sam is always right. Think of a face that looks to the right.",
+      "katakana_note": "Saddle. Think of a huge saddle for a sad elephant who is drunk of sake."
    },
-   "shi": {
+   {
       "category": "Basic",
+      "romaji": "shi",
       "hiragana": "\u3057",
-      "hiragana_note": "Shi has shiny hair. Think of a girl with long hair.",
       "katakana": "\u30b7",
-      "katakana_note": "Shi-tsu dogs. Shi is the girl and looks to the right. Tsu is the boy and looks to the left.",
-      "romaji": "shi"
+      "hiragana_note": "Shi has shiny hair. Think of a girl with long hair.",
+      "katakana_note": "Shi-tsu dogs. Shi is the girl and looks to the right. Tsu is the boy and looks to the left."
    },
-   "su": {
+   {
       "category": "Basic",
+      "romaji": "su",
       "hiragana": "\u3059",
-      "hiragana_note": "Super Sumo! Imagine a caped superman sumo swooping into action.",
       "katakana": "\u30b9",
-      "katakana_note": "Sue the nurse is late for surgery. Think of Sue running at full speed through a hospital.",
-      "romaji": "su"
+      "hiragana_note": "Super Sumo! Imagine a caped superman sumo swooping into action.",
+      "katakana_note": "Sue the nurse is late for surgery. Think of Sue running at full speed through a hospital."
    },
-   "se": {
+   {
       "category": "Basic",
+      "romaji": "se",
       "hiragana": "\u305b",
-      "hiragana_note": "I seriously hate syringes. Think of a seriously big syringe injecting an arm.",
       "katakana": "\u30bb",
-      "katakana_note": "Serenading. Think of a man serenading a cute girl. It\u2019s certainly sensual.",
-      "romaji": "se"
+      "hiragana_note": "I seriously hate syringes. Think of a seriously big syringe injecting an arm.",
+      "katakana_note": "Serenading. Think of a man serenading a cute girl. It\u2019s certainly sensual."
    },
-   "so": {
+   {
       "category": "Basic",
+      "romaji": "so",
       "hiragana": "\u305d",
-      "hiragana_note": "The Penguin is SO fat. Think of his pointy nose, mustache and fat chin.",
       "katakana": "\u30bd",
-      "katakana_note": "So\u2026want to come back to my kennel? Tsu winks at Shi so one of his eyes is hidden.",
-      "romaji": "so"
+      "hiragana_note": "The Penguin is SO fat. Think of his pointy nose, mustache and fat chin.",
+      "katakana_note": "So\u2026want to come back to my kennel? Tsu winks at Shi so one of his eyes is hidden."
    },
-   "ta": {
+   {
       "category": "Basic",
+      "romaji": "ta",
       "hiragana": "\u305f",
-      "hiragana_note": "Ta. This is a simple one. It looks like a ta.",
       "katakana": "\u30bf",
-      "katakana_note": "Take that you tag! Now he angrily tears off the itchy tag and folds it under his cushion.",
-      "romaji": "ta"
+      "hiragana_note": "Ta. This is a simple one. It looks like a ta.",
+      "katakana_note": "Take that you tag! Now he angrily tears off the itchy tag and folds it under his cushion."
    },
-   "chi": {
+   {
       "category": "Basic",
+      "romaji": "chi",
       "hiragana": "\u3061",
-      "hiragana_note": "Five chirping chicks. Look for the number 5.",
       "katakana": "\u30c1",
-      "katakana_note": "Nacho the Chili Pepper. Think of a long chinned cheerful chili pepper with a sombrero.",
-      "romaji": "chi"
+      "hiragana_note": "Five chirping chicks. Look for the number 5.",
+      "katakana_note": "Nacho the Chili Pepper. Think of a long chinned cheerful chili pepper with a sombrero."
    },
-   "tsu": {
+   {
       "category": "Basic",
+      "romaji": "tsu",
       "hiragana": "\u3064",
-      "hiragana_note": "Tsunami! Imagine a giant tsunami wave.",
       "katakana": "\u30c4",
-      "katakana_note": "Tsu promises Shi a tsunami of kisses. Now he has both eyes wide open in anticipation.",
-      "romaji": "tsu"
+      "hiragana_note": "Tsunami! Imagine a giant tsunami wave.",
+      "katakana_note": "Tsu promises Shi a tsunami of kisses. Now he has both eyes wide open in anticipation."
    },
-   "te": {
+   {
       "category": "Basic",
+      "romaji": "te",
       "hiragana": "\u3066",
-      "hiragana_note": "Ten. This symbol looks like the letter \u2019t\u2019.",
       "katakana": "\u30c6",
-      "katakana_note": "Teddy Bear\u2019s Teapot. Think of a cute little teapot at a teddy bear\u2019s picnic.",
-      "romaji": "te"
+      "hiragana_note": "Ten. This symbol looks like the letter \u2019t\u2019.",
+      "katakana_note": "Teddy Bear\u2019s Teapot. Think of a cute little teapot at a teddy bear\u2019s picnic."
    },
-   "to": {
+   {
       "category": "Basic",
+      "romaji": "to",
       "hiragana": "\u3068",
-      "hiragana_note": "Thorn in my toe. Imagine a thorn stuck in a toe.",
       "katakana": "\u30c8",
-      "katakana_note": "Tick TOck tick TOck. Think of a totally awesome wrist watch ticking.",
-      "romaji": "to"
+      "hiragana_note": "Thorn in my toe. Imagine a thorn stuck in a toe.",
+      "katakana_note": "Tick TOck tick TOck. Think of a totally awesome wrist watch ticking."
    },
-   "na": {
+   {
       "category": "Basic",
+      "romaji": "na",
       "hiragana": "\u306a",
-      "hiragana_note": "Throw the narwhal a banana. Think of a narwhal fish eating a banana.",
       "katakana": "\u30ca",
-      "katakana_note": "Natural and Naked Chili. Now Nacho the Chili is missing his sombrero.",
-      "romaji": "na"
+      "hiragana_note": "Throw the narwhal a banana. Think of a narwhal fish eating a banana.",
+      "katakana_note": "Natural and Naked Chili. Now Nacho the Chili is missing his sombrero."
    },
-   "ni": {
+   {
       "category": "Basic",
+      "romaji": "ni",
       "hiragana": "\u306b",
-      "hiragana_note": "Kneeling ninja. Think of a ninja kneeling with his sword.",
       "katakana": "\u30cb",
-      "katakana_note": "Ni is the Japanese word for \u201ctwo\u201d and this symbol has two neat lines.",
-      "romaji": "ni"
+      "hiragana_note": "Kneeling ninja. Think of a ninja kneeling with his sword.",
+      "katakana_note": "Ni is the Japanese word for \u201ctwo\u201d and this symbol has two neat lines."
    },
-   "nu": {
+   {
       "category": "Basic",
+      "romaji": "nu",
       "hiragana": "\u306c",
-      "hiragana_note": "New Noodles. It\u2019s a curly tailed noodle held by chopsticks.",
       "katakana": "\u30cc",
-      "katakana_note": "Sue the NUrse slips on a NOOdle and needs a NEW bag. She breaks her leg and now it pokes through her waste.",
-      "romaji": "nu"
+      "hiragana_note": "New Noodles. It\u2019s a curly tailed noodle held by chopsticks.",
+      "katakana_note": "Sue the NUrse slips on a NOOdle and needs a NEW bag. She breaks her leg and now it pokes through her waste."
    },
-   "ne": {
+   {
       "category": "Basic",
+      "romaji": "ne",
       "hiragana": "\u306d",
-      "hiragana_note": "Ned will NEVER net a fish. Think of a man with a net.",
       "katakana": "\u30cd",
-      "katakana_note": "NEver mess with NEo. Think of Neo from the Matrix. The swooping line is his long leather coat.",
-      "romaji": "ne"
+      "hiragana_note": "Ned will NEVER net a fish. Think of a man with a net.",
+      "katakana_note": "NEver mess with NEo. Think of Neo from the Matrix. The swooping line is his long leather coat."
    },
-   "no": {
+   {
       "category": "Basic",
+      "romaji": "no",
       "hiragana": "\u306e",
-      "hiragana_note": "No Smoking! Think of a no smoking sign.",
       "katakana": "\u30ce",
-      "katakana_note": "NO? Shi said \u201cno\u201d! Tsu closes his eyes in sorrow. Now he has NO eyes.",
-      "romaji": "no"
+      "hiragana_note": "No Smoking! Think of a no smoking sign.",
+      "katakana_note": "NO? Shi said \u201cno\u201d! Tsu closes his eyes in sorrow. Now he has NO eyes."
    },
-   "ha": {
+   {
       "category": "Basic",
+      "romaji": "ha",
       "hiragana": "\u306f",
-      "hiragana_note": "Ha! A rabbit from a hat! The magician has a giant want and prepares for his next trick.",
       "katakana": "\u30cf",
-      "katakana_note": "HA-choo! Think of a close up of Harry\u2019s nose as he is about to sneeze.",
-      "romaji": "ha"
+      "hiragana_note": "Ha! A rabbit from a hat! The magician has a giant want and prepares for his next trick.",
+      "katakana_note": "HA-choo! Think of a close up of Harry\u2019s nose as he is about to sneeze."
    },
-   "hi": {
+   {
       "category": "Basic",
+      "romaji": "hi",
       "hiragana": "\u3072",
-      "hiragana_note": "He wants a hug! Think of a friend who wants a hug.",
       "katakana": "\u30d2",
-      "katakana_note": "He is a hit man. This symbol looks like a lowercase \u2019t\u2019. Add HI and think of a ruthless HITman",
-      "romaji": "hi"
+      "hiragana_note": "He wants a hug! Think of a friend who wants a hug.",
+      "katakana_note": "He is a hit man. This symbol looks like a lowercase \u2019t\u2019. Add HI and think of a ruthless HITman"
    },
-   "fu": {
+   {
       "category": "Basic",
+      "romaji": "fu",
       "hiragana": "\u3075",
-      "hiragana_note": "Who\u2019s stronger than Mr T? I pity the Fu!",
       "katakana": "\u30d5",
-      "katakana_note": "WHO stole my Horn and Fur? Now her Horn and Fur are gone and she is upset.",
-      "romaji": "fu"
+      "hiragana_note": "Who\u2019s stronger than Mr T? I pity the Fu!",
+      "katakana_note": "WHO stole my Horn and Fur? Now her Horn and Fur are gone and she is upset."
    },
-   "he": {
+   {
       "category": "Basic",
+      "romaji": "he",
       "hiragana": "\u3078",
-      "hiragana_note": "He needs help! Think of a mountain that looks like an arrow pointing up to HEaven.",
       "katakana": "\u30d8",
-      "katakana_note": "He needs help! Think of a mountain that looks like an arrow pointing up to HEaven.",
-      "romaji": "he"
+      "hiragana_note": "He needs help! Think of a mountain that looks like an arrow pointing up to HEaven.",
+      "katakana_note": "He needs help! Think of a mountain that looks like an arrow pointing up to HEaven."
    },
-   "ho": {
+   {
       "category": "Basic",
+      "romaji": "ho",
       "hiragana": "\u307b",
-      "hiragana_note": "Hocus Pocus Moustache! He grows a large mustache when he says \u201cHocus Pocus\u201d",
       "katakana": "\u30db",
-      "katakana_note": "Holy Moley! It\u2019s Hot. Think of a man with his arms apart and two horrible sweat drops falling from his armpits.",
-      "romaji": "ho"
+      "hiragana_note": "Hocus Pocus Moustache! He grows a large mustache when he says \u201cHocus Pocus\u201d",
+      "katakana_note": "Holy Moley! It\u2019s Hot. Think of a man with his arms apart and two horrible sweat drops falling from his armpits."
    },
-   "ma": {
+   {
       "category": "Basic",
+      "romaji": "ma",
       "hiragana": "\u307e",
-      "hiragana_note": "Look MA! Four hands",
       "katakana": "\u30de",
-      "katakana_note": "Mama! Mama! Think of a hungry baby screaming for some of Mama\u2019s milk",
-      "romaji": "ma"
+      "hiragana_note": "Look MA! Four hands",
+      "katakana_note": "Mama! Mama! Think of a hungry baby screaming for some of Mama\u2019s milk"
    },
-   "mi": {
+   {
       "category": "Basic",
+      "romaji": "mi",
       "hiragana": "\u307f",
-      "hiragana_note": "Meep meep! Think of a roadrunner",
       "katakana": "\u30df",
-      "katakana_note": "Mi has three meaty lines. Think of it was a progression from Ni which has two neat lines\u2026DO RE MI",
-      "romaji": "mi"
+      "hiragana_note": "Meep meep! Think of a roadrunner",
+      "katakana_note": "Mi has three meaty lines. Think of it was a progression from Ni which has two neat lines\u2026DO RE MI"
    },
-   "mu": {
+   {
       "category": "Basic",
+      "romaji": "mu",
       "hiragana": "\u3080",
-      "hiragana_note": "Moo! Think of a cow farting mustard gas.",
       "katakana": "\u30e0",
-      "katakana_note": "Muscle man. Think of a skinny wimp who pumps up his muscles.",
-      "romaji": "mu"
+      "hiragana_note": "Moo! Think of a cow farting mustard gas.",
+      "katakana_note": "Muscle man. Think of a skinny wimp who pumps up his muscles."
    },
-   "me": {
+   {
       "category": "Basic",
+      "romaji": "me",
       "hiragana": "\u3081",
-      "hiragana_note": "ReMEmber that curly noodle? Well this noodle has no curly tail but it still makes me hungry.",
       "katakana": "\u30e1",
-      "katakana_note": "X-MEN! Think of a large X carved in steel by Wolverine\u2019s claws.",
-      "romaji": "me"
+      "hiragana_note": "ReMEmber that curly noodle? Well this noodle has no curly tail but it still makes me hungry.",
+      "katakana_note": "X-MEN! Think of a large X carved in steel by Wolverine\u2019s claws."
    },
-   "mo": {
+   {
       "category": "Basic",
+      "romaji": "mo",
       "hiragana": "\u3082",
-      "hiragana_note": "You catch mo\u2019 fish with mo\u2019 worms. Think of a fishing hook.",
       "katakana": "\u30e2",
-      "katakana_note": "You catch mo' fish with mo' worms. Think of a fishing hook with two moping worms.",
-      "romaji": "mo"
+      "hiragana_note": "You catch mo\u2019 fish with mo\u2019 worms. Think of a fishing hook.",
+      "katakana_note": "You catch mo' fish with mo' worms. Think of a fishing hook with two moping worms."
    },
-   "ya": {
+   {
       "category": "Basic",
+      "romaji": "ya",
       "hiragana": "\u3084",
-      "hiragana_note": "Yackedy Yak! Think of a hairy yak.",
       "katakana": "\u30e4",
-      "katakana_note": "Yackedy Yak! Think of a hairy yak.",
-      "romaji": "ya"
+      "hiragana_note": "Yackedy Yak! Think of a hairy yak.",
+      "katakana_note": "Yackedy Yak! Think of a hairy yak."
    },
-   "yu": {
+   {
       "category": "Basic",
+      "romaji": "yu",
       "hiragana": "\u3086",
-      "hiragana_note": "Yuck! Fish again? Imagine a smelly fish on a plate.",
       "katakana": "\u30e6",
-      "katakana_note": "You\u2019re number 1. This symbol looks like the number 1.",
-      "romaji": "yu"
+      "hiragana_note": "Yuck! Fish again? Imagine a smelly fish on a plate.",
+      "katakana_note": "You\u2019re number 1. This symbol looks like the number 1."
    },
-   "yo": {
+   {
       "category": "Basic",
+      "romaji": "yo",
       "hiragana": "\u3088",
-      "hiragana_note": "Yoga and yo-yo don\u2019t mix. Imagine an awkward yoga position and a yo-yo trick",
       "katakana": "\u30e8",
-      "katakana_note": "Yo! EAZY-E and EMINEM. Think of a backwards E in Eminem\u2019s logo and him saying Yo! Yo! Yo!",
-      "romaji": "yo"
+      "hiragana_note": "Yoga and yo-yo don\u2019t mix. Imagine an awkward yoga position and a yo-yo trick",
+      "katakana_note": "Yo! EAZY-E and EMINEM. Think of a backwards E in Eminem\u2019s logo and him saying Yo! Yo! Yo!"
    },
-   "ra": {
+   {
       "category": "Basic",
+      "romaji": "ra",
       "hiragana": "\u3089",
-      "hiragana_note": "That rabbit is a rascal. Think of a rabbit looking at a carrot",
       "katakana": "\u30e9",
-      "katakana_note": "RAin lands on her. She is so sad that a cartoon rain cloud appears over her head.",
-      "romaji": "ra"
+      "hiragana_note": "That rabbit is a rascal. Think of a rabbit looking at a carrot",
+      "katakana_note": "RAin lands on her. She is so sad that a cartoon rain cloud appears over her head."
    },
-   "ri": {
+   {
       "category": "Basic",
+      "romaji": "ri",
       "hiragana": "\u308a",
-      "hiragana_note": "Richard\u2019s right ear. Think of an ear on the right hand side.",
       "katakana": "\u30ea",
-      "katakana_note": "Richard\u2019s right ear. Think of an ear.",
-      "romaji": "ri"
+      "hiragana_note": "Richard\u2019s right ear. Think of an ear on the right hand side.",
+      "katakana_note": "Richard\u2019s right ear. Think of an ear."
    },
-   "ru": {
+   {
       "category": "Basic",
+      "romaji": "ru",
       "hiragana": "\u308b",
-      "hiragana_note": "Three Russian rubies. Think of the number three with three rubies sitting on it.",
       "katakana": "\u30eb",
-      "katakana_note": "Kanga-RU running. Ray the baby kangaroo really can\u2019t wait to leave home.",
-      "romaji": "ru"
+      "hiragana_note": "Three Russian rubies. Think of the number three with three rubies sitting on it.",
+      "katakana_note": "Kanga-RU running. Ray the baby kangaroo really can\u2019t wait to leave home."
    },
-   "re": {
+   {
       "category": "Basic",
+      "romaji": "re",
       "hiragana": "\u308c",
-      "hiragana_note": "Reptiles are really repulsive. Think of a snake.",
       "katakana": "\u30ec",
-      "katakana_note": "Hoo-REY for Ray. He\u2019s broken free! And he took the leg with him as he bounces away.",
-      "romaji": "re"
+      "hiragana_note": "Reptiles are really repulsive. Think of a snake.",
+      "katakana_note": "Hoo-REY for Ray. He\u2019s broken free! And he took the leg with him as he bounces away."
    },
-   "ro": {
+   {
       "category": "Basic",
+      "romaji": "ro",
       "hiragana": "\u308d",
-      "hiragana_note": "The rubies rolled away! Now the three rubies are gone.",
       "katakana": "\u30ed",
-      "katakana_note": "Solid as a ROck. Think of a solid & unbreakable rock",
-      "romaji": "ro"
+      "hiragana_note": "The rubies rolled away! Now the three rubies are gone.",
+      "katakana_note": "Solid as a ROck. Think of a solid & unbreakable rock"
    },
-   "wa": {
+   {
       "category": "Basic",
+      "romaji": "wa",
       "hiragana": "\u308f",
-      "hiragana_note": "What a whale! Think of a large whale",
       "katakana": "\u30ef",
-      "katakana_note": "WHAT? The rain was magic water! The rain regrew her fur",
-      "romaji": "wa"
+      "hiragana_note": "What a whale! Think of a large whale",
+      "katakana_note": "WHAT? The rain was magic water! The rain regrew her fur"
    },
-   "wo": {
+   {
       "category": "Basic",
+      "romaji": "wo",
       "hiragana": "\u3092",
-      "hiragana_note": "Whoa! Watch your step. Think of a man about to walk on a frozen lake.",
       "katakana": "\u30f2",
-      "katakana_note": "Bow and Arrow. Despite being written as WO it is pronounced \u2018O\u2019",
-      "romaji": "wo"
+      "hiragana_note": "Whoa! Watch your step. Think of a man about to walk on a frozen lake.",
+      "katakana_note": "Bow and Arrow. Despite being written as WO it is pronounced \u2018O\u2019"
    },
-   "n/m": {
+   {
       "category": "Basic",
+      "romaji": "n/m",
       "hiragana": "\u3093",
-      "hiragana_note": null,
       "katakana": "\u30f3",
-      "katakana_note": null,
-      "romaji": "n/m"
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "ga",
+      "hiragana": "\u304c",
+      "katakana": "\u30ac",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "gi",
+      "hiragana": "\u304e",
+      "katakana": "\u30ae",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "gu",
+      "hiragana": "\u3050",
+      "katakana": "\u30b0",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "ge",
+      "hiragana": "\u3052",
+      "katakana": "\u30b2",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "go",
+      "hiragana": "\u3054",
+      "katakana": "\u30b4",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "za",
+      "hiragana": "\u3056",
+      "katakana": "\u30b6",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "ji",
+      "hiragana": "\u3058",
+      "katakana": "\u30b8",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "zu",
+      "hiragana": "\u305a",
+      "katakana": "\u30ba",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "ze",
+      "hiragana": "\u305c",
+      "katakana": "\u30bc",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "zo",
+      "hiragana": "\u305e",
+      "katakana": "\u30be",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "da",
+      "hiragana": "\u3060",
+      "katakana": "\u30c0",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "dzi",
+      "hiragana": "\u3062",
+      "katakana": "\u30c2",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "dzu",
+      "hiragana": "\u3065",
+      "katakana": "\u30c5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "de",
+      "hiragana": "\u3067",
+      "katakana": "\u30c7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "do",
+      "hiragana": "\u3069",
+      "katakana": "\u30c9",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "ba",
+      "hiragana": "\u3070",
+      "katakana": "\u30d0",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "bi",
+      "hiragana": "\u3073",
+      "katakana": "\u30d3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "bu",
+      "hiragana": "\u3076",
+      "katakana": "\u30d6",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "be",
+      "hiragana": "\u3079",
+      "katakana": "\u30d9",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "bo",
+      "hiragana": "\u307c",
+      "katakana": "\u30dc",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "pa",
+      "hiragana": "\u3071",
+      "katakana": "\u30d1",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "pi",
+      "hiragana": "\u3074",
+      "katakana": "\u30d4",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "pu",
+      "hiragana": "\u3077",
+      "katakana": "\u30d7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "pe",
+      "hiragana": "\u307a",
+      "katakana": "\u30da",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Dakuten",
+      "romaji": "po",
+      "hiragana": "\u307d",
+      "katakana": "\u30dd",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "nya",
+      "hiragana": "\u306b\u3083",
+      "katakana": "\u30cb\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "cha",
+      "hiragana": "\u3061\u3083",
+      "katakana": "\u30c1\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "sha",
+      "hiragana": "\u3057\u3083",
+      "katakana": "\u30b7\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "kya",
+      "hiragana": "\u304d\u3083",
+      "katakana": "\u30ad\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "gya",
+      "hiragana": "\u304e\u3083",
+      "katakana": "\u30ae\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "rya",
+      "hiragana": "\u308a\u3083",
+      "katakana": "\u30ea\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "mya",
+      "hiragana": "\u307f\u3083",
+      "katakana": "\u30df\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "hya",
+      "hiragana": "\u3072\u3083",
+      "katakana": "\u30d2\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "pya",
+      "hiragana": "\u3074\u3083",
+      "katakana": "\u30d4\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "bya",
+      "hiragana": "\u3073\u3083",
+      "katakana": "\u30d3\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "dzya",
+      "hiragana": "\u3062\u3083",
+      "katakana": "\u30c2\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YA",
+      "romaji": "jya",
+      "hiragana": "\u3058",
+      "katakana": "\u30b8\u30e3",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "nyu",
+      "hiragana": "\u306b\u3085",
+      "katakana": "\u30cb\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "chu",
+      "hiragana": "\u3061\u3085",
+      "katakana": "\u30c1\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "shu",
+      "hiragana": "\u3057\u3085",
+      "katakana": "\u30b7\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "kyu",
+      "hiragana": "\u304d\u3085",
+      "katakana": "\u30ad\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "gyu",
+      "hiragana": "\u304e\u3085",
+      "katakana": "\u30ae\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "ryu",
+      "hiragana": "\u308a\u3085",
+      "katakana": "\u30ea\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "myu",
+      "hiragana": "\u307f\u3085",
+      "katakana": "\u30df\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "hyu",
+      "hiragana": "\u3072\u3085",
+      "katakana": "\u30d2\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "pyu",
+      "hiragana": "\u3074\u3085",
+      "katakana": "\u30d4\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "byu",
+      "hiragana": "\u3073\u3085",
+      "katakana": "\u30d3\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "dzyu",
+      "hiragana": "\u3062\u3085",
+      "katakana": "\u30c2\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YU",
+      "romaji": "jyu",
+      "hiragana": "\u3058\u3085",
+      "katakana": "\u30b8\u30e5",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "nyo",
+      "hiragana": "\u306b\u3087",
+      "katakana": "\u30cb\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "cho",
+      "hiragana": "\u3061\u3087",
+      "katakana": "\u30c1\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "sho",
+      "hiragana": "\u3057\u3087",
+      "katakana": "\u30b7\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "kyo",
+      "hiragana": "\u304d\u3087",
+      "katakana": "\u30ad\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "gyo",
+      "hiragana": "\u304e\u3087",
+      "katakana": "\u30ae\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "ryo",
+      "hiragana": "\u308a\u3088",
+      "katakana": "\u30ea\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "myo",
+      "hiragana": "\u307f\u3087",
+      "katakana": "\u30df\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "hyo",
+      "hiragana": "\u3072\u3087",
+      "katakana": "\u30d2\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "pyo",
+      "hiragana": "\u3074\u3087",
+      "katakana": "\u30d4\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "byo",
+      "hiragana": "\u3073\u3087",
+      "katakana": "\u30d3\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "dzyo",
+      "hiragana": "\u3062\u3087",
+      "katakana": "\u30c2\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
+   },
+   {
+      "category": "Modified YO",
+      "romaji": "jyo",
+      "hiragana": "\u3058\u3087",
+      "katakana": "\u30b8\u30e7",
+      "hiragana_note": null,
+      "katakana_note": null
    }
-}
+]

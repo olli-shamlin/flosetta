@@ -1,7 +1,9 @@
 
 from markupsafe import Markup
 from app import app
-from app.model import Syllabary
+# TODO OBSOLETE CORPORA: from app.model import Syllabary
+from app.corpora import Corpus
+from app.corpora import CorpusType
 
 
 def resolve_icon(name: str) -> str:
@@ -64,7 +66,9 @@ def resolve_icon(name: str) -> str:
 
 def kana_reference_tables():
 
-    m = Syllabary()
+    # TODO OBSOLETE CORPORA: m = Syllabary()
+    corpus = Corpus(CorpusType.SYLLABARY)
+    m = {character.romaji: character for character in corpus}
 
     tables = {
         'Basic': {

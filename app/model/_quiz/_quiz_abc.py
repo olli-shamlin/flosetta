@@ -1,5 +1,9 @@
 
-from app.model import Word, Character
+from ._options import TableOption
+# TODO OBSOLETE CORPORA: from app.model import Entry
+from app.corpora import Element
+# TODO OBSOLETE from app.model import Word
+# TODO OBSOLETE from app.model import Character
 from app.data_paths import QUIZ_ITEMS_FILE
 from app.flogger import flogger
 from ._parameters import Parameters
@@ -19,11 +23,17 @@ class Item:
     # TODO OBSOLETE     self._answer: Word | Character = answer
     # TODO OBSOLETE     self._choices: list[Word | Character] = choices
     # TODO OBSOLETE     self._responses: Optional[list[Word | Character]] = None
-    def __init__(self, prompt: Word | Character, choices: list[Word | Character]):
-        self._prompt: Word | Character = prompt
+    # TODO OBSOLETE COPORA: def __init__(self, prompt: Entry, choices: list[Entry]):
+    # TODO OBSOLETE COPORA:     self._prompt: Entry = prompt
+    # TODO OBSOLETE COPORA:     # TODO OBSOLETE self._answer: Word | Character = answer
+    # TODO OBSOLETE COPORA:     self._choices: list[Entry] = choices
+    # TODO OBSOLETE COPORA:     self._responses: Optional[list[Entry]] = None
+    # TODO OBSOLETE COPORA:     return
+    def __init__(self, prompt: Element, choices: list[Element]):
+        self._prompt: Element = prompt
         # TODO OBSOLETE self._answer: Word | Character = answer
-        self._choices: list[Word | Character] = choices
-        self._responses: Optional[list[Word | Character]] = None
+        self._choices: list[Element] = choices
+        self._responses: Optional[list[Element]] = None
         return
         #
         # For Multiple Choice:
@@ -36,7 +46,8 @@ class Item:
         #
 
     @property
-    def prompt(self) -> Word | Character:
+    # TODO OBSOLETE CORPORA: def prompt(self) -> Entry:
+    def prompt(self) -> Element:
         return self._prompt
 
     # TODO OBSOLETE @property
@@ -44,20 +55,65 @@ class Item:
     # TODO OBSOLETE     return self._answer
     # TODO OBSOLETE
     @property
-    def choices(self) -> list[Word | Character]:
+    # TODO OBSOLETE CORPORA: def choices(self) -> list[Entry]:
+    def choices(self) -> list[Element]:
         return self._choices
 
     @property
-    def responses(self) -> Optional[list[Word | Character]]:
+    # TODO OBSOLETE CORPORA: def responses(self) -> Optional[list[Entry]]:
+    def responses(self) -> Optional[list[Element]]:
         return self._responses
 
     @responses.setter
-    def responses(self, responses: list[Word | Character]) -> None:
+    # TODO OBSOLETE CORPORA: def responses(self, responses: list[Entry]) -> None:
+    def responses(self, responses: list[Element]) -> None:
         self._responses = responses
 
     @property
     def transport_format(self) -> str:
-        return f'[TRANSPORT ITEM: {self.prompt.key}]'
+        # TODO This is really an abstract method; WordItem and CharacterItem must provide actual implementations
+        return ''
+
+
+class WordItem(Item):
+
+    @property
+    def transport_format(self) -> str:
+        return '<WORD-TRANSPORT>'
+
+
+class CharacterItem(Item):
+
+    @property
+    def transport_format(self) -> str:
+        # This method renders a character quiz item in the transport format the client side
+        # code expects when executing a quiz. More specifically, this routine generates
+        # JavaScript code that looks like the following:
+        #
+        #   new CharacterElement(ITEM-KEY, new Map([[ELEMENT-FORM, VALUE], ...]), PROMPT-FORM, CHOICE-FORM)
+        #
+        # where
+        #   - ITEM-KEY: self.key
+
+        return '<CHARACTER-TRANSPORT>'
+        #
+        # def tab(n) -> str:
+        #     return '   ' * n
+        # new_line = '\n'
+        #
+        # prelude = new_line
+        # prelude += tab(2) + self.prompt.transport_format + ', ' + new_line
+        # prelude += tab(2) + 'new Map([' + new_line
+        #
+        # transport_choices = ''
+        # for i, choice in enumerate(self.choices):
+        #     transport_choices += tab(3) + f'["{choice.key}", {choice.transport_format}],' + new_line
+        #     # transport_choices += choice.transport_format
+        #
+        # postlude = tab(2) + '])' + new_line  # close the Map constructor call
+        # postlude += tab(1) + ');'            # close the push() method call
+        #
+        # return prelude + transport_choices + postlude
 
 
 class Quiz:
@@ -72,16 +128,38 @@ class Quiz:
 
     @property
     def transport_format(self) -> str:
+        # This method currently renders a multiple choice quiz in the transport format the client side
+        # code expects when executing a quiz. More specifically, this routine generates JavaScript code
+        # that looks like the following:
+        #
+        #   function quiz_items() {
+        #       const quiz_corpus = [];
+        #       quiz_corpus.push(ELEMENT-TRANSPORT-FORMAT);
+        #       ... REPEATED N-1 TIMES WHERE N IS THE NUMBER OF ITEMS IN THE QUIZ ...
+        #       return quiz_corpus;
+        #   }
 
-        prelude: str = '[PRELUDE] '
+        newline = '\n'
 
-        items_transport: str = ''
-        for item in self.items:
-            items_transport += item.transport_format + ' '
+        def tab(n: int = 1) -> str:
+            return '   ' * n
 
-        postlude: str = '[POSTLUDE]'
+        prelude: str = 'function quiz_items() {' + newline
+        prelude += tab(1) + 'const quiz = [];' + newline
 
-        return prelude + items_transport + postlude
+        items: str = ''
+        for i, item in enumerate(self.items):
+            i += 1
+            next_transport_item = tab(1) + f'const item_{i} = [];' + newline
+            for j, choice in enumerate(item.choices):
+                j += 1
+                next_transport_item += tab(1) + f'item_{i}.push({choice.transport_format}>);' + newline
+            items += next_transport_item
+
+        postlude = tab(1) + 'return quiz;'
+        postlude += '}'
+
+        return prelude + items + postlude
 
     def create_transport(self) -> None:
 
