@@ -1,7 +1,5 @@
 
 from markupsafe import Markup
-from app import app
-# TODO OBSOLETE CORPORA: from app.model import Syllabary
 from app.corpora import Corpus
 from app.corpora import CorpusType
 

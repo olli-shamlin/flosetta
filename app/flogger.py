@@ -1,6 +1,8 @@
-import logging
-from app import app
+
+from logging import DEBUG, INFO, WARN, WARNING, ERROR
 import inspect
+
+from app import app
 
 
 class _AppLog:
@@ -13,7 +15,7 @@ class _AppLog:
     @staticmethod
     def debug(msg: str) -> None:
 
-        if app.logger.level == logging.DEBUG:
+        if app.logger.level == DEBUG:
             stack = inspect.stack()
             frame_info = stack[1]
             mod = inspect.getmodule(frame_info[0])
@@ -29,7 +31,7 @@ class _AppLog:
     @staticmethod
     def note(msg: str) -> None:
 
-        if app.logger.level in [logging.DEBUG, logging.INFO, logging.WARNING, logging.WARN, logging.ERROR]:
+        if app.logger.level in [DEBUG, INFO, WARNING, WARN, ERROR]:
 
             stack = inspect.stack()
             frame_info = stack[1]
