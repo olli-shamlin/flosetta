@@ -16,191 +16,187 @@
 #    a. for 'Multiple Choice' and 'Match' kinds of quizzes: 5, 10, 15, 20
 #    b. for 'Mega Match' kind of quiz: 4, 6, 8
 
-from app.model import TableOption
-from app.model import QuizTypeOption
-from app.model import WordOption
-from app.model import CharacterOption
-from app.model import MatchSizeOption
-from app.model import MegaMatchSizeOption
-from app.model import MultipleChoiceSizeOption
+from app.quiz import TableOption
+from app.quiz import QuizTypeOption
+from app.quiz import WordOption
+from app.quiz import CharacterOption
+from app.quiz import MatchSizeOption
+from app.quiz import MegaMatchSizeOption
+from app.quiz import MultipleChoiceSizeOption
 
 
-def test_table_option():
+class TestQuizOptions:
 
-    expected_values = {
-        'Vocabulary': TableOption.VOCABULARY,
-        'Syllabary': TableOption.SYLLABARY
-    }
+    def test_table_option(self) -> None:
 
-    # Check 1: the number of enum members is the same as the number of expected values
-    assert len(TableOption) == len(expected_values)
+        expected_values = {
+            'Vocabulary': TableOption.VOCABULARY,
+            'Syllabary': TableOption.SYLLABARY
+        }
 
-    # Check 2: the enum member names match the expected values
-    assert set(TableOption.valid_values()) == set(expected_values.keys())
+        # Check 1: the number of enum members is the same as the number of expected values
+        assert len(TableOption) == len(expected_values)
 
-    for as_str, as_member in expected_values.items():
+        # Check 2: the enum member names match the expected values
+        assert set(TableOption.valid_values()) == set(expected_values.keys())
 
-        # Check 3: string representations of values are correctly coerced to member values
-        assert TableOption.to_member(as_str) == as_member
+        for as_str, as_member in expected_values.items():
 
-        # Check 4: member values are correctly coerced to string representations
-        assert TableOption.option_name(as_member) == as_str
+            # Check 3: string representations of values are correctly coerced to member values
+            assert TableOption.to_member(as_str) == as_member
 
-    return
+            # Check 4: member values are correctly coerced to string representations
+            assert TableOption.option_name(as_member) == as_str
 
+        return
 
-def test_quiz_type_option():
+    def test_quiz_type_option(self) -> None:
 
-    expected_values = {
-        'Match': QuizTypeOption.MATCH,
-        'Multiple Choice': QuizTypeOption.MULTIPLE_CHOICE,
-        'Mega Match': QuizTypeOption.MEGA_MATCH,
-        'Kana Table': QuizTypeOption.KANA_TABLE,
-    }
+        expected_values = {
+            'Match': QuizTypeOption.MATCH,
+            'Multiple Choice': QuizTypeOption.MULTIPLE_CHOICE,
+            'Mega Match': QuizTypeOption.MEGA_MATCH,
+            'Kana Table': QuizTypeOption.KANA_TABLE,
+        }
 
-    # Check 1: the number of enum members is the same as the number of expected values
-    assert len(QuizTypeOption) == len(expected_values)
+        # Check 1: the number of enum members is the same as the number of expected values
+        assert len(QuizTypeOption) == len(expected_values)
 
-    # Check 2: the enum member names match the expected values
-    assert set(QuizTypeOption.valid_values()) == set(expected_values.keys())
+        # Check 2: the enum member names match the expected values
+        assert set(QuizTypeOption.valid_values()) == set(expected_values.keys())
 
-    for as_str, as_member in expected_values.items():
+        for as_str, as_member in expected_values.items():
 
-        # Check 3: string representations of values are correctly coerced to member values
-        assert QuizTypeOption.to_member(as_str) == as_member
+            # Check 3: string representations of values are correctly coerced to member values
+            assert QuizTypeOption.to_member(as_str) == as_member
 
-        # Check 4: member values are correctly coerced to string representations
-        assert QuizTypeOption.option_name(as_member) == as_str
+            # Check 4: member values are correctly coerced to string representations
+            assert QuizTypeOption.option_name(as_member) == as_str
 
-    return
+        return
 
+    def test_word_option(self) -> None:
 
-def test_word_option():
+        expected_values = {
+            'Romaji': WordOption.ROMAJI,
+            'Kana': WordOption.KANA,
+            'Kanji': WordOption.KANJI,
+            'English': WordOption.ENGLISH,
+        }
 
-    expected_values = {
-        'Romaji': WordOption.ROMAJI,
-        'Kana': WordOption.KANA,
-        'Kanji': WordOption.KANJI,
-        'English': WordOption.ENGLISH,
-    }
+        # Check 1: the number of enum members is the same as the number of expected values
+        assert len(WordOption) == len(expected_values)
 
-    # Check 1: the number of enum members is the same as the number of expected values
-    assert len(WordOption) == len(expected_values)
+        # Check 2: the enum member names match the expected values
+        assert set(WordOption.valid_values()) == set(expected_values.keys())
 
-    # Check 2: the enum member names match the expected values
-    assert set(WordOption.valid_values()) == set(expected_values.keys())
+        for as_str, as_member in expected_values.items():
 
-    for as_str, as_member in expected_values.items():
+            # Check 3: string representations of values are correctly coerced to member values
+            assert WordOption.to_member(as_str) == as_member
 
-        # Check 3: string representations of values are correctly coerced to member values
-        assert WordOption.to_member(as_str) == as_member
+            # Check 4: member values are correctly coerced to string representations
+            assert WordOption.option_name(as_member) == as_str
 
-        # Check 4: member values are correctly coerced to string representations
-        assert WordOption.option_name(as_member) == as_str
+        return
 
-    return
+    def test_character_option(self) -> None:
 
+        expected_values = {
+            'Romaji': CharacterOption.ROMAJI,
+            'Hiragana': CharacterOption.HIRAGANA,
+            'Katakana': CharacterOption.KATAKANA,
+        }
 
-def test_character_option():
+        # Check 1: the number of enum members is the same as the number of expected values
+        assert len(CharacterOption) == len(expected_values)
 
-    expected_values = {
-        'Romaji': CharacterOption.ROMAJI,
-        'Hiragana': CharacterOption.HIRAGANA,
-        'Katakana': CharacterOption.KATAKANA,
-    }
+        # Check 2: the enum member names match the expected values
+        assert set(CharacterOption.valid_values()) == set(expected_values.keys())
 
-    # Check 1: the number of enum members is the same as the number of expected values
-    assert len(CharacterOption) == len(expected_values)
+        for as_str, as_member in expected_values.items():
 
-    # Check 2: the enum member names match the expected values
-    assert set(CharacterOption.valid_values()) == set(expected_values.keys())
+            # Check 3: string representations of values are correctly coerced to member values
+            assert CharacterOption.to_member(as_str) == as_member
 
-    for as_str, as_member in expected_values.items():
+            # Check 4: member values are correctly coerced to string representations
+            assert CharacterOption.option_name(as_member) == as_str
 
-        # Check 3: string representations of values are correctly coerced to member values
-        assert CharacterOption.to_member(as_str) == as_member
+        return
 
-        # Check 4: member values are correctly coerced to string representations
-        assert CharacterOption.option_name(as_member) == as_str
+    def test_multiple_choice_size_option(self) -> None:
 
-    return
+        expected_values = {
+            '5': MultipleChoiceSizeOption.FIVE,
+            '10': MultipleChoiceSizeOption.TEN,
+            '15': MultipleChoiceSizeOption.FIFTEEN,
+            '20': MultipleChoiceSizeOption.TWENTY,
+        }
 
+        # Check 1: the number of enum members is the same as the number of expected values
+        assert len(MultipleChoiceSizeOption) == len(expected_values)
 
-def test_multiple_choice_size_option():
+        # Check 2: the enum member names match the expected values
+        vals = MultipleChoiceSizeOption.valid_values()
+        assert set(vals) == set(expected_values.keys())
 
-    expected_values = {
-        '5': MultipleChoiceSizeOption.FIVE,
-        '10': MultipleChoiceSizeOption.TEN,
-        '15': MultipleChoiceSizeOption.FIFTEEN,
-        '20': MultipleChoiceSizeOption.TWENTY,
-    }
+        for as_str, as_member in expected_values.items():
 
-    # Check 1: the number of enum members is the same as the number of expected values
-    assert len(MultipleChoiceSizeOption) == len(expected_values)
+            # Check 3: string representations of values are correctly coerced to member values
+            assert MultipleChoiceSizeOption.to_member(as_str) == as_member
 
-    # Check 2: the enum member names match the expected values
-    vals = MultipleChoiceSizeOption.valid_values()
-    assert set(vals) == set(expected_values.keys())
+            # Check 4: member values are correctly coerced to string representations
+            assert MultipleChoiceSizeOption.option_name(as_member) == as_str
 
-    for as_str, as_member in expected_values.items():
+        return
 
-        # Check 3: string representations of values are correctly coerced to member values
-        assert MultipleChoiceSizeOption.to_member(as_str) == as_member
+    def test_match_size_option(self) -> None:
 
-        # Check 4: member values are correctly coerced to string representations
-        assert MultipleChoiceSizeOption.option_name(as_member) == as_str
+        expected_values = {
+            '5': MatchSizeOption.FIVE,
+            '10': MatchSizeOption.TEN,
+            '15': MatchSizeOption.FIFTEEN,
+            '20': MatchSizeOption.TWENTY,
+        }
 
-    return
+        # Check 1: the number of enum members is the same as the number of expected values
+        assert len(MatchSizeOption) == len(expected_values)
 
+        # Check 2: the enum member names match the expected values
+        vals = MatchSizeOption.valid_values()
+        assert set(vals) == set(expected_values.keys())
 
-def test_match_size_option():
+        for as_str, as_member in expected_values.items():
 
-    expected_values = {
-        '5': MatchSizeOption.FIVE,
-        '10': MatchSizeOption.TEN,
-        '15': MatchSizeOption.FIFTEEN,
-        '20': MatchSizeOption.TWENTY,
-    }
+            # Check 3: string representations of values are correctly coerced to member values
+            assert MatchSizeOption.to_member(as_str) == as_member
 
-    # Check 1: the number of enum members is the same as the number of expected values
-    assert len(MatchSizeOption) == len(expected_values)
+            # Check 4: member values are correctly coerced to string representations
+            assert MatchSizeOption.option_name(as_member) == as_str
 
-    # Check 2: the enum member names match the expected values
-    vals = MatchSizeOption.valid_values()
-    assert set(vals) == set(expected_values.keys())
+        return
 
-    for as_str, as_member in expected_values.items():
+    def test_mega_match_size_option(self) -> None:
 
-        # Check 3: string representations of values are correctly coerced to member values
-        assert MatchSizeOption.to_member(as_str) == as_member
+        expected_values = {
+            '4': MegaMatchSizeOption.FOUR,
+            '6': MegaMatchSizeOption.SIX,
+            '8': MegaMatchSizeOption.EIGHT,
+        }
 
-        # Check 4: member values are correctly coerced to string representations
-        assert MatchSizeOption.option_name(as_member) == as_str
+        # Check 1: the number of enum members is the same as the number of expected values
+        assert len(MegaMatchSizeOption) == len(expected_values)
 
-    return
+        # Check 2: the enum member names match the expected values
+        vals = MegaMatchSizeOption.valid_values()
+        assert set(vals) == set(expected_values.keys())
 
+        for as_str, as_member in expected_values.items():
 
-def test_mega_match_size_option():
+            # Check 3: string representations of values are correctly coerced to member values
+            assert MegaMatchSizeOption.to_member(as_str) == as_member
 
-    expected_values = {
-        '4': MegaMatchSizeOption.FOUR,
-        '6': MegaMatchSizeOption.SIX,
-        '8': MegaMatchSizeOption.EIGHT,
-    }
+            # Check 4: member values are correctly coerced to string representations
+            assert MegaMatchSizeOption.option_name(as_member) == as_str
 
-    # Check 1: the number of enum members is the same as the number of expected values
-    assert len(MegaMatchSizeOption) == len(expected_values)
-
-    # Check 2: the enum member names match the expected values
-    vals = MegaMatchSizeOption.valid_values()
-    assert set(vals) == set(expected_values.keys())
-
-    for as_str, as_member in expected_values.items():
-
-        # Check 3: string representations of values are correctly coerced to member values
-        assert MegaMatchSizeOption.to_member(as_str) == as_member
-
-        # Check 4: member values are correctly coerced to string representations
-        assert MegaMatchSizeOption.option_name(as_member) == as_str
-
-    return
+        return

@@ -8,7 +8,8 @@ import pytest
 
 @pytest.fixture
 def expected_modules() -> set[str]:
-    return {'corpora', 'data_paths', 'flogger', 'forms', 'logging', 'model', 'routes', 'utils'}
+    # TODO OBSOLETE QUIZ: return {'corpora', 'data_paths', 'flogger', 'forms', 'logging', 'model', 'routes', 'utils'}
+    return {'corpora', 'data_paths', 'flogger', 'forms', 'logging', 'routes', 'utils', 'quiz'}
 
 
 def _is_class(obj): return lambda obj: inspect.isclass(obj)
@@ -20,8 +21,10 @@ def _is_str(obj): return lambda obj: isinstance(obj, str)
 
 
 def get_app_modules():
-    return {member[0]: member[1] for member in inspect.getmembers(app)
-            if inspect.ismodule(member[1]) and member[0] != 'inspect'}
+    members = inspect.getmembers(app)
+    as_dict = {member[0]: member[1] for member in members}
+    filtered = {name: member for name, member in as_dict.items() if inspect.ismodule(member) and name != 'inspect'}
+    return filtered
 
 
 def get_module_members(module_name: str) -> list[tuple]:
@@ -31,6 +34,8 @@ def get_module_members(module_name: str) -> list[tuple]:
     the second item is the member's type.
     """
     modules = get_app_modules()
+    # TODO can the if clause in the following be moved to the inspect.getmembers call above?
+    # TODO See doc re inspect.getmember's predicate param
     return [member for member in inspect.getmembers(modules[module_name])
             if not (member[0].startswith('__') and member[0].endswith('__'))]
 
@@ -187,12 +192,6 @@ class TestAPI:
         for member_name, member_inst in members:
             assert member_name in expected_members.keys()
             assert member_name and expected_members[member_name](member_inst)
-
-        return
-
-    def test_model(self) -> None:
-
-        assert False and 'test_api.py:TestAPI.test_model() not implemented'
 
         return
 

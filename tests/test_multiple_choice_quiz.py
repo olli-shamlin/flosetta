@@ -1,9 +1,14 @@
 
-from app.model import create_quiz
-from app.model import Parameters
-from app.model import MultipleChoiceItem
-from app.model import CharacterItem
-from app.model import WordItem
+# TODO OBSOLETE QUIZ from app.model import create_quiz
+# TODO OBSOLETE QUIZ from app.model import Parameters
+# TODO OBSOLETE QUIZ from app.model import MultipleChoiceItem
+# TODO OBSOLETE QUIZ from app.model import CharacterItem
+# TODO OBSOLETE QUIZ from app.model import WordItem
+from app.quiz import create_quiz
+from app.quiz import Parameters
+from app.quiz import MultipleChoiceItem
+from app.quiz import CharacterItem
+from app.quiz import WordItem
 
 
 def test_quiz_setup_vocabulary():

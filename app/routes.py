@@ -11,9 +11,12 @@ from .forms import MultipleChoiceQuizForm
 # TODO OBSOLETE CORPORA: from .model import Vocabulary
 from app.corpora import Corpus
 from app.corpora import CorpusType
-from .model import Parameters
-from .model import TableOption
-from .model import create_quiz
+# TODO OBSOLETE QUIZ: from .model import Parameters
+# TODO OBSOLETE QUIZ: from .model import TableOption
+# TODO OBSOLETE QUIZ: from .model import create_quiz
+from .quiz import Parameters
+from .quiz import TableOption
+from .quiz import create_quiz
 from .utils import resolve_icon
 from .utils import kana_reference_tables
 from .utils import BATON
