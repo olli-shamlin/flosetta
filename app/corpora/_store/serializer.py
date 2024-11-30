@@ -8,6 +8,7 @@ from datetime import date
 from datetime import datetime
 import json
 import re
+from typing import Optional
 
 
 def _is_iso_datetime(val) -> bool:
@@ -42,5 +43,5 @@ class _CustomEncoder(json.JSONEncoder):
             return obj.as_dict
 
 
-def json_encoder(data) -> str:
-    return json.dumps(data, indent=3, cls=_CustomEncoder)
+def json_encoder(data, indent: Optional[int] = 3) -> str:
+    return json.dumps(data, indent=indent, cls=_CustomEncoder)
