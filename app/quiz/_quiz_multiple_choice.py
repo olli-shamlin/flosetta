@@ -85,14 +85,23 @@ class MultipleChoiceQuiz(Quiz):
         num_questions = int(params.size.value)
 
         # Randomly select the total number of corpus items (num_questions * 5) that are needed for this quiz
-        elements = sample(list(corpus.values()), num_questions * 5)
+        # TODO OBSOLETE CORPORA: elements = sample(list(corpus.values()), num_questions * 5)
+        elements = sample(list(corpus), num_questions * 5)
         shuffle(elements)
         elements = _chunk_list(elements, 5)
 
+        # TODO: This passage of code (for loop below definitely; 3 lines above possibly) are not as readable as they
+        # TODO: could/should be.  Variable names are confusing/ambigous, I think.  E.g., "choices" may be better than
+        # TODO: "elements" here.
         for e in elements:
-            # randomly pick an element from this chunk to be this question's prompt
-            prompt_element = sample(e, 1)[0]
-            self._items.append(MultipleChoiceItem(Item(prompt_element), [Item(f) for f in e]))
+            prompt_item = sample(e, 1)[0]
+            self._items.append(MultipleChoiceItem(prompt_item, e))
+
+        # for e in elements:
+        #     # randomly pick an element from this chunk to be this question's prompt
+        #     prompt_element = sample(e, 1)[0]
+        #     prompt_item = Item(prompt_element)
+        #     self._items.append(MultipleChoiceItem(prompt_item, [Item(f) for f in e]))
         # corpus = Vocabulary() if params.table == TableOption.VOCABULARY else Syllabary()
         # elements = list(corpus.values())
         # prompt_words = sample(elements, num_quiz_items)

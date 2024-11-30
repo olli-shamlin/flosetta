@@ -7,45 +7,42 @@
 from app.quiz import create_quiz
 from app.quiz import Parameters
 from app.quiz import MultipleChoiceItem
-from app.quiz import CharacterItem
-from app.quiz import WordItem
+# from app.quiz import CharacterItem
+# from app.quiz import WordItem
 
 
-def test_quiz_setup_vocabulary():
+class TestMultipleChoiceQuiz:
 
-    assert False == 'pending integration of corpora package'
+    def test_quiz_setup_vocabulary(self) -> None:
 
-    params = Parameters()
-    params.table = 'Vocabulary'
-    params.kind = 'Multiple Choice'
-    params.size = '5'
-    params.prompt_type = 'Kana'
-    params.choice_type = 'English'
+        params = Parameters()
+        params.table = 'Vocabulary'
+        params.kind = 'Multiple Choice'
+        params.size = '5'
+        params.prompt_type = 'Kana'
+        params.choice_type = 'English'
 
-    quiz = create_quiz(params)
+        quiz = create_quiz(params)
 
-    assert len(quiz.items) == 5
-    for item in quiz.items:
-        assert isinstance(item, WordItem)
+        assert len(quiz.items) == 5
+        for item in quiz.items:
+            assert isinstance(item, MultipleChoiceItem)
 
-    return
+        return
 
+    def test_quiz_setup_syllabary(self) -> None:
 
-def test_quiz_setup_syllabary():
+        params = Parameters()
+        params.table = 'Syllabary'
+        params.kind = 'Multiple Choice'
+        params.size = '5'
+        params.prompt_type = 'Romaji'
+        params.choice_type = 'Hiragana'
 
-    assert False == 'pending integration of corpora package'
+        quiz = create_quiz(params)
 
-    params = Parameters()
-    params.table = 'Syllabary'
-    params.kind = 'Multiple Choice'
-    params.size = '5'
-    params.prompt_type = 'Romaji'
-    params.choice_type = 'Hiragana'
+        assert len(quiz.items) == 5
+        for item in quiz.items:
+            assert isinstance(item, MultipleChoiceItem)
 
-    quiz = create_quiz(params)
-
-    assert len(quiz.items) == 5
-    for item in quiz.items:
-        assert isinstance(item, CharacterItem)
-
-    return
+        return
