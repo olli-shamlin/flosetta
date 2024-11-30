@@ -13,20 +13,22 @@ from ._options import MultipleChoiceSizeOption
 
 from ._parameters import Parameters
 
-from ._quiz_abc import Quiz
-from ._quiz_multiple_choice import MultipleChoiceQuiz
-from ._quiz_multiple_choice import MultipleChoiceItem
-from ._quiz_abc import CharacterItem
-from ._quiz_abc import WordItem
+from ._quiz_types import Quiz
+from ._quiz_types import MultipleChoiceQuiz
+from ._quiz_types import MatchQuiz
+from ._quiz_types import MegaMatchQuiz
+from ._quiz_types import TableQuiz
+from ._quiz_types import FillInTheBlankQuiz
 
 
 def create_quiz(params: Parameters) -> Quiz:
 
-    quiz_type_map = {
+    quiz_type_map: dict = {
         QuizTypeOption.MULTIPLE_CHOICE: MultipleChoiceQuiz,
-        # QuizTypeOption.MATCH: None,
-        # QuizTypeOption.MEGA_MATCH: None,
-        # QuizTypeOption.KANA_TABLE: None,
+        QuizTypeOption.MATCH: MatchQuiz,
+        QuizTypeOption.MEGA_MATCH: MegaMatchQuiz,
+        QuizTypeOption.KANA_TABLE: TableQuiz,
+        QuizTypeOption.FILL_IN_THE_BLANK: FillInTheBlankQuiz,
     }
 
     try:

@@ -57,6 +57,7 @@ class TestQuizOptions:
             'Multiple Choice': QuizTypeOption.MULTIPLE_CHOICE,
             'Mega Match': QuizTypeOption.MEGA_MATCH,
             'Kana Table': QuizTypeOption.KANA_TABLE,
+            'Fill In The Blank': QuizTypeOption.FILL_IN_THE_BLANK
         }
 
         # Check 1: the number of enum members is the same as the number of expected values

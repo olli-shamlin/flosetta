@@ -45,6 +45,7 @@ class QuizTypeOption(Option):
     MATCH = auto()
     KANA_TABLE = auto()
     MEGA_MATCH = auto()
+    FILL_IN_THE_BLANK = auto()
 
 
 @unique

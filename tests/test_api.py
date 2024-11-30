@@ -8,8 +8,12 @@ import pytest
 
 @pytest.fixture
 def expected_modules() -> set[str]:
-    # TODO OBSOLETE QUIZ: return {'corpora', 'data_paths', 'flogger', 'forms', 'logging', 'model', 'routes', 'utils'}
-    return {'corpora', 'data_paths', 'flogger', 'forms', 'logging', 'routes', 'utils', 'quiz'}
+    return {'corpora', 'forms', 'routes', 'utils', 'quiz'}
+
+
+@pytest.fixture
+def third_party_modules() -> set[str]:
+    return {'logging'}
 
 
 def _is_class(obj): return lambda obj: inspect.isclass(obj)
@@ -42,10 +46,10 @@ def get_module_members(module_name: str) -> list[tuple]:
 
 class TestAPI:
 
-    def test_modules(self, expected_modules) -> None:
+    def test_modules(self, expected_modules, third_party_modules) -> None:
         """Verify the set of modules in the is stable."""
         modules = get_app_modules()
-        module_names = {name for name in modules.keys()}
+        module_names = {name for name in modules.keys()} - third_party_modules
 
         assert module_names == expected_modules
 
@@ -89,6 +93,8 @@ class TestAPI:
 
         return
 
+    # TODO The following test_data_paths case is currently obsolete; data_paths.py has moved into corpora._store
+    '''
     def test_data_paths(self) -> None:
 
         expected_members = {
@@ -119,7 +125,10 @@ class TestAPI:
             assert member_name and expected_members[member_name](member_inst)
 
         return
+    '''
 
+    # TODO: flogger is not being used at the moment.
+    '''
     def test_flogger(self) -> None:
 
         expected_members = {
@@ -143,6 +152,7 @@ class TestAPI:
             assert member_name and expected_members[member_name](member_inst)
 
         return
+    '''
 
     def test_forms(self) -> None:
 
@@ -171,6 +181,11 @@ class TestAPI:
 
         return
 
+    # TODO: test_logging may just be a bad/unneeded test case.  When I was originally writing this test module
+    # TODO: I saw the logging module as a member of app and thought that was odd. Also if you read this test case code
+    # TODO: carefully, you'll see I'm actually getting members for flogger instead of logging--so it's not even
+    # TODO: covering logging.
+    '''
     def test_logging(self) -> None:
 
         expected_members = {
@@ -194,6 +209,7 @@ class TestAPI:
             assert member_name and expected_members[member_name](member_inst)
 
         return
+    '''
 
     def test_routes(self) -> None:
 
