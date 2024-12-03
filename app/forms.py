@@ -53,5 +53,5 @@ class QuizSetupForm6(FlaskForm):
 
 
 class MultipleChoiceQuizForm(FlaskForm):
-    responses = StringField(id='hidden-response-field', default='initial string field value', widget=HiddenInput())
+    responses = StringField(id='hidden-response-field', default='PLACEHOLDER', widget=HiddenInput())
     submit = SubmitField('DONE')

@@ -1,149 +1,310 @@
 {% extends "base_quiz.html" %}
 {% block js_code %}
-    const trace_switch = true
+    const trace_switch = true;
+    var quiz = null;
+
+    // Function to apply the Fisher-Yates Shuffle
+    // function knuthShuffle(array) {
+    //     traceEnter();
+    //     // Iterate over the array in reverse order
+    //     for (let i = array.length - 1; i > 0; i--) {
+    //
+    //         // Generate Random Index
+    //         const j = Math.floor(Math.random() * (i + 1));
+    //
+    //         // Swap elements
+    //         [array[i], array[j]] = [array[j], array[i]];
+    //     }
+    //     return array;
+    //     traceExit();
+    // }
+
+    // ---------------------------------------------------------------------------------------------------------------
+    // -- start of quiz related classes
+    // ---------------------------------------------------------------------------------------------------------------
+
+    const Format = {
+        PROMPT: 0,
+        CHOICE: 1,
+    }
+
+    class Choice {
+        constructor(vals, a_prompt, b_prompt) {
+            this._vals = vals;
+            this._a_prompt = a_prompt;
+            this._b_prompt = b_prompt;
+        }
+        get key() { return this._vals['key']; }
+        get echo() {
+            let parts = [];
+            for (const [key, value] of Object.entries(this._vals)) {
+                if (key != 'key' && value != null) {
+                    parts.push(key + ': ' + value);
+                }
+            }
+            return parts.join('; ');
+        }
+        render(type) {
+            if (type == Format.PROMPT) { return this._vals[this._a_prompt]; }
+            else { return this._vals[this._b_prompt]; }
+        }
+        is_equal(other) { return this.key == other.key;}
+        contains(form_str) {
+            for (const [key, value] of Object.entries(this._vals)) {
+                if (key != 'key' && value != null) {
+                    if (value == form_str) { return true; }
+                }
+            }
+            return false;
+        }
+    }
+
+    class Question {
+        constructor(choices, prompt_a, prompt_b) {
+            this._choices = [];
+            for (let i = 0; i < choices.length; i++) {
+                this._choices.push(new Choice(choices[i], prompt_a, prompt_b));
+            }
+            this._expected_answer_idx = Math.floor(Math.random() * this._choices.length);
+            this._user_answer = null;
+        }
+        get choices() { return this._choices; }
+        get answer() { return this._choices[this._expected_answer_idx]; }
+        find(form_str) {
+            for (let i = 0; i < this.choices.length; i++) {
+                if (this.choices[i].contains(form_str)) {
+                    return this.choices[i];
+                }
+            }
+            return null;
+        }
+        set user_choice(val_str) {
+            if (this._user_answer != null) { throw 'Question.user_choice setter: already set'; }
+            let choice = this.find(val_str);
+            if (choice == null) { throw `Question.user_choice(): no choice matches "${val_str}"`; }
+            this._user_answer = choice;
+        }
+        get user_choice() {
+            if (this._user_answer == null) { throw 'Question.user_choice getter: called before value set'; }
+            return this._user_answer;
+        }
+        get answered_correctly() {
+            return this.answer.is_equal(this.user_choice)
+        }
+    }
+
+    class Quiz {
+        constructor(json_obj) {
+
+            let payload;
+            try {
+                payload = JSON.parse(json_obj);
+            } catch (error) {
+                console.error('Quiz.constructor: failed to initialize quiz instance');
+            }
+
+            this._idx = 0;
+            this._questions = [];
+            for (let i = 0; i < payload['questions'].length; i++) {
+                this._questions.push(new Question(payload['questions'][i], payload['a_prompt'], payload['b_prompt']));
+            }
+        }
+        get is_done() { return this._idx == this._questions.length; }
+        next() {
+            if (this.is_done) { throw 'Quiz.next(): called when quiz is done'}
+            this._idx++;
+        }
+        get current_question() {
+            if (this.is_done) { throw 'Quiz.current_question: called after quiz is done'}
+            return this._questions[this._idx];
+        }
+        // get answer() { return this.current_question.answer; }
+        // set answer(value) { this.current_question.answer = value;}
+        // get answered_correctly() { return this.current_question.answer_is_correct(); }
+        get percent_complete() {
+            // A note regarding the adding one (1) to this._idx in the calculation below.
+            // This Quiz class method is used to update the progress bar on quiz pages; it
+            // is currently called *before* Quiz.next() is called which causes the progress
+            // bar's state to be "off by one."  A better solution would be to modify the calling
+            // code so that Quiz.next() is called before Quiz.percent_complete.  (An effort for
+            // another day.)
+            return (((this._idx + 1) / this._questions.length) * 100).toFixed() + '%';
+        }
+        get responses_encoded() {
+            let responses = [];
+            for (let i = 0; i < this._questions.length; i++) {
+                let next_question = this._questions[i];
+                let next_expected = next_question.answer;
+                let next_response = next_question.user_choice;
+                let next_pair = {'expected': next_expected.key, 'actual': next_response.key};
+                responses.push(next_pair);
+            }
+            return JSON.stringify(responses);
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------
+    // -- end of quiz related classes
+    // ---------------------------------------------------------------------------------------------------------------
 
     function updateProgress() {
-        traceEnter()
-        // Note the "+ 1" to current_item; this routine is called when the "CHECK" button is clicked
-        // which is *before* current_item is incremented (in handleNextButton/i.e., when the "NEXT" button
-        // is clicked)
-        pct = (((current_item + 1) / item_count) * 100).toFixed() + '%'
-        document.getElementById('progress-bar').setAttribute('style', `width: ${pct}`)
-        traceExit()
+        traceEnter();
+        document.getElementById('progress-bar').setAttribute('style', `width: ${quiz.percent_complete}`);
+        trace(`progress updated: ${quiz.percent_complete} complete`, 'updateProgress');
+        traceExit();
     }
 
     function updatePrompt() {
-        traceEnter()
-        document.getElementById('prompt-word').innerText = items[current_item].prompt
-        traceExit()
+        traceEnter();
+        document.getElementById('prompt-word').innerText = quiz.current_question.answer.render(Format.PROMPT);
+        traceExit();
     }
 
     function updateChoiceButtons() {
-        traceEnter()
-        for (let i = 0; i < items[current_item].choices.length; i++) {
-            document.getElementById(`choice-text-${i + 1}`).innerText = items[current_item].choices[i]
-            btn = document.getElementById(`choice-${i + 1}`)
-            btn.checked = false
-            btn.disabled = false
+        traceEnter();
+
+        for (let i = 0; i < quiz.current_question.choices.length; i++) {
+            document.getElementById(`choice-text-${i + 1}`).innerText =
+                quiz.current_question.choices[i].render(Format.CHOICE);
+            btn = document.getElementById(`choice-${i + 1}`);
+            btn.checked = false;
+            btn.disabled = false;
         }
-        traceExit()
+        traceExit();
     }
 
     function handleCheckButton() {
-        traceEnter()
+        traceEnter();
 
         // disable the choice buttons
-        for (let i = 0; i < items[current_item].choices.length; i++)
-            document.getElementById(`choice-${i + 1}`).disabled = true
-
-        btn = document.getElementById('continue-btn')
+        for (let i = 0; i < quiz.current_question.choices.length; i++) {
+            document.getElementById(`choice-${i + 1}`).disabled = true;
+        }
+        trace('choice buttons disabled', 'handleCheckButton');
 
         // Did the user make the correct choice?
-        i = 0
-        for (; i < items[current_item].choices.length; i++) {
-            next_input_element = document.getElementById(`choice-${i + 1}`);
-            is_selected = next_input_element.checked;
-            if (is_selected) { break };
+        // 1. Determine which choice button the user clicked
+        let selected_idx = 0;
+        let selected_value = null;
+        for (let i = 0; selected_idx < quiz.current_question.choices.length; i++) {
+            let next_choice_button = document.getElementById(`choice-${i + 1}`);
+            if (next_choice_button.checked) {
+                selected_value = document.getElementById(`choice-text-${i + 1}`).innerText;
+                trace(`user selected choice=${i} button_label=${selected_value}`,
+                      'handleCheckButton');
+                break;
+            }
         }
-        if (i == item_count) {
-            traceFatal('did not find selected choice')
+
+        if (selected_value == null) {
+            traceFatal('did not find selected choice');
         } else {
+            quiz.current_question.user_choice = selected_value;
+            let correct_answer_given = quiz.current_question.answered_correctly;
+            trace(`correct_answer_given: ${quiz.current_question.answered_correctly}`, 'handleCheckButton');
 
-            expected_answer = items[current_item].answer
-            given_answer = document.getElementById(`choice-text-${i + 1}`).innerText
-            responses.push(given_answer)
-            correct_answer_given = given_answer == expected_answer
-            items[current_item].answered_correct = given_answer == expected_answer
-
+            // 3. Provide the user feedback based on their answer
             // Background colors: white=bg-white; green=bg-success; red=bg-danger
-            feedback_box = document.getElementById('feedback-box')
-            feedback_text = document.getElementById('feedback-message')
+            let feedback_box = document.getElementById('feedback-box');
+            let feedback_text = document.getElementById('feedback-message');
             if (correct_answer_given) {
-                items[current_item].answered_correct = true
-                feedback_box.setAttribute('class', 'container bg-success bg-opacity-10')
-                feedback_text.setAttribute('class', 'text-success')
-                feedback_text.innerText = 'Correct!'
+                feedback_box.setAttribute('class', 'container bg-success bg-opacity-10');
+                feedback_text.setAttribute('class', 'text-success');
+                let msg = `<h4>Correct!</h4><p>${quiz.current_question.answer.echo}</p>`;
+                feedback_text.innerHTML = msg;
+                trace(`correct answer: "${quiz.current_question.answer.echo}"`, 'handleCheckButton');
             } else {
-                feedback_box.setAttribute('class', 'container bg-danger bg-opacity-10')
-                feedback_text.setAttribute('class', 'text-danger')
-                feedback_text.innerText = 'Wrong!'
+                feedback_box.setAttribute('class', 'container bg-danger bg-opacity-10');
+                feedback_text.setAttribute('class', 'text-danger');
+                let msg = '<h4>Wrong!</h4>' +
+                          `<p>You chose: ${quiz.current_question.user_choice.echo}</p>` +
+                          `<p>Correct answer: ${quiz.current_question.answer.echo}</p>`;
+                feedback_text.innerHTML = msg;
+                trace(``, 'handleCheckButton');
             }
-            if (current_item + 1 == item_count) {
-                // We have reached the end of the items in the quiz!
-                // Pack the responses into the value attribute of the "hidden-response-field" form field
-                document.getElementById('hidden-response-field').setAttribute('value', responses.join('|'))
 
-                // Hide the "check"/"next" button and reveal (ie, un-hide) the submit button
-                document.getElementById('continue-btn').remove()
-                el = document.getElementById('submit');
-                el.setAttribute('type', 'submit');
-                el.setAttribute('size', 6);
-            } else {
-                btn.setAttribute('class', 'btn btn-success')
-                btn.innerText = 'NEXT'
-            }
+            // Change the label on the check/next button from "Check" to "Next"
+            let btn = document.getElementById('continue-btn');
+            btn.setAttribute('class', 'btn btn-success');
+            btn.innerText = 'NEXT';
         }
 
-        updateProgress()
-
-        traceExit()
+        updateProgress();
+        traceExit();
     }
 
     function handleNextButton() {
-        traceEnter()
+        traceEnter();
 
-        current_item += 1
+        quiz.next();
+        if (quiz.is_done) {
+                trace('last question reached', 'handleNextButton');
+                // We have reached the end of the items in the quiz!
+                // Pack the responses into the value attribute of the "hidden-response-field" form field
+                document.getElementById('hidden-response-field').setAttribute('value', quiz.responses_encoded)
 
-        if (current_item == item_count) {
-            alert('we have reached the end of the list of items')
+                // Hide the "check"/"next" button and reveal (ie, un-hide) the submit button
+                document.getElementById('continue-btn').remove();
+                let el = document.getElementById('submit');
+                el.setAttribute('type', 'submit');
+                el.setAttribute('size', 6);
+        }
+        else {
+            trace(`proceeding to question ${quiz.idx}`, 'handleNextButton');
+            updatePrompt();
+            updateChoiceButtons();
+
+            let el = document.getElementById('feedback-box');
+            el.setAttribute('class', 'container bg-white bg-opacity-10');
+            el = document.getElementById('feedback-message');
+            el.innerHTML = '';
+            el = document.getElementById('continue-btn');
+            el.setAttribute('class', 'btn btn-secondary disabled');
+            el.innerText = 'CHECK';
         }
 
-        updatePrompt()
-        updateChoiceButtons()
-
-        el = document.getElementById('feedback-box')
-        el.setAttribute('class', 'container bg-white bg-opacity-10')
-        el = document.getElementById('feedback-message')
-        el.innerText = ''
-        el = document.getElementById('continue-btn')
-        el.setAttribute('class', 'btn btn-secondary disabled')
-        el.innerText = 'CHECK'
-
-        traceExit()
+        traceExit();
     }
 
     function continueClick() {
-        traceEnter()
-        btn = document.getElementById('continue-btn')
-        initial_btn_label = btn.innerText
-        trace(`button state/label = ${initial_btn_label}`)
-        if (initial_btn_label == 'CHECK') { handleCheckButton() }
-        else if (initial_btn_label == 'NEXT') { handleNextButton() }
+        traceEnter();
+        btn = document.getElementById('continue-btn');
+        let initial_btn_label = btn.innerText;
+        trace(`button state/label = ${initial_btn_label}`, 'continueClick');
+        if (initial_btn_label == 'CHECK') { handleCheckButton(); }
+        else if (initial_btn_label == 'NEXT') { handleNextButton(); }
         else {
-            if (initial_btn_label != 'DONE') { traceFatal('not at "done" state as expected') }
-            trace('this condition should never be reached')
+            if (initial_btn_label != 'DONE') { traceFatal('not at "done" state as expected'); }
+            trace('this condition should never be reached', 'continueClick');
         }
-        traceExit()
+        traceExit();
     }
 
     function choiceClick() {
-        traceEnter()
-        btn = document.getElementById('continue-btn')
-        if (btn.innerText != 'CHECK') { traceFatal(`"continue" button should be in "CHECK" state but is set to ${btn.innerText}`) }
-        document.getElementById('continue-btn').setAttribute('class', 'btn btn-outline-success')
-        traceExit()
+        traceEnter();
+        btn = document.getElementById('continue-btn');
+        if (btn.innerText != 'CHECK') {
+            traceFatal(`"continue" button should be in "CHECK" state but is set to ${btn.innerText}`);
+        }
+        document.getElementById('continue-btn').setAttribute('class', 'btn btn-outline-success');
+        traceExit();
+    }
+
+    function initializeQuiz() {
+        traceEnter();
+        try {
+            let json_str = document.getElementById('hidden-response-field').getAttribute('value');
+            quiz = new Quiz(json_str);
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+        }
+        traceExit();
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         traceEnter('DOMContentLoaded');
-        items = quiz_items();
-        item_count = items.length;
-        current_item = 0;
-        responses = [];
-        trace(`quiz has ${item_count} items`, caller_name='DOMContentLoaded');
-
-        document.getElementById('submit').setAttribute('type', 'hidden')  // trying to hide the sumbit button
-
+        initializeQuiz();
+        document.getElementById('submit').setAttribute('type', 'hidden');  // hide the submit button
         updatePrompt();
         updateChoiceButtons();
         traceExit('DOMContentLoaded');
@@ -193,8 +354,7 @@
             <div class="row">&nbsp;</div> <!-- add some space at the top -->
             <div class="row">
                 <div class="col-10">
-                    <span class="text-start">
-                        <h4 class="text-success" id="feedback-message">&nbsp</h4>
+                    <span class="text-start" id="feedback-message">
                     </span>
                 </div>
                 <div class="col">

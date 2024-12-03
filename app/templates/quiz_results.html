@@ -11,27 +11,34 @@
 {% block content %}
     <h2>Summary</h2>
     <ul>
-        <li>Number of items: {{ quiz.items|length }}</li>
-        <li>Number correct: {{ quiz.correct }}</li>
-        <li>Number incorrect: {{ quiz.incorrect }}</li>
-        <li>Percent correct: {{ ((quiz.correct / quiz.items|length) * 100)|round(0, 'common')|int }}%</li>
+        <li>Number of items: {{ summary['num_questions'] }}</li>
+        <li>Number correct: {{ summary['num_correct'] }}</li>
+        <li>Number incorrect: {{ summary['num_wrong'] }} </li>
+        <li>Percent correct: {{ summary['pct_correct'] }}%</li>
     </ul>
-    <h2>Items</h2>
+    <h2>Question Details</h2>
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Prompt</th>
+                <th>&nbsp;</th>
                 <th>Choices</th>
-                <th>Answer</th>
-                <th>Response</th>
+                <th>Expected/Actual</th>
             </tr>
         </thead>
-            {% for item in quiz.items %}
+            {% for question in summary['details'] %}
                 <tr>
-                    <td>{{ item.prompt }}</td>
-                    <td>{{ item.choices|join(', ') }}</td>
-                    {{ highlighted_cell(item.answer, item.answer == item.response) }}
-                    {{ highlighted_cell(item.response, item.answer == item.response) }}
+                    {{ highlighted_cell('Q' ~ loop.index|string, question['answer'] == question['response']) }}
+                    <td>
+                        <ol>
+                            {% for choice in question['choices'] %}<li>{{ choice }}</li>{% endfor %}
+                        </ol>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Expected: {{ question['answer'] }}
+                            <li>Actual: {{ question['response'] }}
+                        </ul>
+                    </td>
                 </tr>
             {% endfor %}
         <tbody>

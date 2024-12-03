@@ -1,5 +1,6 @@
 
 from dataclasses import dataclass
+from dataclasses import field
 from itertools import islice
 from random import sample
 
@@ -7,6 +8,7 @@ from config import Config
 from app.corpora import Corpus
 from app.corpora import CorpusType
 from app.corpora import Element
+from app.corpora import Word
 from app.corpora._store.serializer import json_encoder
 from app.quiz import Parameters
 from app.quiz import TableOption
@@ -38,6 +40,49 @@ class Quiz:
     @property
     def transport(self) -> str:
         return json_encoder(self.as_dict, indent=None)
+
+    def process_results(self, results_from_client: list[dict]) -> dict:
+
+        results = {
+            'num_questions': len(self.questions),
+            'num_correct': 0,
+            'num_wrong': 0,
+            'pct_correct': -1,
+            'details': [],
+        }
+
+        def echo(e) -> str:
+            if isinstance(e, Word):
+                r = '; '.join([f'english: {e.english}', f'romaji: {e.romaji}', f'kana: {e.kana}',
+                               f'kanji: {e.kanji}' if e.kanji else ''])
+            else:
+                r = '; '.join([f'romaji: {e.romaji}', f'hiragana: {e.hiragana}', f'katakana: {e.katakana}'])
+            return r
+
+        corpus = Corpus(CorpusType.VOCABULARY if self.params.table == TableOption.VOCABULARY else CorpusType.SYLLABARY)
+        for i, next_questions_results in enumerate(results_from_client):
+            next_question_summary = {
+                'correct_answer': next_questions_results['expected'] == next_questions_results['actual'],
+                'choices': [echo(e) for e in self.questions[i].elements],
+                'answer': echo(corpus[next_questions_results['expected']]),
+                'response': echo(corpus[next_questions_results['actual']]),
+            }
+            results['details'].append(next_question_summary)
+            if next_question_summary['correct_answer']:
+                # User gave the correct answer to this question
+                results['num_correct'] += 1
+                corpus[next_questions_results['expected']].increment_metrics(answered_correct=True)
+            else:  # User gave the incorrect answer to this question
+                results['num_wrong'] += 1
+                corpus[next_questions_results['expected']].increment_metrics(answered_correct=False)
+                corpus[next_questions_results['actual']].increment_metrics(answered_correct=False)
+
+        results['pct_correct'] = round((results['num_correct'] / results['num_questions']) * 100, 2)
+
+        # Save the updated metrics
+        corpus.flush()
+
+        return results
 
 
 @dataclass
@@ -80,8 +125,9 @@ class FillInTheBlankQuiz(Quiz):
         self.questions = [Question([e]) for e in corpus_sample]
 
 
-def _sample_n_by_5(corpus_id: TableOption, num_questions: int) -> list[Question]:
-    elements = _sample_corpus(corpus_id, num_items=(num_questions * _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES))
+def _sample_n_by_5(corpus_id: TableOption, num_questions: TableOption) -> list[Question]:
+    elements = _sample_corpus(corpus_id,
+                              num_items=(int(num_questions.value) * _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES))
     chunked_elements = _chunk_list(elements, _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES)
     questions: list[Question] = []
     for chunk in chunked_elements:

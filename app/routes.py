@@ -11,15 +11,20 @@ from .forms import MultipleChoiceQuizForm
 # TODO OBSOLETE CORPORA: from .model import Vocabulary
 from app.corpora import Corpus
 from app.corpora import CorpusType
+from app.corpora._store.serializer import json_decoder
 # TODO OBSOLETE QUIZ: from .model import Parameters
 # TODO OBSOLETE QUIZ: from .model import TableOption
 # TODO OBSOLETE QUIZ: from .model import create_quiz
 from .quiz import Parameters
 from .quiz import TableOption
+from .quiz import QuizTypeOption
+from .quiz import WordOption
+from .quiz import MultipleChoiceSizeOption
 from .quiz import create_quiz
 from .utils import resolve_icon
 from .utils import kana_reference_tables
 from .utils import BATON
+
 from flask import redirect
 from flask import render_template
 from flask import request
@@ -46,7 +51,6 @@ def kana():
 def quiz_setup():
     form = QuizSetupForm1()
     if form.validate_on_submit():
-        # TODO OBSOLETE params = QuizParameters()
         params = Parameters()
         params.table = form.table.data
         BATON.object = params
@@ -133,11 +137,11 @@ def multiple_choice_quiz():
     form = MultipleChoiceQuizForm()
     if form.validate_on_submit():
         quiz = BATON.object
-        quiz.add_results(str(form.responses.data).split('|'))
-        BATON.object = quiz
+        BATON.object = quiz.process_results(json_decoder(str(form.responses.data)))
         return redirect('/quiz_results')
     params = BATON.object
     quiz = create_quiz(params)
+    form.responses.data = quiz.transport
     BATON.object = quiz
     return render_template('quiz_multiple_choice.html', quiz=quiz, form=form,
                            title='Multiple Choice Quiz', emoji=resolve_icon('question'))
@@ -145,5 +149,23 @@ def multiple_choice_quiz():
 
 @app.route('/quiz_results')
 def quiz_results():
-    return render_template('quiz_results.html', quiz=BATON.object,
+    quiz_summary = BATON.object
+    return render_template('quiz_results.html', summary=quiz_summary,
                            title='Quiz Results', emoji=resolve_icon('question'))
+
+
+@app.route('/proto', methods=['GET', 'POST'])
+def proto_route():
+    form = MultipleChoiceQuizForm()
+    if form.validate_on_submit():
+        pass
+    params = Parameters()
+    params.table = TableOption.VOCABULARY
+    params.kind = QuizTypeOption.MULTIPLE_CHOICE
+    params.size = MultipleChoiceSizeOption.FIVE
+    params.prompt_type = WordOption.ENGLISH
+    params.choice_type = WordOption.KANA
+    quiz = create_quiz(params)
+    form.responses.data = quiz.transport
+    return render_template('quiz_multiple_choice.html', quiz=quiz, form=form,
+                           title='Multiple Choice Quiz', emoji=resolve_icon('question'))

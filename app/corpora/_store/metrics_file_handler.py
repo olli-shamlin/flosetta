@@ -73,7 +73,10 @@ def _delete_expired_metric_file_versions(path_pattern: str) -> None:
     # that are before the oldest version to retain in the list of all file versions.
     files_to_delete = filenames[:oldest_version_idx + 1]
     for next_file_to_delete in files_to_delete:
-        os.remove(next_file_to_delete)
+        # Not all filenames in files_to_delete may actually exist on disk. Note we potentially injected
+        # the oldest_version_to_retain to files_to_delete above and it may not exist on disk.
+        if os.path.exists(next_file_to_delete):
+            os.remove(next_file_to_delete)
 
     return
 
