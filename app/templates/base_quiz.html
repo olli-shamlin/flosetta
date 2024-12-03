@@ -3,8 +3,8 @@
     <!--==============================================================-->
     <!-- START js_code block                                          -->
     <!--==============================================================-->
-    <script src="static/tracing.js"></script>
-    <!--script src="static/quiz_items.js"></script-->
+    <script src="{{ url_for('static', filename='quiz_utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='quiz_multiple_choice.js') }}"></script>
     <script>
         {% block js_code %}
         {% endblock %}
