@@ -418,6 +418,17 @@ class Collector {
         return false;
     }
 
+    get transport() {
+
+        let params = new Object;
+        let next;
+        for (let i=0; i < this.stack.length; i++) {
+            next = this.stack[i].as_parameter;
+            params[next.name] = next.value;
+        }
+        return JSON.stringify(params);
+    }
+
     step_forward() {
         // if (this.is_done)
         //     fatalError('Collector.step_forward() called when eof is true');

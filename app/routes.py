@@ -1,22 +1,23 @@
 
 from . import app
-from .forms import QuizSetupForm1
-from .forms import QuizSetupForm2a
-from .forms import QuizSetupForm2b
-from .forms import QuizSetupForm3
-from .forms import QuizSetupForm4
-from .forms import QuizSetupForm5
-from .forms import QuizSetupForm6
+from .forms import QuizSetupForm
+# TODO OBSOLETE from .forms import QuizSetupForm1
+# TODO OBSOLETE from .forms import QuizSetupForm2a
+# TODO OBSOLETE from .forms import QuizSetupForm2b
+# TODO OBSOLETE from .forms import QuizSetupForm3
+# TODO OBSOLETE from .forms import QuizSetupForm4
+# TODO OBSOLETE from .forms import QuizSetupForm5
+# TODO OBSOLETE from .forms import QuizSetupForm6
 # TODO OBSOLETE from .forms import MultipleChoiceQuizForm
 from .forms import QuizForm
 from app.corpora import Corpus
 from app.corpora import CorpusType
 from app.corpora._store.serializer import json_decoder
 from .quiz import Parameters
-from .quiz import TableOption
-from .quiz import QuizTypeOption
-from .quiz import WordOption
-from .quiz import MultipleChoiceSizeOption
+# TODO OBSOLETE from .quiz import TableOption
+# TODO OBSOLETE from .quiz import QuizTypeOption
+# TODO OBSOLETE from .quiz import WordOption
+# TODO OBSOLETE from .quiz import MultipleChoiceSizeOption
 from .quiz import create_quiz
 from .utils import resolve_icon
 from .utils import kana_reference_tables
@@ -24,7 +25,7 @@ from .utils import BATON
 
 from flask import redirect
 from flask import render_template
-from flask import request
+# TODO OBSOLETE from flask import request
 
 
 @app.route('/')
@@ -45,82 +46,93 @@ def kana():
 
 @app.route('/quiz_setup', methods=['GET', 'POST'])
 def quiz_setup():
-    form = QuizSetupForm1()
+    form = QuizSetupForm()
     if form.validate_on_submit():
+        foo = json_decoder((str(form.transport.data)))
         params = Parameters()
-        params.table = form.table.data
         BATON.object = params
         return redirect('/quiz_setup2')
     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
-
-
-@app.route('/quiz_setup2', methods=['GET', 'POST'])
-def quiz_setup2():
-    params = BATON.object
-    form = QuizSetupForm2a() if params.table == TableOption.VOCABULARY else QuizSetupForm2b()
-    if form.validate_on_submit():
-        params.kind = form.quiz_type.data
-        BATON.object = params
-        return redirect('/quiz_setup3')
-    BATON.object = params
-    return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
-
-
-@app.route('/quiz_setup3', methods=['GET', 'POST'])
-def quiz_setup3():
-    params = BATON.object
-    form = QuizSetupForm3()
-    if form.validate_on_submit():
-        params.size = form.number_of_items.data
-        BATON.object = params
-        return redirect('/quiz_setup4')
-    BATON.object = params
-    return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
-
-
-@app.route('/quiz_setup4', methods=['GET', 'POST'])
-def quiz_setup4():
-    params = BATON.object
-    form = QuizSetupForm4()
-    if form.is_submitted():  # form.validate_on_submit() doesn't come back True when the submit button is clicked
-        params.prompt_type = form.prompt_type.data
-        BATON.object = params
-        return redirect('/quiz_setup5')
-    form.prompt_type.choices = params.prompt_options
-    BATON.object = params
-    return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
-
-
-@app.route('/quiz_setup5', methods=['GET', 'POST'])
-def quiz_setup5():
-    params = BATON.object
-    form = QuizSetupForm5()
-    if form.is_submitted():  # form.validate_on_submit() doesn't come back True when the submit button is clicked
-        params.choice_type = form.choice_type.data
-        BATON.object = params
-        return redirect('/quiz_setup6')
-
-    # Create the list of possible choice types
-    # The user should be presented with the set of "word" forms *except* the "word" form chosen for quiz item prompts
-    form.choice_type.choices = params.choice_options
-    BATON.object = params
-    return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
-
-
-@app.route('/quiz_setup6', methods=['GET', 'POST'])
-def quiz_setup6():
-    form = QuizSetupForm6(request.form)
-    if request.method == 'POST':
-        if form.cancel.data:
-            BATON.drop()
-            return redirect('/index')
-        return redirect('/quiz')
-    params = BATON.object
-    BATON.object = params
-    return render_template('quiz_start.html', form=form, quiz_params=params,
-                           title='Quiz Setup', emoji=resolve_icon('question'))
-
-
+# TODO OBSOLETE
+# TODO OBSOLETE
+# TODO OBSOLETE @app.route('/quiz_setup', methods=['GET', 'POST'])
+# TODO OBSOLETE def quiz_setup():
+# TODO OBSOLETE     form = QuizSetupForm1()
+# TODO OBSOLETE     if form.validate_on_submit():
+# TODO OBSOLETE         params = Parameters()
+# TODO OBSOLETE         params.table = form.table.data
+# TODO OBSOLETE         BATON.object = params
+# TODO OBSOLETE         return redirect('/quiz_setup2')
+# TODO OBSOLETE     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
+# TODO OBSOLETE
+# TODO OBSOLETE
+# TODO OBSOLETE @app.route('/quiz_setup2', methods=['GET', 'POST'])
+# TODO OBSOLETE def quiz_setup2():
+# TODO OBSOLETE     params = BATON.object
+# TODO OBSOLETE     form = QuizSetupForm2a() if params.table == TableOption.VOCABULARY else QuizSetupForm2b()
+# TODO OBSOLETE     if form.validate_on_submit():
+# TODO OBSOLETE         params.kind = form.quiz_type.data
+# TODO OBSOLETE         BATON.object = params
+# TODO OBSOLETE         return redirect('/quiz_setup3')
+# TODO OBSOLETE     BATON.object = params
+# TODO OBSOLETE     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
+# TODO OBSOLETE
+# TODO OBSOLETE
+# TODO OBSOLETE @app.route('/quiz_setup3', methods=['GET', 'POST'])
+# TODO OBSOLETE def quiz_setup3():
+# TODO OBSOLETE     params = BATON.object
+# TODO OBSOLETE     form = QuizSetupForm3()
+# TODO OBSOLETE     if form.validate_on_submit():
+# TODO OBSOLETE         params.size = form.number_of_items.data
+# TODO OBSOLETE         BATON.object = params
+# TODO OBSOLETE         return redirect('/quiz_setup4')
+# TODO OBSOLETE     BATON.object = params
+# TODO OBSOLETE     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
+# TODO OBSOLETE
+# TODO OBSOLETE
+# TODO OBSOLETE @app.route('/quiz_setup4', methods=['GET', 'POST'])
+# TODO OBSOLETE def quiz_setup4():
+# TODO OBSOLETE     params = BATON.object
+# TODO OBSOLETE     form = QuizSetupForm4()
+# TODO OBSOLETE     if form.is_submitted():  # form.validate_on_submit() doesn't come back True when the submit button is clicked
+# TODO OBSOLETE         params.prompt_type = form.prompt_type.data
+# TODO OBSOLETE         BATON.object = params
+# TODO OBSOLETE         return redirect('/quiz_setup5')
+# TODO OBSOLETE     form.prompt_type.choices = params.prompt_options
+# TODO OBSOLETE     BATON.object = params
+# TODO OBSOLETE     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
+# TODO OBSOLETE
+# TODO OBSOLETE
+# TODO OBSOLETE @app.route('/quiz_setup5', methods=['GET', 'POST'])
+# TODO OBSOLETE def quiz_setup5():
+# TODO OBSOLETE     params = BATON.object
+# TODO OBSOLETE     form = QuizSetupForm5()
+# TODO OBSOLETE     if form.is_submitted():  # form.validate_on_submit() doesn't come back True when the submit button is clicked
+# TODO OBSOLETE         params.choice_type = form.choice_type.data
+# TODO OBSOLETE         BATON.object = params
+# TODO OBSOLETE         return redirect('/quiz_setup6')
+# TODO OBSOLETE
+# TODO OBSOLETE     # Create the list of possible choice types
+# TODO OBSOLETE     # The user should be presented with the set of "word" forms *except* the "word" form chosen for quiz item prompts
+# TODO OBSOLETE     form.choice_type.choices = params.choice_options
+# TODO OBSOLETE     BATON.object = params
+# TODO OBSOLETE     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
+# TODO OBSOLETE
+# TODO OBSOLETE
+# TODO OBSOLETE @app.route('/quiz_setup6', methods=['GET', 'POST'])
+# TODO OBSOLETE def quiz_setup6():
+# TODO OBSOLETE     form = QuizSetupForm6(request.form)
+# TODO OBSOLETE     if request.method == 'POST':
+# TODO OBSOLETE         if form.cancel.data:
+# TODO OBSOLETE             BATON.drop()
+# TODO OBSOLETE             return redirect('/index')
+# TODO OBSOLETE         return redirect('/quiz')
+# TODO OBSOLETE     params = BATON.object
+# TODO OBSOLETE     BATON.object = params
+# TODO OBSOLETE     return render_template('quiz_start.html', form=form, quiz_params=params,
+# TODO OBSOLETE                            title='Quiz Setup', emoji=resolve_icon('question'))
+# TODO OBSOLETE
+# TODO OBSOLETE
 @app.route('/quiz', methods=['GET', 'POST'])
 def execute_quiz():
     form = QuizForm()

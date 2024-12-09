@@ -1,8 +1,62 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <script src="{{ url_for('static', filename='quiz_setup.js') }}"></script>
+    <script>
+        let collector;
 
-    {% from 'bootstrap5/form.html' import render_form %}
-    {{ render_form(form) }}
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hide the submit button
+            document.getElementById('submit').setAttribute('type', 'hidden');
 
+            // Start parameter collection
+            collector = new Collector();
+        });
+
+        function advance() {
+            collector.step_forward();
+
+            if (collector.is_done) {
+                // Pack the collected parameter values into the transport field
+                document.getElementById('transport').setAttribute('value', collector.transport)
+
+                let submit_el = document.getElementById('submit');
+
+                // insert a cancel button in front of the submit button
+                let cancel_el = document.createElement('a');
+                cancel_el.setAttribute('id', 'cancel');
+                cancel_el.setAttribute('class', 'btn btn-outline-primary me-2');
+                cancel_el.setAttribute('href', '/index');
+                cancel_el.innerText = 'Cancel'
+                let parent_el = submit_el.parentNode;
+                parent_el.insertBefore(cancel_el, submit_el);
+
+                // Reveal the cancel & submit buttons
+                submit_el.setAttribute('type', 'submit');
+                submit_el.setAttribute('size', 6);
+            }
+        }
+
+        function undo() {
+            collector.step_backward();
+        }
+    </script>
+    <div class="container mt-4" id="page-content">
+        <!------------------------------------------------------------------------------------------------------------>
+        <!- Page content is injected here by static/quiz_setup.js code ----------------------------------------------->
+        <!------------------------------------------------------------------------------------------------------------>
+    </div>
+    <div class="container mt-4">
+        <form action="" method="post" class="form" role="form">
+            {% from 'bootstrap5/form.html' import render_field %}
+
+            {{ render_field(form.csrf_token, form_type="inline", class="form-control") }}
+            <!--a href="{{ url_for('index') }}" class="btn btn-outline-primary" id="cancel">Cancel</a-->
+            {{ render_field(form.submit, form_type="inline") }}
+
+            {# the "transport" field input is already hidden; the following line renders the field with its label #}
+            {# hidden as well #}
+            {{ render_field(form.transport, form_type="inline", class="form-control") }}
+        </form>
+    </div>
 {% endblock %}
