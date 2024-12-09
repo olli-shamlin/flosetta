@@ -64,7 +64,6 @@ def resolve_icon(name: str) -> str:
 
 def kana_reference_tables():
 
-    # TODO OBSOLETE CORPORA: m = Syllabary()
     corpus = Corpus(CorpusType.SYLLABARY)
     m = {character.romaji: character for character in corpus}
 
