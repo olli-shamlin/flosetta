@@ -52,6 +52,10 @@ class QuizSetupForm6(FlaskForm):
     submit = SubmitField('Start')
 
 
-class MultipleChoiceQuizForm(FlaskForm):
-    responses = StringField(id='hidden-response-field', default='PLACEHOLDER', widget=HiddenInput())
+class QuizForm(FlaskForm):
+    transport = StringField(id='transport', default='PLACEHOLDER', widget=HiddenInput())
     submit = SubmitField('DONE')
+# TODO OBSOLETE
+# TODO OBSOLETE class MultipleChoiceQuizForm(FlaskForm):
+# TODO OBSOLETE     responses = StringField(id='hidden-response-field', default='PLACEHOLDER', widget=HiddenInput())
+# TODO OBSOLETE     submit = SubmitField('DONE')

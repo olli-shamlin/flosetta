@@ -7,6 +7,7 @@ SCRATCH.py
 scratch.py
 quiz_items.js
 app/data/vocabulary_metrics_*.json
+app/data/syllabary_metrics_*.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

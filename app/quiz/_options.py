@@ -24,7 +24,8 @@ class Option(Enum):
         return sorted([cls.option_name(t) for t in cls])
 
     @classmethod
-    def to_member(cls, name: str) -> dict[str, int]:
+    # TODO OBSOLETE def to_member(cls, name: str) -> dict[str, int]:
+    def to_member(cls, name: str):
         mp = {cls.option_name(t): t for t in cls}
         if name not in mp.keys():
             raise OptionValueError(cls.__name__, name)

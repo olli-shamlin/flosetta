@@ -1,6 +1,5 @@
 
 from dataclasses import dataclass
-from dataclasses import field
 from itertools import islice
 from random import sample
 
@@ -10,8 +9,9 @@ from app.corpora import CorpusType
 from app.corpora import Element
 from app.corpora import Word
 from app.corpora._store.serializer import json_encoder
-from app.quiz import Parameters
-from app.quiz import TableOption
+from ._parameters import Parameters
+from ._options import SizeOption
+from ._options import TableOption
 
 
 _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES = 5
@@ -32,6 +32,14 @@ class Quiz:
     questions: list[Question] = None
 
     @property
+    def name(self) -> str:
+        raise NotImplementedError(f'app.quiz._quiz_types.Quiz.name: must be implemented by subclass')
+
+    @property
+    def html_template(self) -> str:
+        raise NotImplementedError(f'app.quiz._quiz_types.Quiz.html_template: must be implemented by subclass')
+
+    @property
     def as_dict(self) -> dict:
         return {'a_prompt': self.params.prompt_type.name.lower(),
                 'b_prompt': self.params.choice_type.name.lower(),
@@ -40,6 +48,24 @@ class Quiz:
     @property
     def transport(self) -> str:
         return json_encoder(self.as_dict, indent=None)
+
+    def process_results(self, results_from_client: list[dict]) -> dict:
+        raise NotImplementedError(f'app.quiz._quiz_types.Quiz.process_results(): must be implemented by subclass')
+
+
+@dataclass
+class MultipleChoiceQuiz(Quiz):
+
+    def __post_init__(self):
+        self.questions = _sample_n_by_5(self.params.table, self.params.size)
+
+    @property
+    def name(self) -> str:
+        return 'Multiple Choice Quiz'
+
+    @property
+    def html_template(self) -> str:
+        return 'quiz_multiple_choice.html'
 
     def process_results(self, results_from_client: list[dict]) -> dict:
 
@@ -86,46 +112,53 @@ class Quiz:
 
 
 @dataclass
-class MultipleChoiceQuiz(Quiz):
-
-    def __post_init__(self):
-        self.questions = _sample_n_by_5(self.params.table, self.params.size)
-
-
-@dataclass
 class MatchQuiz(Quiz):
 
     def __post_init__(self):
         self.questions = _sample_n_by_5(self.params.table, self.params.size)
+
+    @property
+    def name(self) -> str:
+        return 'Match Quiz'
+
+    @property
+    def html_template(self) -> str:
+        return 'quiz_match.html'
+
+    def process_results(self, results_from_client: list[dict]) -> dict:
+        raise NotImplementedError('app.quiz._quiz_types.MatchQuiz.process_results()')
 
 
 @dataclass
 class MegaMatchQuiz(Quiz):
 
     def __post_init__(self):
-        number_of_items = int((self.params.size ** 2) / 2)
-        element_sample = _sample_corpus(self.params.table, num_items=number_of_items)
-        question = Question(element_sample)
-        self.questions = [question]
+        # number_of_items = int((self.params.size ** 2) / 2)
+        # element_sample = _sample_corpus(self.params.table, num_items=number_of_items)
+        # question = Question(element_sample)
+        # self.questions = [question]
+        raise NotImplementedError('app.quiz._quiz_types.MegaMatchQuiz')
 
 
 @dataclass
 class TableQuiz(Quiz):
 
     def __post_init__(self):
-        cat_filter = 'Basic' if not Config.TEST_MODE else 'category 1'
-        self.questions = [Question([c for c in Corpus(CorpusType.SYLLABARY) if c.category == cat_filter])]
+        # cat_filter = 'Basic' if not Config.TEST_MODE else 'category 1'
+        # self.questions = [Question([c for c in Corpus(CorpusType.SYLLABARY) if c.category == cat_filter])]
+        raise NotImplementedError('app.quiz._quiz_types.TableQuiz')
 
 
 @dataclass
 class FillInTheBlankQuiz(Quiz):
 
     def __post_init__(self):
-        corpus_sample = _sample_corpus(self.params.table, num_items=self.params.size)
-        self.questions = [Question([e]) for e in corpus_sample]
+        # corpus_sample = _sample_corpus(self.params.table, num_items=self.params.size)
+        # self.questions = [Question([e]) for e in corpus_sample]
+        raise NotImplementedError('app.quiz._quiz_types.FillInTheBlankQuiz')
 
 
-def _sample_n_by_5(corpus_id: TableOption, num_questions: TableOption) -> list[Question]:
+def _sample_n_by_5(corpus_id: TableOption, num_questions: SizeOption) -> list[Question]:
     elements = _sample_corpus(corpus_id,
                               num_items=(int(num_questions.value) * _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES))
     chunked_elements = _chunk_list(elements, _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES)

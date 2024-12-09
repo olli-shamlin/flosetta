@@ -1,7 +1,7 @@
 {% extends "base_quiz.html" %}
 {% block js_code %}
     const trace_switch = true;
-    var quiz = null;
+    let quiz = null;
 
     function updateProgress() {
         traceEnter();
@@ -18,7 +18,6 @@
 
     function updateChoiceButtons() {
         traceEnter();
-
         for (let i = 0; i < quiz.current_question.choices.length; i++) {
             document.getElementById(`choice-text-${i + 1}`).innerText =
                 quiz.current_question.choices[i].render(Format.CHOICE);
@@ -96,8 +95,8 @@
         if (quiz.is_done) {
                 trace('last question reached', 'handleNextButton');
                 // We have reached the end of the items in the quiz!
-                // Pack the responses into the value attribute of the "hidden-response-field" form field
-                document.getElementById('hidden-response-field').setAttribute('value', quiz.responses_encoded)
+                // Pack the responses into the value attribute of the "transport" form field
+                document.getElementById('transport').setAttribute('value', quiz.responses_encoded)
 
                 // Hide the "check"/"next" button and reveal (ie, un-hide) the submit button
                 document.getElementById('continue-btn').remove();
@@ -149,7 +148,7 @@
     function initializeQuiz() {
         traceEnter();
         try {
-            let json_str = document.getElementById('hidden-response-field').getAttribute('value');
+            let json_str = document.getElementById('transport').getAttribute('value');
             quiz = new Quiz(json_str);
         } catch (error) {
             console.error("Error parsing JSON:", error);
@@ -222,9 +221,9 @@
                 </div>
             </div>
             <div class="row">&nbsp;</div> <!-- add some space at the bottom -->
-            {# the "responses" field input is already hidden; the following line renders the field with its label #}
+            {# the "transport" field input is already hidden; the following line renders the field with its label #}
             {# hidden as well #}
-            {{ render_field(form.responses, form_type="inline", class="form-control") }}
+            {{ render_field(form.transport, form_type="inline", class="form-control") }}
         </div>
     </form>
 {% endblock %}

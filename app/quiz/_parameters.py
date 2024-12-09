@@ -7,6 +7,7 @@ from ._options import CharacterOption
 from ._options import MatchSizeOption
 from ._options import MegaMatchSizeOption
 from ._options import MultipleChoiceSizeOption
+from ._options import SizeOption
 from ._exceptions import OptionValueError
 from ._exceptions import ParameterOrderError
 from ._exceptions import OptionNotAllowed
@@ -62,7 +63,7 @@ class Parameters:
         self._type = value
 
     @property
-    def size(self) -> int:
+    def size(self) -> SizeOption:
         return self._size
 
     @size.setter
