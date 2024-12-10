@@ -58,7 +58,7 @@ class UndoControl {
 
         let btn_el = document.createElement('button');
         btn_el.setAttribute('type', 'button');
-        btn_el.setAttribute('class', 'btn btn-outline-secondary ms-2');
+        btn_el.setAttribute('class', 'btn btn-outline-secondary btn-lg ms-2');
         btn_el.setAttribute('id', 'undo-btn');
         btn_el.setAttribute('onclick', 'undo()');
         btn_el.appendChild(svg_el);
@@ -121,7 +121,7 @@ class QuestionControl {
             input_el.setAttribute('onclick', 'advance()');
 
             let label_el = document.createElement('label');
-            label_el.setAttribute('class', 'btn btn-outline-primary');
+            label_el.setAttribute('class', 'btn btn-outline-primary btn-lg');
             label_el.setAttribute('for', `i-${option_id}`);
             label_el.setAttribute('id', `l-${option_id}`);
             label_el.innerText = this._options[i];

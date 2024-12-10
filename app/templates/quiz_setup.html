@@ -25,7 +25,7 @@
                 // insert a cancel button in front of the submit button
                 let cancel_el = document.createElement('a');
                 cancel_el.setAttribute('id', 'cancel');
-                cancel_el.setAttribute('class', 'btn btn-outline-primary me-2');
+                cancel_el.setAttribute('class', 'btn btn-outline-primary btn-lg me-2');
                 cancel_el.setAttribute('href', '/index');
                 cancel_el.innerText = 'Cancel'
                 let parent_el = submit_el.parentNode;
@@ -33,7 +33,7 @@
 
                 // Reveal the cancel & submit buttons
                 submit_el.setAttribute('type', 'submit');
-                submit_el.setAttribute('size', 6);
+                submit_el.setAttribute('class', 'btn btn-primary btn-lg');
             }
         }
 
