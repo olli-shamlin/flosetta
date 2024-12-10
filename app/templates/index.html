@@ -1,14 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <ul>
-        <li><a href="/quiz_setup">Take a quiz</a> (ie, redirect to quiz_setup route</li>
-        <li><a href="/stats">Review learning progress (ie, stats)</a></li>
-        <li>Reference
-            <ul>
-                <li><a href="/vocab">Vocabulary Words</a></li>
-                <li><a href="/kana">Hiragana and Katakana</a></li>
-            </ul>
-        </li>
-    </ul>
+    <div class="container py-3">
+        <main>
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                <div class="col-lg-4 d-flex align-items-stretch">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Study</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="lead">
+                                Click the buttons below to review Japanese Kana characters and the vocabulary words
+                                you've added to the application.
+                            </p>
+                            <p>&nbsp;</p>
+                            <a href="/kana" class="w-100 btn btn-lg btn-primary mb-2">Syllabary</a>
+                            <a href="/vocab" class="w-100 btn btn-lg btn-primary">Vocabulary</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-flex align-items-stretch">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Practice</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="lead">
+                                Test your understanding of your vocabulary words and Japanese Kana characters. Click
+                                the button below to choose a type of quiz
+                                and what you want to be drilled on: vocabulary words or Kana characters.
+                            </p>
+                            <a href="/quiz_setup" class="w-100 btn btn-lg btn-primary">Take a Quiz</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-flex align-items-stretch">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Review</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="lead">
+                                The application keeps track of the vocabulary words and Kana characters
+                                used in quizzes. Click the button below to see a summary of how you are
+                                faring in your mastery of the Japanese language.
+                            </p>
+                            <a href="/stats" class="w-100 btn btn-lg btn-primary">Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 {% endblock %}
