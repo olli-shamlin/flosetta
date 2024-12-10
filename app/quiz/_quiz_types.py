@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from itertools import islice
 from random import sample
 
-from config import Config
 from app.corpora import Corpus
 from app.corpora import CorpusType
 from app.corpora import Element
@@ -41,8 +40,8 @@ class Quiz:
 
     @property
     def as_dict(self) -> dict:
-        return {'a_prompt': self.params.prompt_type.name.lower(),
-                'b_prompt': self.params.choice_type.name.lower(),
+        return {'a_prompt': self.params.prompt.name.lower(),
+                'b_prompt': self.params.choice.name.lower(),
                 'questions': [q.as_dict for q in self.questions]}
 
     @property
@@ -158,9 +157,9 @@ class FillInTheBlankQuiz(Quiz):
         raise NotImplementedError('app.quiz._quiz_types.FillInTheBlankQuiz')
 
 
-def _sample_n_by_5(corpus_id: TableOption, num_questions: SizeOption) -> list[Question]:
+def _sample_n_by_5(corpus_id: TableOption, num_questions: int) -> list[Question]:
     elements = _sample_corpus(corpus_id,
-                              num_items=(int(num_questions.value) * _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES))
+                              num_items=(num_questions * _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES))
     chunked_elements = _chunk_list(elements, _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES)
     questions: list[Question] = []
     for chunk in chunked_elements:

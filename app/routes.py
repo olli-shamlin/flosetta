@@ -35,10 +35,9 @@ def kana():
 def quiz_setup():
     form = QuizSetupForm()
     if form.validate_on_submit():
-        foo = json_decoder((str(form.transport.data)))
-        params = Parameters()
-        BATON.object = params
-        return redirect('/quiz_setup2')
+        t = json_decoder(str(form.transport.data))
+        BATON.object = create_quiz(Parameters(**t))
+        return redirect('/quiz')
     return render_template('quiz_setup.html', form=form, title='Quiz Setup', emoji=resolve_icon('question'))
 
 
@@ -49,8 +48,7 @@ def execute_quiz():
         quiz = BATON.object
         BATON.object = quiz.process_results(json_decoder((str(form.transport.data))))
         return redirect('/quiz_results')
-    params = BATON.object
-    quiz = create_quiz(params)
+    quiz = BATON.object
     form.transport.data = quiz.transport
     BATON.object = quiz
     return render_template(quiz.html_template, quiz=quiz, form=form, title=quiz.name, emoji=resolve_icon('question'))

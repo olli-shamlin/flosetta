@@ -3,6 +3,7 @@ from ._exceptions import OptionNotAllowed
 from ._exceptions import OptionValueError
 from ._exceptions import ParameterOrderError
 
+from ._options import Option
 from ._options import TableOption
 from ._options import QuizTypeOption
 from ._options import WordOption
