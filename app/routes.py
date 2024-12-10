@@ -17,8 +17,12 @@ from flask import render_template
 
 @app.route('/')
 @app.route('/index')
-@app.route('/vocab')
 def index():
+    return render_template('index.html', title='Welcome', emoji=resolve_icon('chat-heart'))
+
+
+@app.route('/vocab')
+def vocab():
     vocabulary = Corpus(CorpusType.VOCABULARY)
     return render_template('vocabulary.html',
                            words=vocabulary,
@@ -29,6 +33,11 @@ def index():
 @app.route('/kana')
 def kana():
     return render_template('kana.html', reftabs=kana_reference_tables(), title='Kana', emoji=resolve_icon('brilliance'))
+
+
+@app.route('/stats')
+def stats():
+    return render_template('stats.html', title='Statistics', emoji=resolve_icon('speedometer2'))
 
 
 @app.route('/quiz_setup', methods=['GET', 'POST'])

@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p class="lead">Hello, World!</p>
+    <ul>
+        <li><a href="/quiz_setup">Take a quiz</a> (ie, redirect to quiz_setup route</li>
+        <li><a href="/stats">Review learning progress (ie, stats)</a></li>
+        <li>Reference
+            <ul>
+                <li><a href="/vocab">Vocabulary Words</a></li>
+                <li><a href="/kana">Hiragana and Katakana</a></li>
+            </ul>
+        </li>
+    </ul>
 {% endblock %}
