@@ -55,7 +55,8 @@ def execute_quiz():
     form = QuizForm()
     if form.validate_on_submit():
         quiz = BATON.object
-        BATON.object = quiz.process_results(json_decoder((str(form.transport.data))))
+        # BATON.object = quiz.process_results(json_decoder((str(form.transport.data))))
+        BATON.object = 'quiz client result not extracted yet'
         return redirect('/quiz_results')
     quiz = BATON.object
     form.transport.data = quiz.transport

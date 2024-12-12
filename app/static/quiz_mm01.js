@@ -134,16 +134,23 @@ class Question {
 
 class Quiz {
     constructor() {
-        let NUM_QUESTIONS = 3;
+        this.payload;
+        try {
+            let json_obj = document.getElementById('transport').getAttribute('value');
+            this.payload = JSON.parse(json_obj);
+        } catch (error) {
+            console.error('Quiz.constructor: failed to read transport');
+        }
 
-        this.progress_bar = new ProgressBarControl(NUM_QUESTIONS)
+        this.progress_bar = new ProgressBarControl(this.payload.questions.length)
         this.submit_btn = new SubmitButtonControl();
+        this.submit_btn.hide();
         this.continue_btn = new ContinueButtonControl('Next');
         this.continue_btn.enable();
 
         this.current_item = 0;
         this.items = [];
-        for (let i=0; i < 3; i++)
+        for (let i=0; i < this.payload.questions.length; i++)
             this.items.push(new Question(i+1))
 
         this.items[this.current_item].show();
@@ -159,7 +166,8 @@ class Quiz {
         this.items[++this.current_item].show();
         this.progress_bar.increment();
         if (this.is_done)
-            document.getElementById('transport').setAttribute('value', quiz.responses_encoded)
+            // document.getElementById('transport').setAttribute('value', quiz.responses_encoded)
+            document.getElementById('transport').setAttribute('value', 'client-response-goes-here')
     }
 }
 
