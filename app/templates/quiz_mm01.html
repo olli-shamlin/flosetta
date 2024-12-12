@@ -1,0 +1,63 @@
+<!-----------------------------------------------------------------
+
+  Key HTML elements on this page
+    - prompt_area       <span>      id=prompt-word          innerText
+    - response_area     <span>      id=question-number      innerText
+    - feedback_area
+                        <span>      id=feedback-message     innerHtml
+                        <button>    id=continue-btn         onClick=continueClick()
+                        <button>    id=submit-btn
+                        <input>     id=transport            value attr
+  ----------------------------------------------------------------->
+
+{% extends "base_quiz.html" %}
+
+{% block js_code %}
+    <script src="{{ url_for('static', filename='quiz_mm01.js') }}"></script>
+    <script>
+        let quiz;
+        document.addEventListener('DOMContentLoaded', () => { quiz = new Quiz(); });
+    </script>
+{% endblock %}
+
+{% block prompt_area %}
+    <div class="container pb-3" id="prompt-area">
+        <div class="col">
+            <p class="lead">PROMPT AREA: "<span class="text-primary" id="prompt-word">tbd</span>"?</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block response_area %}
+    <div class="container pb-3" id="response-area">
+        <div class="col">
+            <p class="lead">RESPONSE AREA: Question <span class="text-primary" id="question-number">tbd</span></p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block feedback_area %}
+    {% from 'bootstrap5/form.html' import render_field %}
+    <form action="" method="post" class="form" role="form">
+        {{ render_field(form.csrf_token, form_type="inline", class="form-control") }}
+        <div class="container bg-white bg-opacity-10" id="feedback-box">
+            <div class="row">&nbsp;</div> <!-- add some space at the top -->
+            <div class="row">
+                <div class="col-10">
+                    <span class="text-start" id="feedback-message">
+                    </span>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-secondary disabled" id="continue-btn" onclick="continueClick()">
+                        Check
+                    </button>
+                    {{ render_field(form.submit, form_type="inline") }}
+                </div>
+            </div>
+            <div class="row">&nbsp;</div> <!-- add some space at the bottom -->
+            {# the "transport" field input is already hidden; the following line renders the field with its label #}
+            {# hidden as well #}
+            {{ render_field(form.transport, form_type="inline", class="form-control") }}
+        </div>
+    </form>
+{% endblock %}

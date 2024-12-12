@@ -12,4 +12,4 @@ class QuizSetupForm(FlaskForm):
 
 class QuizForm(FlaskForm):
     transport = StringField(id='transport', default='PLACEHOLDER', widget=HiddenInput())
-    submit = SubmitField('DONE')
+    submit = SubmitField(id='submit-btn', label='Done')

@@ -3,14 +3,14 @@ from ._exceptions import OptionNotAllowed
 from ._exceptions import OptionValueError
 from ._exceptions import ParameterOrderError
 
-from ._options import Option
-from ._options import TableOption
-from ._options import QuizTypeOption
-from ._options import WordOption
-from ._options import CharacterOption
-from ._options import MatchSizeOption
-from ._options import MegaMatchSizeOption
-from ._options import MultipleChoiceSizeOption
+# TODO OBSOLETE ISSUE 22 from ._options import Option
+# TODO OBSOLETE ISSUE 22 from ._options import TableOption
+# TODO OBSOLETE ISSUE 22 from ._options import QuizTypeOption
+# TODO OBSOLETE ISSUE 22 from ._options import WordOption
+# TODO OBSOLETE ISSUE 22 from ._options import CharacterOption
+# TODO OBSOLETE ISSUE 22 from ._options import MatchSizeOption
+# TODO OBSOLETE ISSUE 22 from ._options import MegaMatchSizeOption
+# TODO OBSOLETE ISSUE 22 from ._options import MultipleChoiceSizeOption
 
 from ._parameters import Parameters
 
@@ -25,11 +25,16 @@ from ._quiz_types import FillInTheBlankQuiz
 def create_quiz(params: Parameters) -> Quiz:
 
     quiz_type_map: dict = {
-        QuizTypeOption.MULTIPLE_CHOICE: MultipleChoiceQuiz,
-        QuizTypeOption.MATCH: MatchQuiz,
-        QuizTypeOption.MEGA_MATCH: MegaMatchQuiz,
-        QuizTypeOption.KANA_TABLE: TableQuiz,
-        QuizTypeOption.FILL_IN_THE_BLANK: FillInTheBlankQuiz,
+        # TODO OBSOLETE ISSUE 22 QuizTypeOption.MULTIPLE_CHOICE: MultipleChoiceQuiz,
+        # TODO OBSOLETE ISSUE 22 QuizTypeOption.MATCH: MatchQuiz,
+        # TODO OBSOLETE ISSUE 22 QuizTypeOption.MEGA_MATCH: MegaMatchQuiz,
+        # TODO OBSOLETE ISSUE 22 QuizTypeOption.KANA_TABLE: TableQuiz,
+        # TODO OBSOLETE ISSUE 22 QuizTypeOption.FILL_IN_THE_BLANK: FillInTheBlankQuiz,
+        'Multiple Choice': MultipleChoiceQuiz,
+        'Match': MatchQuiz,
+        'Mega Match': MegaMatchQuiz,
+        'Kana Table': TableQuiz,
+        'Fill In The Blank': FillInTheBlankQuiz,
     }
 
     try:

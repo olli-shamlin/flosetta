@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from itertools import islice
 from random import sample
+from random import shuffle
 
 from app.corpora import Corpus
 from app.corpora import CorpusType
@@ -9,8 +10,8 @@ from app.corpora import Element
 from app.corpora import Word
 from app.corpora._store.serializer import json_encoder
 from ._parameters import Parameters
-from ._options import SizeOption
-from ._options import TableOption
+# TODO OBSOLETE ISSUE 22 from ._options import SizeOption
+# TODO OBSOLETE ISSUE 22 from ._options import TableOption
 
 
 _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES = 5
@@ -40,8 +41,11 @@ class Quiz:
 
     @property
     def as_dict(self) -> dict:
-        return {'a_prompt': self.params.prompt.name.lower(),
-                'b_prompt': self.params.choice.name.lower(),
+        # TODO OBSOLETE ISSUE 22         return {'a_prompt': self.params.prompt.name.lower(),
+        # TODO OBSOLETE ISSUE 22         'b_prompt': self.params.choice.name.lower(),
+        # TODO OBSOLETE ISSUE 22         'questions': [q.as_dict for q in self.questions]}
+        return {'a_prompt': self.params.prompt,
+                'b_prompt': self.params.choice,
                 'questions': [q.as_dict for q in self.questions]}
 
     @property
@@ -64,7 +68,7 @@ class MultipleChoiceQuiz(Quiz):
 
     @property
     def html_template(self) -> str:
-        return 'quiz_multiple_choice.html'
+        return 'quiz_mm01.html'
 
     def process_results(self, results_from_client: list[dict]) -> dict:
 
@@ -84,7 +88,8 @@ class MultipleChoiceQuiz(Quiz):
                 r = '; '.join([f'romaji: {e.romaji}', f'hiragana: {e.hiragana}', f'katakana: {e.katakana}'])
             return r
 
-        corpus = Corpus(CorpusType.VOCABULARY if self.params.table == TableOption.VOCABULARY else CorpusType.SYLLABARY)
+        # TODO OBSOLETE ISSUE 22 corpus = Corpus(CorpusType.VOCABULARY if self.params.table == TableOption.VOCABULARY else CorpusType.SYLLABARY)
+        corpus = Corpus(CorpusType.VOCABULARY if self.params.table == 'Vocabulary Words' else CorpusType.SYLLABARY)
         for i, next_questions_results in enumerate(results_from_client):
             next_question_summary = {
                 'correct_answer': next_questions_results['expected'] == next_questions_results['actual'],
@@ -122,7 +127,7 @@ class MatchQuiz(Quiz):
 
     @property
     def html_template(self) -> str:
-        return 'quiz_match.html'
+        return 'quiz_mm01.html'
 
     def process_results(self, results_from_client: list[dict]) -> dict:
         raise NotImplementedError('app.quiz._quiz_types.MatchQuiz.process_results()')
@@ -132,32 +137,55 @@ class MatchQuiz(Quiz):
 class MegaMatchQuiz(Quiz):
 
     def __post_init__(self):
-        # number_of_items = int((self.params.size ** 2) / 2)
-        # element_sample = _sample_corpus(self.params.table, num_items=number_of_items)
-        # question = Question(element_sample)
-        # self.questions = [question]
-        raise NotImplementedError('app.quiz._quiz_types.MegaMatchQuiz')
+        sample_size = int((self.params.size ** 2) / 2)
+        element_sample = _sample_corpus(self.params.table, sample_size)
+        shuffle(element_sample)
+        self.questions = [Question(element_sample)]
+
+    @property
+    def name(self) -> str:
+        return 'Mega Match'
+
+    @property
+    def html_template(self) -> str:
+        return 'quiz_mm01.html'
 
 
 @dataclass
 class TableQuiz(Quiz):
 
     def __post_init__(self):
-        # cat_filter = 'Basic' if not Config.TEST_MODE else 'category 1'
-        # self.questions = [Question([c for c in Corpus(CorpusType.SYLLABARY) if c.category == cat_filter])]
-        raise NotImplementedError('app.quiz._quiz_types.TableQuiz')
+        self.questions = [Question([c for c in Corpus(CorpusType.SYLLABARY) if c.category == 'Basic'])]
+        shuffle(self.questions)
+
+    @property
+    def name(self) -> str:
+        return 'Kana Table'
+
+    @property
+    def html_template(self) -> str:
+        return 'quiz_mm01.html'
 
 
 @dataclass
 class FillInTheBlankQuiz(Quiz):
 
     def __post_init__(self):
-        # corpus_sample = _sample_corpus(self.params.table, num_items=self.params.size)
-        # self.questions = [Question([e]) for e in corpus_sample]
-        raise NotImplementedError('app.quiz._quiz_types.FillInTheBlankQuiz')
+        corpus_sample = _sample_corpus(self.params.table, num_items=self.params.size)
+        self.questions = [Question([e]) for e in corpus_sample]
+        shuffle(self.questions)
+
+    @property
+    def name(self) -> str:
+        return 'Fill In The Blank'
+
+    @property
+    def html_template(self) -> str:
+        return 'quiz_mm01.html'
 
 
-def _sample_n_by_5(corpus_id: TableOption, num_questions: int) -> list[Question]:
+# TODO OBSOLETE ISSUE 22 def _sample_n_by_5(corpus_id: TableOption, num_questions: int) -> list[Question]:
+def _sample_n_by_5(corpus_id: str, num_questions: int) -> list[Question]:
     elements = _sample_corpus(corpus_id,
                               num_items=(num_questions * _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES))
     chunked_elements = _chunk_list(elements, _NUM_MATCH_AND_MULTIPLE_CHOICE_QUESTION_CHOICES)
@@ -168,8 +196,10 @@ def _sample_n_by_5(corpus_id: TableOption, num_questions: int) -> list[Question]
     return questions
 
 
-def _sample_corpus(corpus_id: TableOption, num_items: int) -> list[Element]:
-    corpus = Corpus(CorpusType.VOCABULARY if corpus_id == TableOption.VOCABULARY else CorpusType.SYLLABARY)
+# TODO OBSOLETE ISSUE 22 def _sample_corpus(corpus_id: TableOption, num_items: int) -> list[Element]:
+# TODO OBSOLETE ISSUE 22     corpus = Corpus(CorpusType.VOCABULARY if corpus_id == TableOption.VOCABULARY else CorpusType.SYLLABARY)
+def _sample_corpus(corpus_id: str, num_items: int) -> list[Element]:
+    corpus = Corpus(CorpusType.VOCABULARY if corpus_id == 'Vocabulary Words' else CorpusType.SYLLABARY)
     elements = sample(corpus, num_items)
     return elements
 
