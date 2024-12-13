@@ -390,7 +390,10 @@ class KindQuestion extends Question {
             case 'Kana Table':
                 return [new Parameter('table', 'Syllabary'), new Prompt3Question(this)];
             case 'Fill in the Blank':
-                return [new Parameter('table', 'Vocabulary'), new Prompt1Question(this)];
+                return [new Parameter('table', 'Vocabulary'),
+                        new Parameter('prompt', 'English'),
+                        new Parameter('choice', 'Kana'),
+                        new Size1Question(this)];
         }
     }
 }
