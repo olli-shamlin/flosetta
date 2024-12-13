@@ -1,0 +1,78 @@
+
+{% extends "base_quiz.html" %}
+
+{% block js_code %}
+    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+    <script src="{{ url_for('static', filename='quiz_mega_match.js') }}"></script>
+    <script>
+        let quiz;
+        document.addEventListener('DOMContentLoaded', () => { quiz = new MegaMatchQuiz(); });
+    </script>
+{% endblock %}
+
+{% block prompt_area %}
+    <div class="container pb-3" id="prompt-area">
+        <div class="col">
+            <h3>Select the matching pairs of tiles.</h3>
+        </div>
+    </div>
+{% endblock %}
+
+{% block response_area %}
+    <div class="container-fluid gap-3 col-6">
+        <table class="table table-borderless text-center align-middle">
+            <tbody id="response-table">
+                <tr>
+                    <td class="col-1"><button id="r1c1" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r1c2" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r1c3" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r1c4" type="button" class="btn btn-outline-secondary">?</button></td>
+                </tr>
+                <tr>
+                    <td class="col-1"><button id="r2c1" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r2c2" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r2c3" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r2c4" type="button" class="btn btn-outline-secondary">?</button></td>
+                </tr>
+                <tr>
+                    <td class="col-1"><button id="r3c1" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r3c2" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r3c3" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r3c4" type="button" class="btn btn-outline-secondary">?</button></td>
+                </tr>
+                <tr>
+                    <td class="col-1"><button id="r4c1" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r4c2" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r4c3" type="button" class="btn btn-outline-secondary">?</button></td>
+                    <td class="col-1"><button id="r4c4" type="button" class="btn btn-outline-secondary">?</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block feedback_area %}
+    {% from 'bootstrap5/form.html' import render_field %}
+    <form action="" method="post" class="form" role="form">
+        {{ render_field(form.csrf_token, form_type="inline", class="form-control") }}
+        <div class="container bg-white bg-opacity-10" id="feedback-box">
+            <div class="row">&nbsp;</div> <!-- add some space at the top -->
+            <div class="row">
+                <div class="col-10">
+                    <span class="text-start" id="feedback-message">
+                    </span>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-secondary disabled" id="continue-btn" onclick="continueClick()">
+                        Check
+                    </button>
+                    {{ render_field(form.submit, form_type="inline") }}
+                </div>
+            </div>
+            <div class="row">&nbsp;</div> <!-- add some space at the bottom -->
+            {# the "transport" field input is already hidden; the following line renders the field with its label #}
+            {# hidden as well #}
+            {{ render_field(form.transport, form_type="inline", class="form-control") }}
+        </div>
+    </form>
+{% endblock %}

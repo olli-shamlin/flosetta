@@ -44,3 +44,10 @@ class Parameters:
         # TODO OBSOLETE ISSUE 22 self.choice = table_map[self.table].to_member(self.choice)
         # TODO OBSOLETE ISSUE 22
         # TODO OBSOLETE ISSUE 22 return
+    @property
+    def as_dict(self) -> dict:
+        return {'kind': self.kind,
+                'table': self.table,
+                'prompt': self.prompt,
+                'choice': self.choice,
+                'size': self.size}

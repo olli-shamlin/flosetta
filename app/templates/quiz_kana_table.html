@@ -1,0 +1,144 @@
+
+{% extends "base_quiz.html" %}
+
+{% block js_code %}
+    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+    <script src="{{ url_for('static', filename='quiz_kana_table.js') }}"></script>
+    <script>
+        let quiz;
+        document.addEventListener('DOMContentLoaded', () => { quiz = new KanaTableQuiz(); });
+    </script>
+{% endblock %}
+
+{% block prompt_area %}
+    <div class="container pb-3" id="prompt-area">
+        <div class="col">
+            <h3>Place the character "<span class="text-primary" id="prompt-word">tbd</span>" in its correct position in the table.</h3>
+        </div>
+    </div>
+{% endblock %}
+
+{% block response_area %}
+    <div class="container-fluid gap-3 col-6">
+        <table class="table table-bordered text-center align-middle">
+            <thead>
+                <tr>
+                    <th class="col-1">&nbsp;</th>
+                    <th class="col-1">a</th>
+                    <th class="col-1">i</th>
+                    <th class="col-1">u</th>
+                    <th class="col-1">e</th>
+                    <th class="col-1">o</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="col-1">k</th>
+                    <td class="col-1"><button id="r1c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r1c2" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r1c3" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r1c4" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r1c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">s</th>
+                    <td class="col-1"><button id="r2c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r2c2" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r2c3" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r2c4" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r2c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">t</th>
+                    <td class="col-1"><button id="r3c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r3c2" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r3c3" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r3c4" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r3c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">n</th>
+                    <td class="col-1"><button id="r4c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r4c2" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r4c3" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r4c4" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r4c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">h</th>
+                    <td class="col-1"><button id="r5c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r5c2" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r5c3" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r5c4" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r5c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">m</th>
+                    <td class="col-1"><button id="r6c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r6c2" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r6c3" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r6c4" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r6c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">y</th>
+                    <td class="col-1"><button id="r7c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r7c2" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r7c3" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r7c4" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r7c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">r</th>
+                    <td class="col-1"><button id="r8c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r8c2" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r8c3" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r8c4" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1"><button id="r8c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">w</th>
+                    <td class="col-1"><button id="r9c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1 table-secondary" style="border: none!important;">&nbsp;</td>
+                    <td class="col-1 table-secondary" style="border: none!important;">&nbsp;</td>
+                    <td class="col-1 table-secondary" style="border: none!important;">&nbsp;</td>
+                    <td class="col-1"><button id="r9c5" type="button" class="btn btn-outline-light">?</button></td>
+                </tr>
+                <tr>
+                    <th class="col-1">n/m</th>
+                    <td class="col-1"><button id="r10c1" type="button" class="btn btn-outline-light">?</button></td>
+                    <td class="col-1 table-secondary" style="border: none!important;">&nbsp;</td>
+                    <td class="col-1 table-secondary" style="border: none!important;">&nbsp;</td>
+                    <td class="col-1 table-secondary" style="border: none!important;">&nbsp;</td>
+                    <td class="col-1 table-secondary" style="border: none!important;">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block feedback_area %}
+    {% from 'bootstrap5/form.html' import render_field %}
+    <form action="" method="post" class="form" role="form">
+        {{ render_field(form.csrf_token, form_type="inline", class="form-control") }}
+        <div class="container bg-white bg-opacity-10" id="feedback-box">
+            <div class="row">&nbsp;</div> <!-- add some space at the top -->
+            <div class="row">
+                <div class="col-10">
+                    <span class="text-start" id="feedback-message">
+                    </span>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-secondary disabled" id="continue-btn" onclick="continueClick()">
+                        Check
+                    </button>
+                    {{ render_field(form.submit, form_type="inline") }}
+                </div>
+            </div>
+            <div class="row">&nbsp;</div> <!-- add some space at the bottom -->
+            {# the "transport" field input is already hidden; the following line renders the field with its label #}
+            {# hidden as well #}
+            {{ render_field(form.transport, form_type="inline", class="form-control") }}
+        </div>
+    </form>
+{% endblock %}

@@ -18,7 +18,7 @@ from ._quiz_types import Quiz
 from ._quiz_types import MultipleChoiceQuiz
 from ._quiz_types import MatchQuiz
 from ._quiz_types import MegaMatchQuiz
-from ._quiz_types import TableQuiz
+from ._quiz_types import KanaTableQuiz
 from ._quiz_types import FillInTheBlankQuiz
 
 
@@ -33,7 +33,7 @@ def create_quiz(params: Parameters) -> Quiz:
         'Multiple Choice': MultipleChoiceQuiz,
         'Match': MatchQuiz,
         'Mega Match': MegaMatchQuiz,
-        'Kana Table': TableQuiz,
+        'Kana Table': KanaTableQuiz,
         'Fill In The Blank': FillInTheBlankQuiz,
     }
 

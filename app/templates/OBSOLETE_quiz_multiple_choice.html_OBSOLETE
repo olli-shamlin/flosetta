@@ -1,0 +1,229 @@
+{% extends "base_quiz.html" %}
+{% block js_code %}
+    const trace_switch = true;
+    let quiz = null;
+
+    function updateProgress() {
+        traceEnter();
+        document.getElementById('progress-bar').setAttribute('style', `width: ${quiz.percent_complete}`);
+        trace(`progress updated: ${quiz.percent_complete} complete`, 'updateProgress');
+        traceExit();
+    }
+
+    function updatePrompt() {
+        traceEnter();
+        document.getElementById('prompt-word').innerText = quiz.current_question.answer.render(Format.PROMPT);
+        traceExit();
+    }
+
+    function updateChoiceButtons() {
+        traceEnter();
+        for (let i = 0; i < quiz.current_question.choices.length; i++) {
+            document.getElementById(`choice-text-${i + 1}`).innerText =
+                quiz.current_question.choices[i].render(Format.CHOICE);
+            btn = document.getElementById(`choice-${i + 1}`);
+            btn.checked = false;
+            btn.disabled = false;
+        }
+        traceExit();
+    }
+
+    function handleCheckButton() {
+        traceEnter();
+
+        // disable the choice buttons
+        for (let i = 0; i < quiz.current_question.choices.length; i++) {
+            document.getElementById(`choice-${i + 1}`).disabled = true;
+        }
+        trace('choice buttons disabled', 'handleCheckButton');
+
+        // Did the user make the correct choice?
+        // 1. Determine which choice button the user clicked
+        let selected_idx = 0;
+        let selected_value = null;
+        for (let i = 0; selected_idx < quiz.current_question.choices.length; i++) {
+            let next_choice_button = document.getElementById(`choice-${i + 1}`);
+            if (next_choice_button.checked) {
+                selected_value = document.getElementById(`choice-text-${i + 1}`).innerText;
+                trace(`user selected choice=${i} button_label=${selected_value}`,
+                      'handleCheckButton');
+                break;
+            }
+        }
+
+        if (selected_value == null) {
+            traceFatal('did not find selected choice');
+        } else {
+            quiz.current_question.user_choice = selected_value;
+            let correct_answer_given = quiz.current_question.answered_correctly;
+            trace(`correct_answer_given: ${quiz.current_question.answered_correctly}`, 'handleCheckButton');
+
+            // 3. Provide the user feedback based on their answer
+            // Background colors: white=bg-white; green=bg-success; red=bg-danger
+            let feedback_box = document.getElementById('feedback-box');
+            let feedback_text = document.getElementById('feedback-message');
+            if (correct_answer_given) {
+                feedback_box.setAttribute('class', 'container bg-success bg-opacity-10');
+                feedback_text.setAttribute('class', 'text-success');
+                let msg = `<h4>Correct!</h4><p>${quiz.current_question.answer.echo}</p>`;
+                feedback_text.innerHTML = msg;
+                trace(`correct answer: "${quiz.current_question.answer.echo}"`, 'handleCheckButton');
+            } else {
+                feedback_box.setAttribute('class', 'container bg-danger bg-opacity-10');
+                feedback_text.setAttribute('class', 'text-danger');
+                let msg = '<h4>Wrong!</h4>' +
+                          `<p>You chose: ${quiz.current_question.user_choice.echo}</p>` +
+                          `<p>Correct answer: ${quiz.current_question.answer.echo}</p>`;
+                feedback_text.innerHTML = msg;
+                trace(``, 'handleCheckButton');
+            }
+
+            // Change the label on the check/next button from "Check" to "Next"
+            let btn = document.getElementById('continue-btn');
+            btn.setAttribute('class', 'btn btn-success');
+            btn.innerText = 'NEXT';
+        }
+
+        updateProgress();
+        traceExit();
+    }
+
+    function handleNextButton() {
+        traceEnter();
+
+        quiz.next();
+        if (quiz.is_done) {
+                trace('last question reached', 'handleNextButton');
+                // We have reached the end of the items in the quiz!
+                // Pack the responses into the value attribute of the "transport" form field
+                document.getElementById('transport').setAttribute('value', quiz.responses_encoded)
+
+                // Hide the "check"/"next" button and reveal (ie, un-hide) the submit button
+                document.getElementById('continue-btn').remove();
+                let el = document.getElementById('submit');
+                el.setAttribute('type', 'submit');
+                el.setAttribute('size', 6);
+        }
+        else {
+            trace(`proceeding to question ${quiz.idx}`, 'handleNextButton');
+            updatePrompt();
+            updateChoiceButtons();
+
+            let el = document.getElementById('feedback-box');
+            el.setAttribute('class', 'container bg-white bg-opacity-10');
+            el = document.getElementById('feedback-message');
+            el.innerHTML = '';
+            el = document.getElementById('continue-btn');
+            el.setAttribute('class', 'btn btn-secondary disabled');
+            el.innerText = 'CHECK';
+        }
+
+        traceExit();
+    }
+
+    function continueClick() {
+        traceEnter();
+        btn = document.getElementById('continue-btn');
+        let initial_btn_label = btn.innerText;
+        trace(`button state/label = ${initial_btn_label}`, 'continueClick');
+        if (initial_btn_label == 'CHECK') { handleCheckButton(); }
+        else if (initial_btn_label == 'NEXT') { handleNextButton(); }
+        else {
+            if (initial_btn_label != 'DONE') { traceFatal('not at "done" state as expected'); }
+            trace('this condition should never be reached', 'continueClick');
+        }
+        traceExit();
+    }
+
+    function choiceClick() {
+        traceEnter();
+        btn = document.getElementById('continue-btn');
+        if (btn.innerText != 'CHECK') {
+            traceFatal(`"continue" button should be in "CHECK" state but is set to ${btn.innerText}`);
+        }
+        document.getElementById('continue-btn').setAttribute('class', 'btn btn-outline-success');
+        traceExit();
+    }
+
+    function initializeQuiz() {
+        traceEnter();
+        try {
+            let json_str = document.getElementById('transport').getAttribute('value');
+            quiz = new Quiz(json_str);
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+        }
+        traceExit();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        traceEnter('DOMContentLoaded');
+        initializeQuiz();
+        document.getElementById('submit').setAttribute('type', 'hidden');  // hide the submit button
+        updatePrompt();
+        updateChoiceButtons();
+        traceExit('DOMContentLoaded');
+    });
+{% endblock %}
+
+{% block prompt_area %}
+    <div class="row pt-3">
+        <div class="col">
+            <h3>Which word means "<span class="text-primary" id="prompt-word">tbd</span>"?</h3>
+        </div>
+    </div>
+{% endblock %}
+
+{% block response_area %}
+    <div class="d-grid gap-2 col-4 mx-auto">
+        <input type="radio" class="btn-check" name="choices" id="choice-1" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-1" for="choice-1" onclick="choiceClick()">
+            TBD
+        </label>
+        <input type="radio" class="btn-check" name="choices" id="choice-2" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-2" for="choice-2" onclick="choiceClick()">
+            TBD
+        </label>
+        <input type="radio" class="btn-check" name="choices" id="choice-3" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-3" for="choice-3" onclick="choiceClick()">
+            TBD
+        </label>
+        <input type="radio" class="btn-check" name="choices" id="choice-4" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-4" for="choice-4" onclick="choiceClick()">
+            TBD
+        </label>
+        <input type="radio" class="btn-check" name="choices" id="choice-5" autocomplete="off">
+        <label class="btn btn-lg btn-outline-primary" id="choice-text-5" for="choice-5" onclick="choiceClick()">
+            TBD
+        </label>
+    </div>
+{% endblock %}
+
+{% block feedback_area %}
+    {% from 'bootstrap5/form.html' import render_field %}
+    <!-- Alert box colors: white = "alert alert-light"; green = "alert alert-success"; red = "alert alert-danger" -->
+    <!-- Background colors: white=bg-white; green=bg-success; red=bg-danger; -->
+    <form action="" method="post" class="form" role="form">
+        {{ render_field(form.csrf_token, form_type="inline", class="form-control") }}
+        <div class="container bg-white bg-opacity-10" id="feedback-box">
+            <div class="row">&nbsp;</div> <!-- add some space at the top -->
+            <div class="row">
+                <div class="col-10">
+                    <span class="text-start" id="feedback-message">
+                    </span>
+                </div>
+                <div class="col">
+                    <!-- Button colors: blue = "btn btn-primary"; grey = "btn btn-secondary" -->
+                    <button type="button" class="btn btn-secondary disabled" id="continue-btn" onclick="continueClick()">
+                        CHECK
+                    </button>
+                    {{ render_field(form.submit, form_type="inline") }}
+                </div>
+            </div>
+            <div class="row">&nbsp;</div> <!-- add some space at the bottom -->
+            {# the "transport" field input is already hidden; the following line renders the field with its label #}
+            {# hidden as well #}
+            {{ render_field(form.transport, form_type="inline", class="form-control") }}
+        </div>
+    </form>
+{% endblock %}

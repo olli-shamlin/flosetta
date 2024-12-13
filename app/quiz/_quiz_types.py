@@ -44,8 +44,10 @@ class Quiz:
         # TODO OBSOLETE ISSUE 22         return {'a_prompt': self.params.prompt.name.lower(),
         # TODO OBSOLETE ISSUE 22         'b_prompt': self.params.choice.name.lower(),
         # TODO OBSOLETE ISSUE 22         'questions': [q.as_dict for q in self.questions]}
-        return {'a_prompt': self.params.prompt,
-                'b_prompt': self.params.choice,
+        # TODO OBSOLETE ISSUE 22 return {'a_prompt': self.params.prompt,
+        # TODO OBSOLETE ISSUE 22         'b_prompt': self.params.choice,
+        # TODO OBSOLETE ISSUE 22         'questions': [q.as_dict for q in self.questions]}
+        return {'parameters': self.params.as_dict,
                 'questions': [q.as_dict for q in self.questions]}
 
     @property
@@ -68,7 +70,7 @@ class MultipleChoiceQuiz(Quiz):
 
     @property
     def html_template(self) -> str:
-        return 'quiz_mm01.html'
+        return 'quiz_multiple_choice.html'
 
     def process_results(self, results_from_client: list[dict]) -> dict:
 
@@ -127,7 +129,7 @@ class MatchQuiz(Quiz):
 
     @property
     def html_template(self) -> str:
-        return 'quiz_mm01.html'
+        return 'quiz_match.html'
 
     def process_results(self, results_from_client: list[dict]) -> dict:
         raise NotImplementedError('app.quiz._quiz_types.MatchQuiz.process_results()')
@@ -148,11 +150,11 @@ class MegaMatchQuiz(Quiz):
 
     @property
     def html_template(self) -> str:
-        return 'quiz_mm01.html'
+        return 'quiz_mega_match.html'
 
 
 @dataclass
-class TableQuiz(Quiz):
+class KanaTableQuiz(Quiz):
 
     def __post_init__(self):
         self.questions = [Question([c for c in Corpus(CorpusType.SYLLABARY) if c.category == 'Basic'])]
@@ -164,7 +166,7 @@ class TableQuiz(Quiz):
 
     @property
     def html_template(self) -> str:
-        return 'quiz_mm01.html'
+        return 'quiz_kana_table.html'
 
 
 @dataclass
@@ -181,7 +183,7 @@ class FillInTheBlankQuiz(Quiz):
 
     @property
     def html_template(self) -> str:
-        return 'quiz_mm01.html'
+        return 'quiz_fill_in_the_blank.html'
 
 
 # TODO OBSOLETE ISSUE 22 def _sample_n_by_5(corpus_id: TableOption, num_questions: int) -> list[Question]:

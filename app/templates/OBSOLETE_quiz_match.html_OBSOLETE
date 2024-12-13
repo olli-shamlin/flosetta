@@ -1,0 +1,413 @@
+{% extends "base_quiz.html" %}
+{% block js_code %}
+    const trace_switch = true;
+    let quiz = null;
+    let page = null;
+
+    // --------------------------------------------------------------------------------------------------------
+    // --- START: quiz_multiple_choice.js rewrites
+    // --------------------------------------------------------------------------------------------------------
+
+    class Quiz2 {
+        constructor() {
+            let payload;
+            try {
+                let json_str = document.getElementById('transport').getAttribute('value');
+                payload = JSON.parse(json_str);
+            } catch (error) {
+                traceFatal('Quiz.constructor: failed to initialize quiz instance');
+            }
+
+            this._idx = 0;
+            this._questions = [];
+            for (let i = 0; i < payload['questions'].length; i++) {
+                this._questions.push(new Question(payload['questions'][i], payload['a_prompt'], payload['b_prompt']));
+            }
+        }
+        get is_done() { return this._idx == this._questions.length; }
+        get number_of_questions() { return this._questions.length; }
+        next() {
+            if (this.is_done) { throw 'Quiz.next(): called when quiz is done'}
+            this._idx++;
+        }
+        get current_question() {
+            if (this.is_done) { throw 'Quiz.current_question: called after quiz is done'}
+            return this._questions[this._idx];
+        }
+        get responses_encoded() {
+            let responses = [];
+            for (let i = 0; i < this._questions.length; i++) {
+                let next_question = this._questions[i];
+                let next_expected = next_question.answer;
+                let next_response = next_question.user_choice;
+                let next_pair = {'expected': next_expected.key, 'actual': next_response.key};
+                responses.push(next_pair);
+            }
+            return JSON.stringify(responses);
+        }
+    }
+
+    // --------------------------------------------------------------------------------------------------------
+    // --- END: quiz_multiple_choice.js rewrites
+    // --------------------------------------------------------------------------------------------------------
+
+    // --------------------------------------------------------------------------------------------------------
+    // --- START: quiz_controls.js
+    // --------------------------------------------------------------------------------------------------------
+    class ProgressBar {
+        constructor(count) {
+            this._n = 0;
+            this._max = 0;
+            this._control = document.getElementById('progress-bar');
+        }
+        increment() {
+            width = (((this._n + 1) / this._max) * 100).toFixed() + '%';
+            this._control.setAttribute('style', `width: ${width}`)
+        }
+    }
+
+    class Feedback {
+        constructor() {
+            this._box = document.getElementById('feedback-box');
+            this._text = document.getElementById('feedback-message');
+        }
+        post_success(msg) {
+            this._box.setAttribute('class', 'container bg-success bg-opacity-10');
+            this._text.setAttribute('class', 'text-success');
+            this._text.innerHTML = msg;
+        }
+        post_error(msg) {
+            this._box.setAttribute('class', 'container bg-danger bg-opacity-10');
+            this._text.setAttribute('class', 'text-danger');
+            this._text.innerHTML = msg;
+        }
+        clear() {
+            this._box.setAttribute('class', 'container bg-white bg-opacity-10');
+            this._text.innerHTML = '';
+        }
+    }
+
+    class Button {
+        constructor(id) {
+            this._btn = document.getElementById(id);
+        }
+        get label() { return this._btn.innerText; }
+        set label(val) { this._btn.innerText = val; }
+        set style(val) {
+            if (val == 'OUTLINE') { this._btn.setAttribute('class', 'btn btn-outline-primary'); }
+            else if (val == 'SOLID') { this._btn.setAttribute('class', 'btn btn-primary'); }
+            else traceFatal('Button.style set with unsupported value');
+        }
+        hide() { this._btn.setAttribute('type', 'hidden'); }
+        reveal() { this._btn.setAttribute('type', 'submit'); }
+/* ===========================================================================================================
+        get selected() { return this._btn. ???
+        get checked() { return this._btn.checked; }
+        set checked(val) { this._btn.checked = val; }
+        enable() {
+            this._btn.disabled = false;
+        }
+        disable() {
+            this._btn.disabled = true;
+            // I do the following in handleNextButton
+            this._btn.setAttribute('class', 'btn btn-secondary disabled');
+        }
+        hide() {
+            // I hide the continue button in handleNextButton with the following line of code
+            this._btn.remove();
+            // I hide the submit button in DOMContentLoaded with the following
+            this._btn.setAttribute('type', 'hidden');
+        }
+        reveal() {
+            // I reveal the submit button with the following two lines of code
+            this._btn.setAttribute('type', 'submit');
+            this._btn.setAttribute('size', 6);
+        }
+        set style(val) {
+            this._btn.setAttribute('class', 'btn btn-success');
+            this._btn.setAttribute('class', 'btn btn-outline-success');
+        }
+============================================================================================================== */
+    }
+
+    class RadioItem {
+        constructor(prefix, n) {
+            this._input = document.getElementById(`${prefix}${n}`);
+            this._label = document.getElementById(`${prefix}T${n}`);
+        }
+        get label() { return this._label.innerText; }
+        set label(val) { this._label.innerText = val; }
+        get checked() { return this._input.checked; }
+        set checked(val) { this._input.checked = val; }
+        get disable() { return this._input.disabled; }
+        set disable(val) { this._input.disabled = val; }
+    }
+
+    class RadioGroup {
+        constructor(prefix, n) {
+            this._items = []
+            for (let i = 0; i < n; i++) { this._items.push(new RadioItem(prefix, i + 1)); }
+        }
+        get items() { return this._items; }
+        get selected() {
+            for (let i = 0; i < this._items.length; i++) { if (this._items[i].checked) { return true; } }
+            return false;
+        }
+}
+
+    class Page {
+        constructor(quiz) {
+            this.progress = new ProgressBar(quiz.number_of_questions);
+            this.feedback = new Feedback();
+            this.continue = new Button('continue-btn');
+            this.submit = new Button('submit');
+            this.lbs = new RadioGroup('LC', 5);
+            this.rbs = new RadioGroup('RC', 5);
+            this._prompt = null;  // There is no prompt word field with MQ type!
+        }
+        get prompt() { return this._prompt.innerText; }
+        set prompt(val) { this._prompt.innerText = val; }
+    }
+
+    // --------------------------------------------------------------------------------------------------------
+    // --- END: quiz_controls.js
+    // --------------------------------------------------------------------------------------------------------
+
+    function updateProgress() {
+        page.progress.increment();
+    }
+
+    function updatePrompt() {
+        // This routine needs to accommodate a difference between MCQ and MQ.  For MCQ, the "prompt-word" DOM
+        // element's innerText needs to be set; for MQ, it does not.  For MQ, the LC buttons need to be updated.
+        // The following commented line is the code MCQ needs to execute
+        // document.getElementById('prompt-word').innerText = quiz.current_question.answer.render(Format.PROMPT);
+
+        for (let i = 0; i < page.lbs.items.length; i++) {
+            page.lbs.items[i].label = quiz.current_question.choices[i].render(Format.PROMPT);
+            page.lbs.items[i].checked = false;
+            page.lbs.items[i].disabled = false;
+        }
+    }
+
+    function updateChoiceButtons() {
+        for (let i = 0; i < page.rbs.items.length; i++) {
+            page.rbs.items[i].label = quiz.current_question.choices[i].render(Format.CHOICE);
+            page.rbs.items[i].checked = false;
+            page.rbs.items[i].checked = false;
+        }
+    }
+
+    function handleCheckButton() {
+        // disable the choice buttons
+        for (let i = 0; i < quiz.current_question.choices.length; i++) {
+            document.getElementById(`choice-${i + 1}`).disabled = true;
+        }
+        trace('choice buttons disabled', 'handleCheckButton');
+
+        // Did the user make the correct choice?
+        // 1. Determine which choice button the user clicked
+        let selected_idx = 0;
+        let selected_value = null;
+        for (let i = 0; selected_idx < quiz.current_question.choices.length; i++) {
+            let next_choice_button = document.getElementById(`choice-${i + 1}`);
+            if (next_choice_button.checked) {
+                selected_value = document.getElementById(`choice-text-${i + 1}`).innerText;
+                trace(`user selected choice=${i} button_label=${selected_value}`,
+                      'handleCheckButton');
+                break;
+            }
+        }
+
+        if (selected_value == null) {
+            traceFatal('did not find selected choice');
+        } else {
+            quiz.current_question.user_choice = selected_value;
+            let correct_answer_given = quiz.current_question.answered_correctly;
+            trace(`correct_answer_given: ${quiz.current_question.answered_correctly}`, 'handleCheckButton');
+
+            // 3. Provide the user feedback based on their answer
+            // Background colors: white=bg-white; green=bg-success; red=bg-danger
+            let feedback_box = document.getElementById('feedback-box');
+            let feedback_text = document.getElementById('feedback-message');
+            if (correct_answer_given) {
+                feedback_box.setAttribute('class', 'container bg-success bg-opacity-10');
+                feedback_text.setAttribute('class', 'text-success');
+                let msg = `<h4>Correct!</h4><p>${quiz.current_question.answer.echo}</p>`;
+                feedback_text.innerHTML = msg;
+                trace(`correct answer: "${quiz.current_question.answer.echo}"`, 'handleCheckButton');
+            } else {
+                feedback_box.setAttribute('class', 'container bg-danger bg-opacity-10');
+                feedback_text.setAttribute('class', 'text-danger');
+                let msg = '<h4>Wrong!</h4>' +
+                          `<p>You chose: ${quiz.current_question.user_choice.echo}</p>` +
+                          `<p>Correct answer: ${quiz.current_question.answer.echo}</p>`;
+                feedback_text.innerHTML = msg;
+                trace(``, 'handleCheckButton');
+            }
+
+            // Change the label on the check/next button from "Check" to "Next"
+            let btn = document.getElementById('continue-btn');
+            btn.setAttribute('class', 'btn btn-success');
+            btn.innerText = 'NEXT';
+        }
+
+        updateProgress();
+    }
+
+    function handleNextButton() {
+        quiz.next();
+        if (quiz.is_done) {
+                trace('last question reached', 'handleNextButton');
+                // We have reached the end of the items in the quiz!
+                // Pack the responses into the value attribute of the "transport" form field
+                document.getElementById('transport').setAttribute('value', quiz.responses_encoded)
+
+                // Hide the "check"/"next" button and reveal (ie, un-hide) the submit button
+                document.getElementById('continue-btn').remove();
+                let el = document.getElementById('submit');
+                el.setAttribute('type', 'submit');
+                el.setAttribute('size', 6);
+        }
+        else {
+            trace(`proceeding to question ${quiz.idx}`, 'handleNextButton');
+            updatePrompt();
+            updateChoiceButtons();
+
+            let el = document.getElementById('feedback-box');
+            el.setAttribute('class', 'container bg-white bg-opacity-10');
+            el = document.getElementById('feedback-message');
+            el.innerHTML = '';
+            el = document.getElementById('continue-btn');
+            el.setAttribute('class', 'btn btn-secondary disabled');
+            el.innerText = 'CHECK';
+        }
+    }
+
+    function continueClick() {
+        if (page.continue.label == 'CHECK') { handleCheckButton(); }
+        else if (page.continue.label == 'NEXT') { handleNextButton(); }
+        else { if (page.continue.label != 'DONE') { traceFatal('not at "done" state as expected'); } }
+    }
+
+    function choiceClick() {
+        if (page.continue.label != 'CHECK') {
+            traceFatal(`"continue" button should be in "CHECK" state but is set to ${btn.innerText}`);
+        }
+        let id_of_clicked_item = event.srcElement.id.slice(0, 2);
+        let change_state = false;
+        if (id_of_clicked_item == 'LC') {
+            change_state = page.rbs.selected
+        }
+        else {
+            if (id_of_clicked_item != 'RC') {
+                traceFatal(`choiceClick(): unexpected radio group prefix: ${id_of_clicked_item}`);
+            }
+            change_state = page.lbs.selected;
+        }
+        if (change_state) { page.continue.style = 'OUTLINE'; }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        quiz = new Quiz2();
+        page = new Page(quiz);
+        page.submit.hide();
+        updatePrompt();
+        updateChoiceButtons();
+    });
+{% endblock %}
+
+{% block prompt_area %}
+    <div class="row pt-3">
+        <div class="col">
+            <h3>Match the items on the left to the items on the right.</h3>
+        </div>
+    </div>
+{% endblock %}
+
+{% block response_area %}
+    <!--div class="container"-->
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="row">
+            <div  class="col justify-content-end">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <input type="radio" class="btn-check" name="L-CHOICE" id="LC1" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" style="width: 250px;"
+                           id="LCT1" for="LC1" onclick="choiceClick()">
+                        TBD
+                    </label>
+                    <input type="radio" class="btn-check" name="L-CHOICE" id="LC2" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" id="LCT2" for="LC2" onclick="choiceClick()">
+                        TBD
+                    </label>
+                    <input type="radio" class="btn-check" name="L-CHOICE" id="LC3" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" id="LCT3" for="LC3" onclick="choiceClick()">
+                        TBD
+                    </label>
+                    <input type="radio" class="btn-check" name="L-CHOICE" id="LC4" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" id="LCT4" for="LC4" onclick="choiceClick()">
+                        TBD
+                    </label>
+                    <input type="radio" class="btn-check" name="L-CHOICE" id="LC5" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" id="LCT5" for="LC5" onclick="choiceClick()">
+                        TBD
+                    </label>
+                </div>
+            </div>
+            <div class="col justify-content-end">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <input type="radio" class="btn-check" name="R-CHOICE" id="RC1" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" style="width: 250px;"
+                           id="RCT1" for="RC1" onclick="choiceClick()">
+                        TBD
+                    </label>
+                    <input type="radio" class="btn-check" name="R-CHOICE" id="RC2" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" id="RCT2" for="RC2" onclick="choiceClick()">
+                        TBD
+                    </label>
+                    <input type="radio" class="btn-check" name="R-CHOICE" id="RC3" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" id="RCT3" for="RC3" onclick="choiceClick()">
+                        TBD
+                    </label>
+                    <input type="radio" class="btn-check" name="R-CHOICE" id="RC4" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" id="RCT4" for="RC4" onclick="choiceClick()">
+                        TBD
+                    </label>
+                    <input type="radio" class="btn-check" name="R-CHOICE" id="RC5" autocomplete="off">
+                    <label class="btn btn-lg btn-outline-primary" id="RCT5" for="RC5" onclick="choiceClick()">
+                        TBD
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block feedback_area %}
+    {% from 'bootstrap5/form.html' import render_field %}
+    <!-- Alert box colors: white = "alert alert-light"; green = "alert alert-success"; red = "alert alert-danger" -->
+    <!-- Background colors: white=bg-white; green=bg-success; red=bg-danger; -->
+    <form action="" method="post" class="form" role="form">
+        {{ render_field(form.csrf_token, form_type="inline", class="form-control") }}
+        <div class="container bg-white bg-opacity-10" id="feedback-box">
+            <div class="row">&nbsp;</div> <!-- add some space at the top -->
+            <div class="row">
+                <div class="col-10">
+                    <span class="text-start" id="feedback-message">
+                    </span>
+                </div>
+                <div class="col">
+                    <!-- Button colors: blue = "btn btn-primary"; grey = "btn btn-secondary" -->
+                    <button type="button" class="btn btn-secondary disabled" id="continue-btn" onclick="continueClick()">
+                        CHECK
+                    </button>
+                    {{ render_field(form.submit, form_type="inline") }}
+                </div>
+            </div>
+            <div class="row">&nbsp;</div> <!-- add some space at the bottom -->
+            {# the "transport" field input is already hidden; the following line renders the field with its label #}
+            {# hidden as well #}
+            {{ render_field(form.transport, form_type="inline", class="form-control") }}
+        </div>
+    </form>
+{% endblock %}

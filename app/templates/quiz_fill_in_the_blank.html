@@ -3,43 +3,32 @@
 
 {% block js_code %}
     <script src="{{ url_for('static', filename='quiz.js') }}"></script>
-    <script src="{{ url_for('static', filename='quiz_multiple_choice.js') }}"></script>
+    <script src="{{ url_for('static', filename='quiz_fill_in_the_blank.js') }}"></script>
     <script>
         let quiz;
-        document.addEventListener('DOMContentLoaded', () => { quiz = new MultipleChoiceQuiz(); });
+        document.addEventListener('DOMContentLoaded', () => { quiz = new FillInTheBlankQuiz(); });
     </script>
 {% endblock %}
 
 {% block prompt_area %}
     <div class="container pb-3" id="prompt-area">
         <div class="col">
-            <h3>Which word means "<span class="text-primary" id="prompt-word">tbd</span>"?</h3>
+            <h3>Type the word "<span class="text-primary" id="prompt-word">tbd</span>" in Japanese.</h3>
         </div>
     </div>
 {% endblock %}
 
 {% block response_area %}
-    <div class="d-grid gap-2 col-4 mx-auto">
-        <input type="radio" class="btn-check" name="choices" id="choice-1" autocomplete="off">
-        <label class="btn btn-lg btn-outline-primary" id="choice-text-1" for="choice-1" onclick="choiceClick()">
-            TBD
-        </label>
-        <input type="radio" class="btn-check" name="choices" id="choice-2" autocomplete="off">
-        <label class="btn btn-lg btn-outline-primary" id="choice-text-2" for="choice-2" onclick="choiceClick()">
-            TBD
-        </label>
-        <input type="radio" class="btn-check" name="choices" id="choice-3" autocomplete="off">
-        <label class="btn btn-lg btn-outline-primary" id="choice-text-3" for="choice-3" onclick="choiceClick()">
-            TBD
-        </label>
-        <input type="radio" class="btn-check" name="choices" id="choice-4" autocomplete="off">
-        <label class="btn btn-lg btn-outline-primary" id="choice-text-4" for="choice-4" onclick="choiceClick()">
-            TBD
-        </label>
-        <input type="radio" class="btn-check" name="choices" id="choice-5" autocomplete="off">
-        <label class="btn btn-lg btn-outline-primary" id="choice-text-5" for="choice-5" onclick="choiceClick()">
-            TBD
-        </label>
+    <div class="d-grid gap-3 col-6 mx-auto">
+        <form>
+            <div class="form-group">
+                <input id="response-box"
+                       type="text"
+                       class="form-control form-control-lg"
+                       placeholder="Your answer"
+                       aria-describedby="user-response">
+            </div>
+        </form>
     </div>
 {% endblock %}
 
