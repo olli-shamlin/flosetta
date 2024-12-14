@@ -201,7 +201,7 @@ def _sample_n_by_5(corpus_id: str, num_questions: int) -> list[Question]:
 # TODO OBSOLETE ISSUE 22 def _sample_corpus(corpus_id: TableOption, num_items: int) -> list[Element]:
 # TODO OBSOLETE ISSUE 22     corpus = Corpus(CorpusType.VOCABULARY if corpus_id == TableOption.VOCABULARY else CorpusType.SYLLABARY)
 def _sample_corpus(corpus_id: str, num_items: int) -> list[Element]:
-    corpus = Corpus(CorpusType.VOCABULARY if corpus_id == 'Vocabulary Words' else CorpusType.SYLLABARY)
+    corpus = Corpus(CorpusType.VOCABULARY if corpus_id == 'Vocabulary' else CorpusType.SYLLABARY)
     elements = sample(corpus, num_items)
     return elements
 
